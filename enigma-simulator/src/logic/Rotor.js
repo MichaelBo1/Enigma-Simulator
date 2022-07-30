@@ -3,7 +3,7 @@ const ALPHABET = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p
 // rotates array, shifting elements left n times
 const rotateArray = (arr, n) => arr.concat(arr).slice(n, n + arr.length);
 
-class Rotor {
+export default class Rotor {
     constructor(wiring, rotorPos='a', ringSetting=1, steppingPoint) {
         // Array of characters substituted by index: ["b", "d"...]
         this.wiring = wiring;
@@ -99,7 +99,12 @@ class Rotor {
 
     reversePass(char) {
         // entry offset (is string to then do reverse substitution from wiring)
-        char = String.fromCharCode(char.charCodeAt() + this.offset);
+        let asciiVal = char.charCodeAt() + this.offset;
+        // standardize value if out of alphabetical range (97-122)
+        if (asciiVal > 122) {
+            asciiVal = (asciiVal % 123) + 97;
+        }
+        char = String.fromCharCode(asciiVal);
         // find index of target character to swap in ALPHABET   
         let charIndex = this.wiring.indexOf(char);
         char = ALPHABET[charIndex];
@@ -115,7 +120,7 @@ class Rotor {
 }
 
 
-export default Rotor;
+
 
 
 
