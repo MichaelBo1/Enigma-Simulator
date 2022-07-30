@@ -14,6 +14,15 @@ class Rotor {
         this.offset = 0;
     }
 
+    // signals if stepping point has been reached, in which case the left rotor (if middle or right), must also be stepped
+    atSteppingPoint() {
+        if (this.rotorPos === this.steppingPoint) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
     // computes entry or exit offset depending on val (1: entry, -1: exit)
     offsetIndex(char, val) {
         if (val === 1) {
