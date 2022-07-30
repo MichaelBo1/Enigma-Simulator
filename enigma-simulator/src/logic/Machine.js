@@ -1,4 +1,4 @@
-class Machine {
+export default class Machine {
     // ([rotor1, rotor2, rotor3], reflector, plugboard)
     constructor(rotors, reflector, plugboard) {
         this.rotors = rotors;
