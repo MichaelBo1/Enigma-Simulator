@@ -11,9 +11,7 @@ export default class Rotor {
         this.ringSetting = ringSetting
         this.steppingPoint = steppingPoint;
         // adjusts entry and exit points. changes with configuration
-        this.offset = 0;
-        // record previous rotor position to backstep if input is deleted
-        this.prevPos = '';
+        this.offset = 0;;
     }
 
     // signals if stepping point has been reached, in which case the left rotor (if this rotor is middle or right) must also be stepped
@@ -39,13 +37,11 @@ export default class Rotor {
     // adjust offset by 1 (loops round with modulus 26) and "increase" the character in the rotor position
     step() {
         this.offset = (this.offset + 1) % 26;
-        this.prevPos = this.rotorPos;
         this.rotorPos = String.fromCharCode(97 + this.offset);
     }
     // adjusts offset and rotor position depending on user defined setting. Position is given as a lowercase character
     setRotor(position) {
         this.offset = position.charCodeAt() - 97;
-        this.prevPos = this.rotorPos;
         this.rotorPos = position;
     }   
 
