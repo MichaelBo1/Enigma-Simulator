@@ -28,16 +28,12 @@ const preProcessChar = (char) => {
 // default settings
 const MACHINE = new Machine([rotorI, rotorII, rotorIII], reflectorB, new Plugboard({}));
 
-const reverseRotors = (machine) => {
-    // check if current rotor position is different from previous, in which case step it backwards and adjust the offset accordingly
-    for (let rotor of machine.rotors) {
-        if (rotor.rotorPos !== rotor.prevPos) {
-            // does not work for multiple deletes in a row...
-            rotor.rotorPos = rotor.prevPos
-        }
+const reverseRotors = (machine, arr) => {
+    // shift rotor positions to those passed into as an array
+    for (let i = 0; i < 3; i++) {
+        machine.rotors[i].setRotor(arr[i])
     }
-
-}
+};
 
 export default class Enigma extends React.Component {
     constructor(props) {
@@ -55,56 +51,60 @@ export default class Enigma extends React.Component {
             stepNo: 0
         }
         this.handleChange = this.handleChange.bind(this);
-        this.handleNewInput = this.handleNewInput.bind(this);
     }
     // update this.state.inputVal field as user types.
     handleChange(event) {
-        // record previous input before updating 
-        this.setState({
-            prevInput: this.state.inputVal,
-            inputVal: event.target.value
-        });
-    }
+        const changedInput = event.target.value;
+        // check for difference when input field changes
+        const newLength = changedInput.length;
+        const prevLength = this.state.inputVal.length;
+        let updatedHistory;
+        let newStepNo;
+        let newOutput;
 
-    handleNewInput() {
-        const curLength = this.state.inputVal.length;
-        const prevLength = this.state.prevInput.length;
-        
-
-        // input is greater, so encode only the new letter and add to output value
-        if (curLength > prevLength) {
-   
-            let addedInput = preProcessChar(this.state.inputVal[this.state.inputVal.length - 1]);
+        // new input is >=, so encode only the new letter and add to output value
+        if (newLength >= prevLength) {
+            let addedInput;
+            if (this.state.inputVal === '') {
+                addedInput = preProcessChar(changedInput);
+            } 
+            else {
+                addedInput = preProcessChar(this.state.inputVal[this.state.inputVal.length - 1]);
+            }
             // exit if new character is not alphabetical
             if (addedInput === null) {
                 return;
             }
-            // otherwise add the encoded character to the output
-            this.setState({
-                outputVal: this.state.outputVal.push(MACHINE.encodeChar(addedInput)),
-                history: this.state.history.concat([
-                    {
-                        positions: [MACHINE.rotors[0].rotorPos, MACHINE.rotors[1].rotorPos, MACHINE.rotors[2].rotorPos]
-                    }
-                ]),
-                stepNo: this.stepNo++
-            })
-
+            newOutput = this.state.outputVal.concat(MACHINE.encodeChar(addedInput));
+            updatedHistory = this.state.history.concat([
+                {
+                    positions: [MACHINE.rotors[0].rotorPos, MACHINE.rotors[1].rotorPos, MACHINE.rotors[2].rotorPos]
+                }
+            ]);
+            newStepNo = this.state.stepNo + 1;
         }
         // input is smaller, so a char has been deleted and the machine needs to reverse its rotor position
-        else if (curLength < prevLength) {
+        else {
             let deletedInput = preProcessChar(this.state.prevInput[this.state.prevInput.length - 1]);
             // ignore if not alphabetical
             if (deletedInput === null) {
                 return;
             }
+            newOutput = this.state.outputVal.slice(0, this.state.outputVal.length - 1);
+            updatedHistory = this.state.history.slice(0, this.state.stepNo);
+            newStepNo = this.state.stepNo - 1;
 
-            this.setState({
-                outputVal: this.state.outputVal.pop()
-            })
-            // TODO: reverse rotor positions (keep a record?)
-
+            // TODO: reverse rotor positions based on history
         }
+
+       
+        this.setState({
+            prevInput: this.state.inputVal,
+            inputVal: changedInput,
+            outputVal: newOutput,
+            history: updatedHistory,
+            stepNo: newStepNo
+        });
         
     }
     // update (and re-render) component only if input value has changed
@@ -114,12 +114,16 @@ export default class Enigma extends React.Component {
         }
         return false;
     }
-
+    
     
     
 
     
     render() {
+        console.log("history:", this.state.history)
+        console.log("input val:", this.state.inputVal)
+        console.log("output val:", this.state.outputVal)
+
         return (
             <div className="container-fluid this.state.inputVal-center">
                 <h1>Enigma</h1>
@@ -136,7 +140,7 @@ export default class Enigma extends React.Component {
                 </div>
                 <div className="row">
                     <GetInput input={this.state.inputVal} handleChange={this.handleChange}/>
-                    <RenderInput input={this.state.outputVal}/>
+                    <RenderInput input={this.state.outputVal.join('')}/>
                 </div>
             </div>
       
