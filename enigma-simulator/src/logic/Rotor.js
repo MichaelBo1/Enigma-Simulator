@@ -12,9 +12,11 @@ export default class Rotor {
         this.steppingPoint = steppingPoint;
         // adjusts entry and exit points. changes with configuration
         this.offset = 0;
+        // record previous rotor position to backstep if input is deleted
+        this.prevPos = '';
     }
 
-    // signals if stepping point has been reached, in which case the left rotor (if middle or right), must also be stepped
+    // signals if stepping point has been reached, in which case the left rotor (if this rotor is middle or right) must also be stepped
     atSteppingPoint() {
         if (this.rotorPos === this.steppingPoint) {
             return true;
@@ -37,23 +39,20 @@ export default class Rotor {
     // adjust offset by 1 (loops round with modulus 26) and "increase" the character in the rotor position
     step() {
         this.offset = (this.offset + 1) % 26;
+        this.prevPos = this.rotorPos;
         this.rotorPos = String.fromCharCode(97 + this.offset);
-        console.log("Offset:", this.offset, "Rotor at position:", this.rotorPos);
     }
     // adjusts offset and rotor position depending on user defined setting. Position is given as a lowercase character
     setRotor(position) {
-        console.log("Setting rotor to position: ", position);
         this.offset = position.charCodeAt() - 97;
+        this.prevPos = this.rotorPos;
         this.rotorPos = position;
-        console.log("offset is now: ", this.offset, "and rotor position is: ", this.rotorPos);
     }   
 
-    // assumes that the new ring setting is different from the current (which is handle when processing user input)
+    // assumes that the new ring setting is different from the current (which is handled when processing user input)
     setRing(setting) {
         // find the dot position ('a' by default) in wiring before shifting
-        console.log("Current Wiring: ", this.wiring)
         let dotPos = this.wiring.indexOf('a');
-        console.log("dot position of a is:", dotPos)
 
         let diff = setting - 1;
         // update wiring table by shifting based on the new ring setting (relative to a: 1)
@@ -63,38 +62,35 @@ export default class Rotor {
             return ALPHABET[newCharIndex];
             });
 
-        console.log("Wiring shifted by", diff, "resulting in: ", this.wiring);
             
         dotPos = (dotPos + diff) % 26;
         // find position of ring setting character (e.g. 1:'a') and its distance from the dot position to then shift it
-        console.log("dot position after shift is now: ", dotPos)
         let ringIndex = this.wiring.indexOf(String.fromCharCode(setting + 96));
-        console.log("the index of the target char is:", ringIndex)
         let rotateBy =  ringIndex - dotPos
 
-        console.log("distance of target char from 'a' is ", rotateBy)
         // > 0, to the right of dot position, so just left shift. < 0, need to 'move right' by left shifting. != 0 as this be be for a ring setting of 01 (default reset)
         if (rotateBy < 0) {
-            console.log("rotating wiring...")
             this.wiring = rotateArray(this.wiring, this.wiring.length + rotateBy)
 
         }
         else {
             this.wiring = rotateArray(this.wiring, rotateBy);
         }
-        console.log("Wiring after rotation: ", this.wiring);
     }
     // char assumed to be pre-processed to lowercase
     forwardPass(char) {
         // Account for entry offset (subtract ASCII value to set in index range)
         let charIndex = this.offsetIndex(char, 1);      
-        console.log("character index:", charIndex, "resulting in:", ALPHABET[charIndex])
         // perform substitution by checking index against ALPHABET
         char = this.wiring[charIndex];
         
-        // adjust for exit offset and return value
-        char = ALPHABET[this.offsetIndex(char, -1)];
-        return char;
+        // exit offset
+        let exitIndex = this.offsetIndex(char, -1);
+        // < 0: adjust negative index
+        if (exitIndex < 0) {
+            exitIndex += 26; // length of ALPHABET;
+        }
+        return ALPHABET[exitIndex];
     }
 
     reversePass(char) {
@@ -110,7 +106,12 @@ export default class Rotor {
         char = ALPHABET[charIndex];
 
         // exit offset
-        return ALPHABET[this.offsetIndex(char, -1)];
+        let exitIndex = this.offsetIndex(char, -1);
+        // < 0: adjust negative index
+        if (exitIndex < 0) {
+            exitIndex += 26; // length of ALPHABET;
+        }
+        return ALPHABET[exitIndex];
 
     }
 
