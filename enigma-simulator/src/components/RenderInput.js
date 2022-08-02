@@ -4,7 +4,7 @@ export default class RenderInput extends React.Component {
     render() {
         return (
             <div className="col-6">
-                <label for="renderInput" className="form-label"></label>
+                <label htmlFor="renderInput" className="form-label"></label>
                 <textarea 
                     value={this.props.input}
                     className="form-control"
