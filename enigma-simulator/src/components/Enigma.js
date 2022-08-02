@@ -47,7 +47,6 @@ export default class Enigma extends React.Component {
             inputVal: '',
             prevInput: '',
             outputVal: [],
-            machine: new Machine([rotorI, rotorII, rotorIII], reflectorB, new Plugboard({})),
             history: [
                 {
                     positions: [MACHINE.rotors[0].rotorPos, MACHINE.rotors[1].rotorPos, MACHINE.rotors[2].rotorPos]
