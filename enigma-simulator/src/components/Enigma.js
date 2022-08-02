@@ -69,7 +69,7 @@ export default class Enigma extends React.Component {
                 addedInput = preProcessChar(changedInput);
             } 
             else {
-                addedInput = preProcessChar(this.state.inputVal[this.state.inputVal.length - 1]);
+                addedInput = preProcessChar(changedInput[changedInput.length - 1]);
             }
             // exit if new character is not alphabetical
             if (addedInput === null) {
@@ -123,6 +123,7 @@ export default class Enigma extends React.Component {
         console.log("history:", this.state.history)
         console.log("input val:", this.state.inputVal)
         console.log("output val:", this.state.outputVal)
+        console.log("Curent rotor positions: ", MACHINE.rotors)
 
         return (
             <div className="container-fluid this.state.inputVal-center">
