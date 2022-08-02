@@ -25,9 +25,17 @@ const preProcessChar = (char) => {
         return null;
     }
 }
+// default settings
+const MACHINE = new Machine([rotorI, rotorII, rotorIII], reflectorB, new Plugboard({}));
 
 const reverseRotors = (machine) => {
     // check if current rotor position is different from previous, in which case step it backwards and adjust the offset accordingly
+    for (let rotor of machine.rotors) {
+        if (rotor.rotorPos !== rotor.prevPos) {
+            // does not work for multiple deletes in a row...
+            rotor.rotorPos = rotor.prevPos
+        }
+    }
 
 }
 
@@ -39,7 +47,13 @@ export default class Enigma extends React.Component {
             inputVal: '',
             prevInput: '',
             outputVal: [],
-            machine: new Machine([rotorI, rotorII, rotorIII], reflectorB, new Plugboard({}))
+            machine: new Machine([rotorI, rotorII, rotorIII], reflectorB, new Plugboard({})),
+            history: [
+                {
+                    positions: [MACHINE.rotors[0].rotorPos, MACHINE.rotors[1].rotorPos, MACHINE.rotors[2].rotorPos]
+                }
+            ],
+            stepNo: 0
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleNewInput = this.handleNewInput.bind(this);
@@ -54,8 +68,9 @@ export default class Enigma extends React.Component {
     }
 
     handleNewInput() {
-        const prevLength = this.state.prevInput.length;
         const curLength = this.state.inputVal.length;
+        const prevLength = this.state.prevInput.length;
+        
 
         // input is greater, so encode only the new letter and add to output value
         if (curLength > prevLength) {
@@ -67,8 +82,15 @@ export default class Enigma extends React.Component {
             }
             // otherwise add the encoded character to the output
             this.setState({
-                outputVal: this.state.outputVal.push(this.state.machine.encodeChar(addedInput))
+                outputVal: this.state.outputVal.push(MACHINE.encodeChar(addedInput)),
+                history: this.state.history.concat([
+                    {
+                        positions: [MACHINE.rotors[0].rotorPos, MACHINE.rotors[1].rotorPos, MACHINE.rotors[2].rotorPos]
+                    }
+                ]),
+                stepNo: this.stepNo++
             })
+
         }
         // input is smaller, so a char has been deleted and the machine needs to reverse its rotor position
         else if (curLength < prevLength) {
