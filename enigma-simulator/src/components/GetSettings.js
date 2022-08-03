@@ -1,5 +1,6 @@
 import React from 'react';
 import RenderRotorList from './RenderRotorList.js';
+import RenderRingSettings from './RenderRingSettings.js';
 
 export default class GetSettings extends React.Component {
     render() {
@@ -20,9 +21,9 @@ export default class GetSettings extends React.Component {
                         </tr>
                         <tr>
                             <th>Rings</th>
-                            <td><input type="text" pattern="/[1-26]/" maxLength="2" name="ring-l"></input></td>
-                            <td><input type="text" pattern="/[1-26]/" maxLength="2" name="ring-m"></input></td>
-                            <td><input type="text" pattern="/[1-26]/" maxLength="2" name="ring-r"></input></td>
+                            <td><RenderRingSettings /></td>
+                            <td><RenderRingSettings /></td>
+                            <td><RenderRingSettings /></td>
                         </tr>
                     </tbody>
                 </table>
