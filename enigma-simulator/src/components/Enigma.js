@@ -63,7 +63,7 @@ export default class Enigma extends React.Component {
                     prevInput: this.state.inputVal,
                     inputVal: changedInput,
                     outputVal: [],
-                    history: this.state.history.slice(0),
+                    history: this.state.history.slice(0, 1),
                     stepNo: 0
                 }
             )
