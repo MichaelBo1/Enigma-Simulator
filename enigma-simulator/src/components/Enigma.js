@@ -55,6 +55,20 @@ export default class Enigma extends React.Component {
     // update this.state.inputVal field as user types.
     handleChange(event) {
         const changedInput = event.target.value;
+        // input has been fully deleted - reset everything
+        if (changedInput === '') {
+            this.setState(
+                {
+                    prevInput: this.state.inputVal,
+                    inputVal: changedInput,
+                    outputVal: [],
+                    history: this.state.history.slice(0),
+                    stepNo: 0
+                }
+            )
+            revertRotors(MACHINE, this.state.history[0].positions)
+            return;
+        } 
         // check for difference when input field changes
         const newLength = changedInput.length;
         const prevLength = this.state.inputVal.length;
