@@ -3,13 +3,15 @@ import React from 'react';
 export default class GetInput extends React.Component {
     render() {
         return (
-            <div className="col-6">
+            <div className="col">
                 <label htmlFor="userInput" className="form-label"></label>
                 <textarea 
-                    value={this.props.input} 
+                    value={this.props.input}
+                    Style={"resize: none"}
                     onChange={this.props.handleChange}
                     className="form-control"
-                    id="userInput"></textarea>
+                    id="userInput"
+                    rows="12"></textarea>
 
             </div>
         )
