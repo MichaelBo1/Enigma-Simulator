@@ -10,9 +10,9 @@ import Reflector from '../logic/Reflector.js';
 import Rotor from '../logic/Rotor.js';
 
 // Define constants and default components
-const rotorI = new Rotor(['e','k','m','f','l','g','d','q','v','z','n','t','o','w','y','h','x','u','s','p','a','i','b','r','c','j'], 'a', 1, 'q');
-const rotorII = new Rotor(['a', 'j', 'd', 'k', 's', 'i', 'r', 'u', 'x', 'b', 'l', 'h', 'w', 't', 'm', 'c', 'q', 'g', 'z', 'n', 'p', 'y', 'f', 'v', 'o', 'e'], 'a', 1, 'e');
-const rotorIII = new Rotor(['b', 'd', 'f', 'h', 'j', 'l', 'c', 'p', 'r', 't', 'x', 'v', 'z', 'n', 'y', 'e', 'i', 'w', 'g', 'a', 'k', 'm', 'u', 's', 'q', 'o'], 'a', 1, 'v');
+const rotorI = new Rotor(['e','k','m','f','l','g','d','q','v','z','n','t','o','w','y','h','x','u','s','p','a','i','b','r','c','j'], 'a', 1, 'r');
+const rotorII = new Rotor(['a', 'j', 'd', 'k', 's', 'i', 'r', 'u', 'x', 'b', 'l', 'h', 'w', 't', 'm', 'c', 'q', 'g', 'z', 'n', 'p', 'y', 'f', 'v', 'o', 'e'], 'a', 1, 'f');
+const rotorIII = new Rotor(['b', 'd', 'f', 'h', 'j', 'l', 'c', 'p', 'r', 't', 'x', 'v', 'z', 'n', 'y', 'e', 'i', 'w', 'g', 'a', 'k', 'm', 'u', 's', 'q', 'o'], 'a', 1, 'w');
 const reflectorB = new Reflector({'a': 'y', 'b': 'r', 'c': 'u', 'd': 'h', 'e': 'q', 'f': 's','g': 'l','h': 'd','i': 'p','j': 'x','k': 'n','l': 'g','m': 'o','n': 'k','o': 'm',
 'p': 'i', 'q': 'e', 'r': 'b', 's': 'f', 't': 'z', 'u': 'c', 'v': 'w','w': 'v'
 , 'x': 'j','y': 's', 'z': 't'})
@@ -137,23 +137,23 @@ export default class Enigma extends React.Component {
 
     
     render() {
-        console.log("history:", this.state.history)
+        /*console.log("history:", this.state.history)
         console.log("input val:", this.state.inputVal)
         console.log("output val:", this.state.outputVal)
-        console.log("Curent rotor positions: ", MACHINE.rotors)
+        console.log("Curent rotor positions: ", MACHINE.rotors)*/
 
         return (
             <div className="container-fluid text-center">
                 <h1>Enigma</h1>
                 <div className="row">
                     <div className="col">
-                        <RotorComponent position={MACHINE.rotors[0].rotorPos}/>
+                        <RotorComponent position={MACHINE.rotors[0].rotorPos} ring={MACHINE.rotors[0].ringSetting}/>
                     </div>
                     <div className="col">
-                        <RotorComponent position={MACHINE.rotors[1].rotorPos}/>
+                        <RotorComponent position={MACHINE.rotors[1].rotorPos} ring={MACHINE.rotors[1].ringSetting}/>
                     </div>
                     <div className="col">
-                        <RotorComponent position={MACHINE.rotors[2].rotorPos}/>
+                        <RotorComponent position={MACHINE.rotors[2].rotorPos} ring={MACHINE.rotors[2].ringSetting}/>
                     </div>
                 </div>
                 <div className="row">
