@@ -5,7 +5,11 @@ import { faGear } from '@fortawesome/free-solid-svg-icons'
 class RotorComponent extends React.Component {
     render() {
         return (
-            <FontAwesomeIcon icon={faGear} className="fa-4x"/>
+            <div>
+                <p>{this.props.position}</p>
+                <FontAwesomeIcon icon={faGear} className="fa-4x"/>
+            </div>
+            
            
         )
     }

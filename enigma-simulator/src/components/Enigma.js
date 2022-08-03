@@ -2,6 +2,7 @@ import React from 'react';
 import RotorComponent from './RotorComponent.js';
 import GetInput from './GetInput.js';
 import RenderInput from './RenderInput.js';
+import GetSettings from './GetSettings.js';
 // Logic modules
 import Machine from '../logic/Machine.js';
 import Plugboard from '../logic/Plugboard.js';
@@ -142,21 +143,22 @@ export default class Enigma extends React.Component {
         console.log("Curent rotor positions: ", MACHINE.rotors)
 
         return (
-            <div className="container-fluid this.state.inputVal-center">
+            <div className="container-fluid text-center">
                 <h1>Enigma</h1>
                 <div className="row">
                     <div className="col">
-                        <RotorComponent />
+                        <RotorComponent position={MACHINE.rotors[0].rotorPos}/>
                     </div>
                     <div className="col">
-                        <RotorComponent />
+                        <RotorComponent position={MACHINE.rotors[1].rotorPos}/>
                     </div>
                     <div className="col">
-                        <RotorComponent />
+                        <RotorComponent position={MACHINE.rotors[2].rotorPos}/>
                     </div>
                 </div>
                 <div className="row">
                     <GetInput input={this.state.inputVal} handleChange={this.handleChange}/>
+                    <GetSettings />
                     <RenderInput input={this.state.outputVal.join('')}/>
                 </div>
             </div>
