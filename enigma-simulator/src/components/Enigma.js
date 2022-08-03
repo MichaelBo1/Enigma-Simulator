@@ -28,7 +28,7 @@ const preProcessChar = (char) => {
 // default settings
 const MACHINE = new Machine([rotorI, rotorII, rotorIII], reflectorB, new Plugboard({}));
 
-const reverseRotors = (machine, arr) => {
+const revertRotors = (machine, arr) => {
     // shift rotor positions to those passed into as an array
     for (let i = 0; i < 3; i++) {
         machine.rotors[i].setRotor(arr[i])
@@ -94,7 +94,9 @@ export default class Enigma extends React.Component {
             updatedHistory = this.state.history.slice(0, this.state.stepNo);
             newStepNo = this.state.stepNo - 1;
 
-            // TODO: reverse rotor positions based on history
+            // revert rotor position by passing in the last positions in the history
+            revertRotors(MACHINE, updatedHistory[updatedHistory.length - 1].positions);
+
         }
 
        
