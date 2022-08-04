@@ -91,7 +91,8 @@ export default class Enigma extends React.Component {
                         updatedMachine.rotors[0].rotorPos, 
                         updatedMachine.rotors[1].rotorPos, 
                         updatedMachine.rotors[2].rotorPos
-                                    ]
+                                    ],
+                    ringSettings: [1, 1, 1]
                 }
             )
             
