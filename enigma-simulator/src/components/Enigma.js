@@ -53,6 +53,7 @@ export default class Enigma extends React.Component {
             currentPositions: [MACHINE.rotors[0].rotorPos, MACHINE.rotors[1].rotorPos, MACHINE.rotors[2].rotorPos],
             machine: new Machine([rotorI, rotorII, rotorIII], reflectorB, new Plugboard({})),
             rotorPositions: ['a', 'a', 'a'],
+            ringSettings: [1, 1, 1],
             rotorTypes: [rotorI, rotorII, rotorIII],
             reflector: reflectorB,
             plugboard: new Plugboard({})
@@ -72,6 +73,8 @@ export default class Enigma extends React.Component {
             );
         for (let i = 0; i < 3; i++) {
             updatedMachine.rotors[i].setRotor(this.state.rotorPositions[i]);
+            updatedMachine.rotors[i].setRing(this.state.ringSettings[i]);
+            this.updateRings = this.updateRings.bind(this);
         }
 
 
@@ -91,8 +94,7 @@ export default class Enigma extends React.Component {
                         updatedMachine.rotors[0].rotorPos, 
                         updatedMachine.rotors[1].rotorPos, 
                         updatedMachine.rotors[2].rotorPos
-                                    ],
-                    ringSettings: [1, 1, 1]
+                                    ]
                 }
             )
             
@@ -161,13 +163,20 @@ export default class Enigma extends React.Component {
             rotorPositions: newPos
         })
     }
+    updateRings(event) {
+        let newRings = this.state.ringSettings
+        newRings[event.target.id] = parseInt(event.target.value);
+        this.setState({
+            ringSettings: newRings
+        })
+    }
     // update (and re-render) component only if input value has changed
-    shouldComponentUpdate(nextProps, nextState) {
+    /*shouldComponentUpdate(nextProps, nextState) {
         if (nextState.inputVal !== this.state.inputVal || nextState.rotorPositions !== this.state.rotorPositions) {
             return true;
         }
         return false;
-    }
+    }*/
     
     
     
@@ -179,13 +188,13 @@ export default class Enigma extends React.Component {
                 <h1>Enigma</h1>
                 <div className="row">
                     <div className="col">
-                        <RotorComponent position={this.state.rotorPositions[0]} ring={MACHINE.rotors[0].ringSetting}/>
+                        <RotorComponent position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]}/>
                     </div>
                     <div className="col">
-                        <RotorComponent position={this.state.rotorPositions[1]} ring={MACHINE.rotors[1].ringSetting}/>
+                        <RotorComponent position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]}/>
                     </div>
                     <div className="col">
-                        <RotorComponent position={this.state.rotorPositions[2]} ring={MACHINE.rotors[2].ringSetting}/>
+                        <RotorComponent position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]}/>
                     </div>
                 </div>
                 <div className="row">
