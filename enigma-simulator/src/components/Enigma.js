@@ -49,26 +49,52 @@ export default class Enigma extends React.Component {
                     positions: [MACHINE.rotors[0].rotorPos, MACHINE.rotors[1].rotorPos, MACHINE.rotors[2].rotorPos]
                 }
             ],
-            stepNo: 0
+            stepNo: 0,
+            currentPositions: [MACHINE.rotors[0].rotorPos, MACHINE.rotors[1].rotorPos, MACHINE.rotors[2].rotorPos],
+            machine: new Machine([rotorI, rotorII, rotorIII], reflectorB, new Plugboard({})),
+            rotorPositions: ['a', 'a', 'a'],
+            rotorTypes: [rotorI, rotorII, rotorIII],
+            reflector: reflectorB,
+            plugboard: new Plugboard({})
         }
         this.handleChange = this.handleChange.bind(this);
         this.updateRotor = this.updateRotor.bind(this);
     }
     // update this.state.inputVal field as user types.
     handleChange(event) {
+        let updatedMachine = new Machine(
+            [this.state.rotorTypes[0],
+             this.state.rotorTypes[1],
+             this.state.rotorTypes[2]],
+
+             this.state.reflector,
+             this.state.plugboard    
+            );
+        for (let i = 0; i < 3; i++) {
+            updatedMachine.rotors[i].setRotor(this.state.rotorPositions[i]);
+        }
+
+
         const changedInput = event.target.value;
         // input has been fully deleted - reset everything
         if (changedInput === '') {
+            revertRotors(updatedMachine, this.state.history[0].positions)
             this.setState(
                 {
                     prevInput: this.state.inputVal,
                     inputVal: changedInput,
                     outputVal: [],
                     history: this.state.history.slice(0, 1),
-                    stepNo: 0
+                    stepNo: 0,
+                    machine: updatedMachine,
+                    rotorPositions: [
+                        updatedMachine.rotors[0].rotorPos, 
+                        updatedMachine.rotors[1].rotorPos, 
+                        updatedMachine.rotors[2].rotorPos
+                                    ]
                 }
             )
-            revertRotors(MACHINE, this.state.history[0].positions)
+            
             return;
         } 
         // check for difference when input field changes
@@ -91,10 +117,10 @@ export default class Enigma extends React.Component {
             if (addedInput === null) {
                 return;
             }
-            newOutput = this.state.outputVal.concat(MACHINE.encodeChar(addedInput));
+            newOutput = this.state.outputVal.concat(updatedMachine.encodeChar(addedInput));
             updatedHistory = this.state.history.concat([
                 {
-                    positions: [MACHINE.rotors[0].rotorPos, MACHINE.rotors[1].rotorPos, MACHINE.rotors[2].rotorPos]
+                    positions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos]
                 }
             ]);
             newStepNo = this.state.stepNo + 1;
@@ -111,7 +137,7 @@ export default class Enigma extends React.Component {
             newStepNo = this.state.stepNo - 1;
 
             // revert rotor position by passing in the last positions in the history
-            revertRotors(MACHINE, updatedHistory[updatedHistory.length - 1].positions);
+            revertRotors(updatedMachine, updatedHistory[updatedHistory.length - 1].positions);
 
         }
 
@@ -143,11 +169,6 @@ export default class Enigma extends React.Component {
 
     
     render() {
-        /*console.log("history:", this.state.history)
-        console.log("input val:", this.state.inputVal)
-        console.log("output val:", this.state.outputVal)
-        console.log("Curent rotor positions: ", MACHINE.rotors)*/
-
         return (
             <div className="container-fluid text-center">
                 <h1>Enigma</h1>
