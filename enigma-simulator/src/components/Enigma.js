@@ -52,6 +52,7 @@ export default class Enigma extends React.Component {
             stepNo: 0
         }
         this.handleChange = this.handleChange.bind(this);
+        this.updateRotor = this.updateRotor.bind(this);
     }
     // update this.state.inputVal field as user types.
     handleChange(event) {
@@ -123,6 +124,11 @@ export default class Enigma extends React.Component {
             stepNo: newStepNo
         });
         
+    }
+    updateRotor(event) {
+        const val = event.target.value;
+        const id = event.target.id;
+        console.log(val, id)
     }
     // update (and re-render) component only if input value has changed
     shouldComponentUpdate(nextProps, nextState) {

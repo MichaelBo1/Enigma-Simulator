@@ -7,7 +7,6 @@ export default class RenderInput extends React.Component {
                 <label htmlFor="renderInput" className="form-label"></label>
                 <textarea 
                     value={this.props.input}
-                    Style={"resize: none"}
                     className="form-control"
                     type="text" 
                     id="renderInput"

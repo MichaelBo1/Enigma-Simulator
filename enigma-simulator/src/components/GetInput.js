@@ -7,7 +7,6 @@ export default class GetInput extends React.Component {
                 <label htmlFor="userInput" className="form-label"></label>
                 <textarea 
                     value={this.props.input}
-                    Style={"resize: none"}
                     onChange={this.props.handleChange}
                     className="form-control"
                     id="userInput"
