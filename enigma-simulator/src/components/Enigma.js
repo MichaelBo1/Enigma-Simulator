@@ -49,26 +49,59 @@ export default class Enigma extends React.Component {
                     positions: [MACHINE.rotors[0].rotorPos, MACHINE.rotors[1].rotorPos, MACHINE.rotors[2].rotorPos]
                 }
             ],
-            stepNo: 0
+            stepNo: 0,
+            currentPositions: [MACHINE.rotors[0].rotorPos, MACHINE.rotors[1].rotorPos, MACHINE.rotors[2].rotorPos],
+            machine: new Machine([rotorI, rotorII, rotorIII], reflectorB, new Plugboard({})),
+            rotorPositions: ['a', 'a', 'a'],
+            ringSettings: [1, 1, 1],
+            rotorTypes: [rotorI, rotorII, rotorIII],
+            reflector: reflectorB,
+            plugboard: new Plugboard({})
         }
         this.handleChange = this.handleChange.bind(this);
         this.updateRotor = this.updateRotor.bind(this);
+        this.updateRings = this.updateRings.bind(this);
+        this.getUpdatedMachine = this.getUpdatedMachine.bind(this);
     }
     // update this.state.inputVal field as user types.
+    getUpdatedMachine() {
+        let updatedMachine = new Machine(
+            [this.state.rotorTypes[0],
+             this.state.rotorTypes[1],
+             this.state.rotorTypes[2]],
+
+             this.state.reflector,
+             this.state.plugboard    
+            );
+        for (let i = 0; i < 3; i++) {
+            updatedMachine.rotors[i].setRotor(this.state.rotorPositions[i]);
+            updatedMachine.rotors[i].setRing(this.state.ringSettings[i]);
+        }
+        return updatedMachine;
+    }
     handleChange(event) {
+        let updatedMachine = this.getUpdatedMachine();
+
         const changedInput = event.target.value;
         // input has been fully deleted - reset everything
         if (changedInput === '') {
+            revertRotors(updatedMachine, this.state.history[0].positions)
             this.setState(
                 {
                     prevInput: this.state.inputVal,
                     inputVal: changedInput,
                     outputVal: [],
                     history: this.state.history.slice(0, 1),
-                    stepNo: 0
+                    stepNo: 0,
+                    machine: updatedMachine,
+                    rotorPositions: [
+                        updatedMachine.rotors[0].rotorPos, 
+                        updatedMachine.rotors[1].rotorPos, 
+                        updatedMachine.rotors[2].rotorPos
+                                    ]
                 }
             )
-            revertRotors(MACHINE, this.state.history[0].positions)
+            
             return;
         } 
         // check for difference when input field changes
@@ -91,10 +124,10 @@ export default class Enigma extends React.Component {
             if (addedInput === null) {
                 return;
             }
-            newOutput = this.state.outputVal.concat(MACHINE.encodeChar(addedInput));
+            newOutput = this.state.outputVal.concat(updatedMachine.encodeChar(addedInput));
             updatedHistory = this.state.history.concat([
                 {
-                    positions: [MACHINE.rotors[0].rotorPos, MACHINE.rotors[1].rotorPos, MACHINE.rotors[2].rotorPos]
+                    positions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos]
                 }
             ]);
             newStepNo = this.state.stepNo + 1;
@@ -111,7 +144,7 @@ export default class Enigma extends React.Component {
             newStepNo = this.state.stepNo - 1;
 
             // revert rotor position by passing in the last positions in the history
-            revertRotors(MACHINE, updatedHistory[updatedHistory.length - 1].positions);
+            revertRotors(updatedMachine, updatedHistory[updatedHistory.length - 1].positions);
 
         }
 
@@ -121,50 +154,56 @@ export default class Enigma extends React.Component {
             inputVal: changedInput,
             outputVal: newOutput,
             history: updatedHistory,
-            stepNo: newStepNo
+            stepNo: newStepNo,
+            machine: updatedMachine,
+            rotorPositions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos]
         });
         
     }
     updateRotor(event) {
-        const val = event.target.value;
-        const id = event.target.id;
-        console.log(val, id)
+        let newPos = this.state.rotorPositions.slice();
+        newPos[event.target.id] = event.target.value.toLowerCase();
+        this.setState({
+            rotorPositions: newPos
+        })
+    }
+    updateRings(event) {
+        let newRings = this.state.ringSettings
+        newRings[event.target.id] = parseInt(event.target.value);
+        this.setState({
+            ringSettings: newRings
+        })
     }
     // update (and re-render) component only if input value has changed
-    shouldComponentUpdate(nextProps, nextState) {
-        if (nextState.inputVal !== this.state.inputVal) {
+    /*shouldComponentUpdate(nextProps, nextState) {
+        if (nextState.inputVal !== this.state.inputVal || nextState.rotorPositions !== this.state.rotorPositions) {
             return true;
         }
         return false;
-    }
+    }*/
     
     
     
 
     
     render() {
-        /*console.log("history:", this.state.history)
-        console.log("input val:", this.state.inputVal)
-        console.log("output val:", this.state.outputVal)
-        console.log("Curent rotor positions: ", MACHINE.rotors)*/
-
         return (
             <div className="container-fluid text-center">
                 <h1>Enigma</h1>
                 <div className="row">
                     <div className="col">
-                        <RotorComponent position={MACHINE.rotors[0].rotorPos} ring={MACHINE.rotors[0].ringSetting}/>
+                        <RotorComponent position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]}/>
                     </div>
                     <div className="col">
-                        <RotorComponent position={MACHINE.rotors[1].rotorPos} ring={MACHINE.rotors[1].ringSetting}/>
+                        <RotorComponent position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]}/>
                     </div>
                     <div className="col">
-                        <RotorComponent position={MACHINE.rotors[2].rotorPos} ring={MACHINE.rotors[2].ringSetting}/>
+                        <RotorComponent position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]}/>
                     </div>
                 </div>
                 <div className="row">
                     <GetInput input={this.state.inputVal} handleChange={this.handleChange}/>
-                    <GetSettings updateRotor={this.updateRotor} />
+                    <GetSettings updateRotor={this.updateRotor} updateRings={this.updateRings} />
                     <RenderInput input={this.state.outputVal.join('')}/>
                 </div>
             </div>

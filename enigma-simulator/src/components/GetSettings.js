@@ -21,9 +21,9 @@ export default class GetSettings extends React.Component {
                         </tr>
                         <tr>
                             <th>Rings</th>
-                            <td><RenderRingSettings /></td>
-                            <td><RenderRingSettings /></td>
-                            <td><RenderRingSettings /></td>
+                            <td><RenderRingSettings idPos={0} updateRings={this.props.updateRings}/></td>
+                            <td><RenderRingSettings idPos={1} updateRings={this.props.updateRings}/></td>
+                            <td><RenderRingSettings idPos={2} updateRings={this.props.updateRings}/></td>
                         </tr>
                     </tbody>
                 </table>
