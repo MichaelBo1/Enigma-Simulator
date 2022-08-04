@@ -47,6 +47,7 @@ export default class Rotor {
 
     // assumes that the new ring setting is different from the current (which is handled when processing user input)
     setRing(setting) {
+        this.ringSetting = setting
         // find the dot position ('a' by default) in wiring before shifting
         let dotPos = this.wiring.indexOf('a');
 
