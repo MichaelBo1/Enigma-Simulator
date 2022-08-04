@@ -147,7 +147,9 @@ export default class Enigma extends React.Component {
             inputVal: changedInput,
             outputVal: newOutput,
             history: updatedHistory,
-            stepNo: newStepNo
+            stepNo: newStepNo,
+            machine: updatedMachine,
+            rotorPositions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos]
         });
         
     }
@@ -174,13 +176,13 @@ export default class Enigma extends React.Component {
                 <h1>Enigma</h1>
                 <div className="row">
                     <div className="col">
-                        <RotorComponent position={MACHINE.rotors[0].rotorPos} ring={MACHINE.rotors[0].ringSetting}/>
+                        <RotorComponent position={this.state.rotorPositions[0]} ring={MACHINE.rotors[0].ringSetting}/>
                     </div>
                     <div className="col">
-                        <RotorComponent position={MACHINE.rotors[1].rotorPos} ring={MACHINE.rotors[1].ringSetting}/>
+                        <RotorComponent position={this.state.rotorPositions[1]} ring={MACHINE.rotors[1].ringSetting}/>
                     </div>
                     <div className="col">
-                        <RotorComponent position={MACHINE.rotors[2].rotorPos} ring={MACHINE.rotors[2].ringSetting}/>
+                        <RotorComponent position={this.state.rotorPositions[2]} ring={MACHINE.rotors[2].ringSetting}/>
                     </div>
                 </div>
                 <div className="row">
