@@ -199,7 +199,7 @@ export default class Enigma extends React.Component {
                 </div>
                 <div className="row">
                     <GetInput input={this.state.inputVal} handleChange={this.handleChange}/>
-                    <GetSettings updateRotor={this.updateRotor} />
+                    <GetSettings updateRotor={this.updateRotor} updateRings={this.updateRings} />
                     <RenderInput input={this.state.outputVal.join('')}/>
                 </div>
             </div>
