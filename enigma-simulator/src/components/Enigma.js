@@ -154,13 +154,15 @@ export default class Enigma extends React.Component {
         
     }
     updateRotor(event) {
-        const val = event.target.value;
-        const id = event.target.id;
-        console.log(val, id)
+        let newPos = this.state.rotorPositions.slice();
+        newPos[event.target.id] = event.target.value.toLowerCase();
+        this.setState({
+            rotorPositions: newPos
+        })
     }
     // update (and re-render) component only if input value has changed
     shouldComponentUpdate(nextProps, nextState) {
-        if (nextState.inputVal !== this.state.inputVal) {
+        if (nextState.inputVal !== this.state.inputVal || nextState.rotorPositions !== this.state.rotorPositions) {
             return true;
         }
         return false;
