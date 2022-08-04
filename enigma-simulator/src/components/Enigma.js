@@ -80,8 +80,9 @@ export default class Enigma extends React.Component {
         return updatedMachine;
     }
     handleChange(event) {
+        console.log("current wiring (rr):", this.state.machine.rotors[2].wiring)
         let updatedMachine = this.getUpdatedMachine();
-
+        console.log("changed wiring (right rotor):", updatedMachine.rotors[2].wiring)
 
         const changedInput = event.target.value;
         // input has been fully deleted - reset everything
@@ -188,7 +189,6 @@ export default class Enigma extends React.Component {
 
     
     render() {
-        console.log(this.state.ringSettings)
         return (
             <div className="container-fluid text-center">
                 <h1>Enigma</h1>
