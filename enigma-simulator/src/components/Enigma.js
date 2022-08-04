@@ -61,9 +61,10 @@ export default class Enigma extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.updateRotor = this.updateRotor.bind(this);
         this.updateRings = this.updateRings.bind(this);
+        this.getUpdatedMachine = this.getUpdatedMachine.bind(this);
     }
     // update this.state.inputVal field as user types.
-    handleChange(event) {
+    getUpdatedMachine() {
         let updatedMachine = new Machine(
             [this.state.rotorTypes[0],
              this.state.rotorTypes[1],
@@ -76,6 +77,10 @@ export default class Enigma extends React.Component {
             updatedMachine.rotors[i].setRotor(this.state.rotorPositions[i]);
             updatedMachine.rotors[i].setRing(this.state.ringSettings[i]);
         }
+        return updatedMachine;
+    }
+    handleChange(event) {
+        let updatedMachine = this.getUpdatedMachine();
 
 
         const changedInput = event.target.value;
@@ -183,6 +188,7 @@ export default class Enigma extends React.Component {
 
     
     render() {
+        console.log(this.state.ringSettings)
         return (
             <div className="container-fluid text-center">
                 <h1>Enigma</h1>
