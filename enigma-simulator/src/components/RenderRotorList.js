@@ -1,6 +1,6 @@
 export default function RenderRotorList() {
     return (
-        <select>
+        <select onChange={this.props.updateRotor}>
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="C">C</option>

@@ -15,9 +15,9 @@ export default class GetSettings extends React.Component {
                     <tbody>
                         <tr>
                             <th>Rotors</th>
-                            <td><RenderRotorList /></td>
-                            <td><RenderRotorList /></td>
-                            <td><RenderRotorList /></td>
+                            <td><RenderRotorList idPos={0} updateRotor={this.props.updateRotor}/></td>
+                            <td><RenderRotorList idPos={1} updateRotor={this.props.updateRotor}/></td>
+                            <td><RenderRotorList idPos={2} updateRotor={this.props.updateRotor}/></td>
                         </tr>
                         <tr>
                             <th>Rings</th>
