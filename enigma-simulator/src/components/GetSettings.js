@@ -1,4 +1,5 @@
 import React from 'react';
+import RenderPlugboard from './RenderPlugboard.js';
 import RenderRotorList from './RenderRotorList.js';
 import RenderRingSettings from './RenderRingSettings.js';
 
@@ -27,6 +28,14 @@ export default class GetSettings extends React.Component {
                         </tr>
                     </tbody>
                 </table>
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th colspan="4"> Plugboard </th>
+                        </tr>
+                    </thead>
+                </table>
+                <RenderPlugboard />
             </div>
     
             
