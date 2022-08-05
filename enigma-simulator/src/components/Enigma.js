@@ -182,8 +182,8 @@ export default class Enigma extends React.Component {
         }
         return false;
     }*/
-    connectPlug(target) {
-
+    connectPlug() {
+        console.log("plug clicked")
     }
     
     

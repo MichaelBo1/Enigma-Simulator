@@ -7,86 +7,86 @@ export default class RenderPlugboard extends React.Component {
             <div>
                 <div className="row">
                     <div className="col">
-                        <Letter letter={"Q"} connectPlug={this.props.connectPlug}/>
+                        <Letter idLetter={"Q"} letter={"Q"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                        <Letter letter={"W"} connectPlug={this.props.connectPlug}/>
+                        <Letter idLetter={"W"} letter={"W"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                        <Letter letter={"E"} connectPlug={this.props.connectPlug}/>
+                        <Letter idLetter={"E"} letter={"E"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                        <Letter letter={"R"} connectPlug={this.props.connectPlug}/>
+                        <Letter idLetter={"R"} letter={"R"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                        <Letter letter={"T"} connectPlug={this.props.connectPlug}/>
+                        <Letter idLetter={"T"} letter={"T"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                        <Letter letter={"Z"} connectPlug={this.props.connectPlug}/>
+                        <Letter idLetter={"Z"} letter={"Z"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                        <Letter letter={"U"} connectPlug={this.props.connectPlug}/>
+                        <Letter idLetter={"U"} letter={"U"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                        <Letter letter={"I"} connectPlug={this.props.connectPlug}/>
+                        <Letter idLetter={"I"} letter={"I"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                        <Letter letter={"O"} connectPlug={this.props.connectPlug}/>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col">
-                        <Letter letter={"A"} connectPlug={this.props.connectPlug}/>
-                    </div>
-                    <div className="col">
-                        <Letter letter={"S"} connectPlug={this.props.connectPlug}/>
-                    </div>
-                    <div className="col">
-                        <Letter letter={"D"} connectPlug={this.props.connectPlug}/>
-                    </div>
-                    <div className="col">
-                        <Letter letter={"F"} connectPlug={this.props.connectPlug}/>
-                    </div>
-                    <div className="col">
-                        <Letter letter={"G"} connectPlug={this.props.connectPlug}/>
-                    </div>
-                    <div className="col">
-                        <Letter letter={"H"} connectPlug={this.props.connectPlug}/>
-                    </div>
-                    <div className="col">
-                        <Letter letter={"J"} connectPlug={this.props.connectPlug}/>
-                    </div>
-                    <div className="col">
-                        <Letter letter={"K"} connectPlug={this.props.connectPlug}/>
+                        <Letter idLetter={"O"} letter={"O"} connectPlug={this.props.connectPlug}/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col">
-                    <Letter letter={"P"} connectPlug={this.props.connectPlug}/>
+                        <Letter idLetter={"A"} letter={"A"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                    <Letter letter={"Y"} connectPlug={this.props.connectPlug}/>
+                        <Letter idLetter={"S"} letter={"S"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                    <Letter letter={"X"} connectPlug={this.props.connectPlug}/>
+                        <Letter idLetter={"D"} letter={"D"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                    <Letter letter={"C"} connectPlug={this.props.connectPlug}/>
+                        <Letter idLetter={"F"} letter={"F"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                    <Letter letter={"V"} connectPlug={this.props.connectPlug}/>
+                        <Letter idLetter={"G"} letter={"G"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                    <Letter letter={"B"} connectPlug={this.props.connectPlug}/>
+                        <Letter idLetter={"H"} letter={"H"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                    <Letter letter={"M"} connectPlug={this.props.connectPlug}/>
+                        <Letter idLetter={"J"} letter={"J"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                    <Letter letter={"N"} connectPlug={this.props.connectPlug}/>
+                        <Letter idLetter={"K"} letter={"K"} connectPlug={this.props.connectPlug}/>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col">
+                    <Letter idLetter={"P"} letter={"P"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                    <Letter letter={"L"} connectPlug={this.props.connectPlug}/>
+                    <Letter idLetter={"Y"} letter={"Y"} connectPlug={this.props.connectPlug}/>
+                    </div>
+                    <div className="col">
+                    <Letter idLetter={"X"} letter={"X"} connectPlug={this.props.connectPlug}/>
+                    </div>
+                    <div className="col">
+                    <Letter idLetter={"C"} letter={"C"} connectPlug={this.props.connectPlug}/>
+                    </div>
+                    <div className="col">
+                    <Letter idLetter={"V"} letter={"V"} connectPlug={this.props.connectPlug}/>
+                    </div>
+                    <div className="col">
+                    <Letter idLetter={"B"} letter={"B"} connectPlug={this.props.connectPlug}/>
+                    </div>
+                    <div className="col">
+                    <Letter idLetter={"M"} letter={"M"} connectPlug={this.props.connectPlug}/>
+                    </div>
+                    <div className="col">
+                    <Letter idLetter={"N"} letter={"N"} connectPlug={this.props.connectPlug}/>
+                    </div>
+                    <div className="col">
+                    <Letter idLetter={"L"} letter={"L"} connectPlug={this.props.connectPlug}/>
                     </div>
                 </div>
             </div>
