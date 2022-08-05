@@ -51,13 +51,13 @@ export default class Rotor {
             return;
         }
         this.ringSetting = setting;
-        // find the dot position ('a' by default) in wiring before shifting
+        // find the dot position ('a' by default) in the default wiring before shifting
         let dotPos = this.defaultWiring.indexOf('a');
 
         let diff = setting - 1;
-        // update wiring table by shifting based on the new ring setting (relative to a: 1)
+        // update default wiring table by shifting based on the new ring setting (relative to a: 1)
         
-        this.wiring = this.wiring.map(char => {
+        this.wiring = this.defaultWiring.map(char => {
             let newCharIndex = (char.charCodeAt() - 97 + diff) % 26;
             return ALPHABET[newCharIndex];
             });
