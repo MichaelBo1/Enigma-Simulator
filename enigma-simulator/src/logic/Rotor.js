@@ -7,6 +7,7 @@ export default class Rotor {
     constructor(wiring, rotorPos='a', ringSetting=1, steppingPoint) {
         // Array of characters substituted by index: ["b", "d"...]
         this.wiring = wiring;
+        this.defaultWiring = wiring;
         this.rotorPos = rotorPos;
         this.ringSetting = ringSetting
         this.steppingPoint = steppingPoint;
@@ -51,7 +52,7 @@ export default class Rotor {
         }
         this.ringSetting = setting;
         // find the dot position ('a' by default) in wiring before shifting
-        let dotPos = this.wiring.indexOf('a');
+        let dotPos = this.defaultWiring.indexOf('a');
 
         let diff = setting - 1;
         // update wiring table by shifting based on the new ring setting (relative to a: 1)
