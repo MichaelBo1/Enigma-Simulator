@@ -7,86 +7,86 @@ export default class RenderPlugboard extends React.Component {
             <div>
                 <div className="row">
                     <div className="col">
-                        <Letter letter={"Q"} />
+                        <Letter letter={"Q"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                        <Letter letter={"W"} />
+                        <Letter letter={"W"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                        <Letter letter={"E"} />
+                        <Letter letter={"E"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                        <Letter letter={"R"} />
+                        <Letter letter={"R"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                        <Letter letter={"T"} />
+                        <Letter letter={"T"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                        <Letter letter={"Z"} />
+                        <Letter letter={"Z"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                        <Letter letter={"U"} />
+                        <Letter letter={"U"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                        <Letter letter={"I"} />
+                        <Letter letter={"I"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                        <Letter letter={"O"} />
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col">
-                        <Letter letter={"A"} />
-                    </div>
-                    <div className="col">
-                        <Letter letter={"S"} />
-                    </div>
-                    <div className="col">
-                        <Letter letter={"D"} />
-                    </div>
-                    <div className="col">
-                        <Letter letter={"F"} />
-                    </div>
-                    <div className="col">
-                        <Letter letter={"G"} />
-                    </div>
-                    <div className="col">
-                        <Letter letter={"H"} />
-                    </div>
-                    <div className="col">
-                        <Letter letter={"J"} />
-                    </div>
-                    <div className="col">
-                        <Letter letter={"K"} />
+                        <Letter letter={"O"} connectPlug={this.props.connectPlug}/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col">
-                    <Letter letter={"P"} />
+                        <Letter letter={"A"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                    <Letter letter={"Y"} />
+                        <Letter letter={"S"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                    <Letter letter={"X"} />
+                        <Letter letter={"D"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                    <Letter letter={"C"} />
+                        <Letter letter={"F"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                    <Letter letter={"V"} />
+                        <Letter letter={"G"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                    <Letter letter={"B"} />
+                        <Letter letter={"H"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                    <Letter letter={"M"} />
+                        <Letter letter={"J"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                    <Letter letter={"N"} />
+                        <Letter letter={"K"} connectPlug={this.props.connectPlug}/>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col">
+                    <Letter letter={"P"} connectPlug={this.props.connectPlug}/>
                     </div>
                     <div className="col">
-                    <Letter letter={"L"} />
+                    <Letter letter={"Y"} connectPlug={this.props.connectPlug}/>
+                    </div>
+                    <div className="col">
+                    <Letter letter={"X"} connectPlug={this.props.connectPlug}/>
+                    </div>
+                    <div className="col">
+                    <Letter letter={"C"} connectPlug={this.props.connectPlug}/>
+                    </div>
+                    <div className="col">
+                    <Letter letter={"V"} connectPlug={this.props.connectPlug}/>
+                    </div>
+                    <div className="col">
+                    <Letter letter={"B"} connectPlug={this.props.connectPlug}/>
+                    </div>
+                    <div className="col">
+                    <Letter letter={"M"} connectPlug={this.props.connectPlug}/>
+                    </div>
+                    <div className="col">
+                    <Letter letter={"N"} connectPlug={this.props.connectPlug}/>
+                    </div>
+                    <div className="col">
+                    <Letter letter={"L"} connectPlug={this.props.connectPlug}/>
                     </div>
                 </div>
             </div>
