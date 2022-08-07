@@ -23,3 +23,18 @@ code {
   text-align: center;
   font-size: 14px;
 }
+
+
+.blue-pair {
+  color: blue;
+  border-color: blue;
+}
+.red-pair {
+  color: red;
+  border-color: red;
+}
+
+.green-pair {
+  color: green;
+  border-color: green;
+}
