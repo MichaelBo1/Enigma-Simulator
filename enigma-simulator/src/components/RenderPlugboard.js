@@ -1,5 +1,6 @@
 import React from "react";
 import Letter from "./Letter.js";
+import ConfigurePlugboard from "./ConfigurePlugboard.js";
 
 export default class RenderPlugboard extends React.Component {
     render() {
@@ -88,6 +89,9 @@ export default class RenderPlugboard extends React.Component {
                     <div className="col">
                     <Letter idLetter={"L"} letter={"L"} connectPlug={this.props.connectPlug}/>
                     </div>
+                </div>
+                <div className="row">
+                    <ConfigurePlugboard />                  
                 </div>
             </div>
         ) 
