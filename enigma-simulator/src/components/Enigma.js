@@ -82,6 +82,13 @@ export default class Enigma extends React.Component {
         }
         return updatedMachine;
     }
+
+    handleReset(event) {
+        event.preventDefault();
+        document.querySelectorAll('.pair').forEach((elem) => {
+            elem.value = null;
+        })
+    }
     handleChange(event) {
         let updatedMachine = this.getUpdatedMachine();
         console.log("new plugboard:", updatedMachine.plugboard)
