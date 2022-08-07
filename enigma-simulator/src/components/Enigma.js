@@ -26,8 +26,6 @@ const preProcessChar = (char) => {
         return null;
     }
 }
-// default settings
-const MACHINE = new Machine([rotorI, rotorII, rotorIII], reflectorB, new Plugboard({}));
 
 const revertRotors = (machine, arr) => {
     // shift rotor positions to those passed into as an array
@@ -46,11 +44,11 @@ export default class Enigma extends React.Component {
             outputVal: [],
             history: [
                 {
-                    positions: [MACHINE.rotors[0].rotorPos, MACHINE.rotors[1].rotorPos, MACHINE.rotors[2].rotorPos]
+                    positions: ['a', 'a', 'a']
                 }
             ],
             stepNo: 0,
-            currentPositions: [MACHINE.rotors[0].rotorPos, MACHINE.rotors[1].rotorPos, MACHINE.rotors[2].rotorPos],
+            currentPositions: ['a', 'a', 'a'],
             machine: new Machine([rotorI, rotorII, rotorIII], reflectorB, new Plugboard({})),
             rotorPositions: ['a', 'a', 'a'],
             ringSettings: [1, 1, 1],
