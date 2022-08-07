@@ -84,6 +84,7 @@ export default class Enigma extends React.Component {
     }
     handleChange(event) {
         let updatedMachine = this.getUpdatedMachine();
+        console.log("new plugboard:", updatedMachine.plugboard)
 
         const changedInput = event.target.value;
         // input has been fully deleted - reset everything
@@ -184,7 +185,52 @@ export default class Enigma extends React.Component {
         }
         return false;
     }*/
-    handleConnect()
+    handleConnect(event) {
+        event.preventDefault();
+        const pairs = document.querySelectorAll('.pair')
+        // use count to identify input box that has errored (if any)
+        let count = 0
+        let letters = [];
+        pairs.forEach((elem) => {
+            const val = elem.value;
+            // exit if only a single letter has been given in an input field
+            if (val.length === 1) {
+                alert(`error: a pair cannot be made from a single letter. Field ${count + 1}`);
+                return;
+            } 
+            // if value is defined, it must be a pair (maxlength is 2), so check for duplicates and previously used letters
+            else if (val) {
+                const first = val[0].toLowerCase();
+                const second = val[1].toLowerCase();
+                // if letters are duplicated in field, remove the value and do nothing else
+                if (first === second) {
+                    elem.value = null;
+                }
+                // then check if letter has been used in another pair or not
+                else if (letters.includes(first) || letters.includes(second)) {
+                    alert(`error: duplicate letter used in multiple pairs. Field ${count}`);
+                    return;
+                }
+                // otherwise add letters to array to later "connect" in plugboard
+                else {
+                    letters.push(first, second)
+                }
+            }
+            count++;
+        })
+        // if executed correctly, generate plugboard object
+        let updatedPairs = {};
+        // jump in 2s as only valid pairs are added in letters
+        for (let i = 0; i < letters.length; i += 2) {
+            updatedPairs[letters[i]] = letters[i+1];
+            updatedPairs[letters[i+1]] = letters[i];
+        }
+        console.log(updatedPairs)
+        // change the state of the plugboard
+        this.setState({
+            plugboard: new Plugboard(updatedPairs)
+        })
+    }
     
     render() {
         return (
