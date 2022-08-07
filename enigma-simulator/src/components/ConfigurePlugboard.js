@@ -7,7 +7,41 @@ export default function ConfigurePlugboard() {
     
     const handleClick = (event) => {
         event.preventDefault();
-        console.log("connecting pairs...")
+        const pairs = document.querySelectorAll('.pair')
+        // use count to identify input box that has errored (if any)
+        let count = 0
+        let letters = [];
+        pairs.forEach((elem) => {
+            const val = elem.value;
+            // exit if only a single letter has been given in an input field
+            if (val.length === 1) {
+                console.log("error: a pair cannot be made from a single letter. At input", count + 1);
+                return;
+            } 
+            // if value is defined, it must be a pair (maxlength is 2), so check for duplicates and previously used letters
+            else if (val) {
+                const first = val[0].toLowerCase();
+                const second = val[1].toLowerCase();
+                // if letters are duplicated in field, remove the value and do nothing else
+                if (first === second) {
+                    elem.value = null;
+                }
+                // then check if letter has been used in another pair or not
+                else if (letters.includes(first) || letters.includes(second)) {
+                    console.log("error: duplicate letter used in multiple pairs. Field", count);
+                    return;
+                }
+                // otherwise add letters to array to later "connect" in plugboard
+                else {
+                    letters.push(first, second)
+                    console.log("current letters:", letters)
+                }
+                
+
+
+            }
+            count++;
+        })
     }
     return (
         <div>
