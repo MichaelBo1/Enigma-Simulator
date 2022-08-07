@@ -36,12 +36,16 @@ export default function ConfigurePlugboard() {
                     letters.push(first, second)
                     console.log("current letters:", letters)
                 }
-                
-
-
             }
             count++;
         })
+        // if executed correctly, generate plugboard object
+        let plugBoard = {};
+        // jump in 2s as only valid pairs are added in letters
+        for (let i = 0; i < letters.length; i += 2) {
+            plugBoard[letters[i]] = letters[i+1];
+            plugBoard[letters[i+1]] = letters[i];
+        }
     }
     return (
         <div>
