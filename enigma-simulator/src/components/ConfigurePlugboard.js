@@ -4,7 +4,12 @@ import { Collapse } from 'react-bootstrap';
 export default function ConfigurePlugboard() {
     const [open, setOpen] = useState(false)
 
-    
+    const handleReset = (event) => {
+        event.preventDefault();
+        document.querySelectorAll('.pair').forEach((elem) => {
+            elem.value = null;
+        })
+    }
     const handleClick = (event) => {
         event.preventDefault();
         const pairs = document.querySelectorAll('.pair')
@@ -15,7 +20,7 @@ export default function ConfigurePlugboard() {
             const val = elem.value;
             // exit if only a single letter has been given in an input field
             if (val.length === 1) {
-                console.log("error: a pair cannot be made from a single letter. At input", count + 1);
+                alert(`error: a pair cannot be made from a single letter. Field ${count + 1}`);
                 return;
             } 
             // if value is defined, it must be a pair (maxlength is 2), so check for duplicates and previously used letters
@@ -28,13 +33,12 @@ export default function ConfigurePlugboard() {
                 }
                 // then check if letter has been used in another pair or not
                 else if (letters.includes(first) || letters.includes(second)) {
-                    console.log("error: duplicate letter used in multiple pairs. Field", count);
+                    alert(`error: duplicate letter used in multiple pairs. Field ${count}`);
                     return;
                 }
                 // otherwise add letters to array to later "connect" in plugboard
                 else {
                     letters.push(first, second)
-                    console.log("current letters:", letters)
                 }
             }
             count++;
@@ -75,7 +79,7 @@ export default function ConfigurePlugboard() {
                                 <tr>
                                     <td align="center" colSpan="10">
                                         <button type="submit" className="btn"  onClick={handleClick}>Connect</button>
-                                        <button className="btn">Reset</button>
+                                        <button className="btn" onClick={handleReset}>Reset</button>
                                     </td>
                                     
                                 </tr>
