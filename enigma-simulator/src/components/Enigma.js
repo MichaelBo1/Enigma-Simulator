@@ -62,6 +62,7 @@ export default class Enigma extends React.Component {
         this.updateRotor = this.updateRotor.bind(this);
         this.updateRings = this.updateRings.bind(this);
         this.getUpdatedMachine = this.getUpdatedMachine.bind(this);
+        this.handleConnect = this.handleConnect.bind(this);
 
         
     }
@@ -183,7 +184,7 @@ export default class Enigma extends React.Component {
         }
         return false;
     }*/
-    
+    handleConnect()
     
     render() {
         return (
@@ -202,7 +203,7 @@ export default class Enigma extends React.Component {
                 </div>
                 <div className="row">
                     <GetInput input={this.state.inputVal} handleChange={this.handleChange}/>
-                    <GetSettings updateRotor={this.updateRotor} updateRings={this.updateRings} connectPlug={this.connectPlug}/>
+                    <GetSettings updateRotor={this.updateRotor} updateRings={this.updateRings} handleConnect={this.handleConnect}/>
 
                     <RenderInput input={this.state.outputVal.join('')}/>
                 </div>

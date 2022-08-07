@@ -35,7 +35,7 @@ export default class GetSettings extends React.Component {
                         </tr>
                     </thead>
                 </table>
-                <RenderPlugboard connectPlug={this.props.connectPlug}/>
+                <RenderPlugboard handleConnect={this.props.handleConnect}/>
             </div>
     
             

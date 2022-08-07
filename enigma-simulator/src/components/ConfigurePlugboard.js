@@ -78,7 +78,7 @@ export default function ConfigurePlugboard() {
                                 </tr>
                                 <tr>
                                     <td align="center" colSpan="10">
-                                        <button type="submit" className="btn"  onClick={handleClick}>Connect</button>
+                                        <button type="submit" className="btn"  onClick={this.props.handleConnect}>Connect</button>
                                         <button className="btn" onClick={handleReset}>Reset</button>
                                     </td>
                                     
