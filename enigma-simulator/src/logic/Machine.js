@@ -26,6 +26,7 @@ export default class Machine {
         char = this.encodeForwards(char);
         char = this.reflector.reflect(char);
         char = this.encodeBackwards(char);
+        char = this.plugboard.swap(char);
 
         return char;
     }
