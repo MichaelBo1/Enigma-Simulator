@@ -44,7 +44,7 @@ export default class ConfigurePlugboard extends React.Component {
                                     <tr>
                                         <td align="center" colSpan="10">
                                             <button type="submit" className="btn"  onClick={this.props.handleConnect}>Connect</button>
-                                            <button className="btn">Reset</button>
+                                            <button className="btn" onClick={this.props.handleReset}>Reset</button>
                                         </td>
                                         
                                     </tr>

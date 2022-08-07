@@ -91,7 +91,7 @@ export default class RenderPlugboard extends React.Component {
                     </div>
                 </div>
                 <div className="row">
-                    <ConfigurePlugboard handleConnect={this.props.handleConnect}/>                  
+                    <ConfigurePlugboard handleConnect={this.props.handleConnect} handleReset={this.props.handleReset}/>                  
                 </div>
             </div>
         ) 
