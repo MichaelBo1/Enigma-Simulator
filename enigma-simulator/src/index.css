@@ -11,3 +11,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.plug {
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  background-color: white;
+  border: 1px solid black;
+  margin: 2px 2px 2px 2px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.pair {
+  text-transform: uppercase;
+}

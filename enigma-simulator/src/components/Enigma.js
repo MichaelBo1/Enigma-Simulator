@@ -56,12 +56,14 @@ export default class Enigma extends React.Component {
             ringSettings: [1, 1, 1],
             rotorTypes: [rotorI, rotorII, rotorIII],
             reflector: reflectorB,
-            plugboard: new Plugboard({})
+            plugboard: new Plugboard({}),
         }
         this.handleChange = this.handleChange.bind(this);
         this.updateRotor = this.updateRotor.bind(this);
         this.updateRings = this.updateRings.bind(this);
         this.getUpdatedMachine = this.getUpdatedMachine.bind(this);
+
+        
     }
     // update this.state.inputVal field as user types.
     getUpdatedMachine() {
@@ -183,9 +185,6 @@ export default class Enigma extends React.Component {
     }*/
     
     
-    
-
-    
     render() {
         console.log(this.state.machine.rotors)
         return (
@@ -204,7 +203,8 @@ export default class Enigma extends React.Component {
                 </div>
                 <div className="row">
                     <GetInput input={this.state.inputVal} handleChange={this.handleChange}/>
-                    <GetSettings updateRotor={this.updateRotor} updateRings={this.updateRings} />
+                    <GetSettings updateRotor={this.updateRotor} updateRings={this.updateRings} connectPlug={this.connectPlug}/>
+
                     <RenderInput input={this.state.outputVal.join('')}/>
                 </div>
             </div>
