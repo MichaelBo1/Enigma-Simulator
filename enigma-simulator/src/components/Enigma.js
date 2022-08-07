@@ -28,7 +28,6 @@ const preProcessChar = (char) => {
 }
 // default settings
 const MACHINE = new Machine([rotorI, rotorII, rotorIII], reflectorB, new Plugboard({}));
-const colorPairs = ['red-pair', 'green-pair', 'blue-pair'];
 
 const revertRotors = (machine, arr) => {
     // shift rotor positions to those passed into as an array
@@ -58,14 +57,11 @@ export default class Enigma extends React.Component {
             rotorTypes: [rotorI, rotorII, rotorIII],
             reflector: reflectorB,
             plugboard: new Plugboard({}),
-            plugCount: 0, // counts number of plugs clicked
-            colorIndex: 0 // records the index of the color when selecting pairs from the plugboard
         }
         this.handleChange = this.handleChange.bind(this);
         this.updateRotor = this.updateRotor.bind(this);
         this.updateRings = this.updateRings.bind(this);
         this.getUpdatedMachine = this.getUpdatedMachine.bind(this);
-        this.connectPlug = this.connectPlug.bind(this);
 
         
     }
@@ -187,33 +183,7 @@ export default class Enigma extends React.Component {
         }
         return false;
     }*/
-    connectPlug(event) {
-        console.log("plug count:", this.state.plugCount, "color index:", this.state.colorIndex)
-        const targetPlug = event.currentTarget;
-        const newCount = this.state.plugCount + 1;
-        let updatedIndex = this.state.colorIndex;
-        // (0,1) - one pair, (2,3) etc.
-        if (newCount % 2 === 0) {
-            // then update color index for next click
-            updatedIndex = updatedIndex + 1;
-        }
-        targetPlug.classList.add(colorPairs[this.state.colorIndex])
-        console.log("new count and updated index:", newCount, updatedIndex)
-        this.setState({
-            plugCount: newCount,
-            colorIndex: updatedIndex
-        })
-        // LOGIC DOESN'T WORK, but it is on the right lines I think. Need to add deletion and subtraction to this. Do by ADDING/REMOVING CLASSES INSTESAD. MAP OUT!!!
-        
-
-        // add classNames to style when clicked
-
-        // See codepen - add functinality to create plugboard pairs and remove them.
-    }
     
-    
-    
-
     
     render() {
         return (
