@@ -4,8 +4,10 @@ import { Collapse } from 'react-bootstrap';
 export default function ConfigurePlugboard() {
     const [open, setOpen] = useState(false)
 
-    const handleSubmit = (event) => {
+    
+    const handleClick = (event) => {
         event.preventDefault();
+        console.log("connecting pairs...")
     }
     return (
         <div>
@@ -16,12 +18,28 @@ export default function ConfigurePlugboard() {
             aria-expanded={open}>Configure</button>
             <Collapse in={open}>
                 <div id="configure-plugboard">
-                    <form onSubmit={handleSubmit}>
+                    <form>
                         Connect up to 10 pairs
                         <table>
                             <tbody>
                                 <tr>
                                     <td><input type="text" size="2" maxLength="2" className="pair noEnterSubmit"></input></td>
+                                    <td><input type="text" size="2" maxLength="2" className="pair noEnterSubmit"></input></td>
+                                    <td><input type="text" size="2" maxLength="2" className="pair noEnterSubmit"></input></td>
+                                    <td><input type="text" size="2" maxLength="2" className="pair noEnterSubmit"></input></td>
+                                    <td><input type="text" size="2" maxLength="2" className="pair noEnterSubmit"></input></td>
+                                    <td><input type="text" size="2" maxLength="2" className="pair noEnterSubmit"></input></td>
+                                    <td><input type="text" size="2" maxLength="2" className="pair noEnterSubmit"></input></td>
+                                    <td><input type="text" size="2" maxLength="2" className="pair noEnterSubmit"></input></td>
+                                    <td><input type="text" size="2" maxLength="2" className="pair noEnterSubmit"></input></td>
+                                    <td><input type="text" size="2" maxLength="2" className="pair noEnterSubmit"></input></td>
+                                </tr>
+                                <tr>
+                                    <td align="center" colSpan="10">
+                                        <button type="submit" className="btn"  onClick={handleClick}>Connect</button>
+                                        <button className="btn">Reset</button>
+                                    </td>
+                                    
                                 </tr>
                             </tbody>
                         </table>
