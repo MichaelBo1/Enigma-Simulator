@@ -242,9 +242,38 @@ export default class Enigma extends React.Component {
         this.setState({
             plugboard: new Plugboard(updatedPairs)
         })
+        // color corresponding pairs on plugboard
+        this.colorPairs(letters);
     }
-    
+    // pass in array of letters after plugboard has been connected
+    // TODO: reset colors of all letters on reset click and those not included - might be easier to use the same reset method for both cases, the latter before then adding colors back
     colorPairs(letters) {
+        let colorIdx = 0;
+        
+        for (let i = 0; i < letters.length; i++) {
+            const letter = document.getElementById(letters[i]);
+            console.log(letter)
+            // check if letter has been previously colored. If so, remove color class and add in default styling
+            if (letter.classList.contains('colored')) {
+                // find color of element
+                const elemClr = window.getComputedStyle(letter.color);
+                // remove color class
+                letter.classList.remove(elemClr + '-pair', 'colored');
+                // add default styling
+                //letter.classList.add('standard-plug') MAYBE?
+            }
+            else {
+                letter.classList.add('colored', colorClasses[colorIdx])
+            }
+
+            // update color index of a pair has been successfully colored
+            if ((i + 1) % 2 === 0) {
+                colorIdx++;
+            }
+            
+        }
+
+
 
     }
     render() {
