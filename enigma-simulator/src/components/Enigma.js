@@ -221,8 +221,8 @@ export default class Enigma extends React.Component {
                 }
                 // then check if letter has been used in another pair or not
                 else if (letters.includes(first) || letters.includes(second)) {
-                    alert(`error: duplicate letter used in multiple pairs. Field ${count}`);
-                    return;
+                    alert(`error: duplicate letter used in multiple pairs. Field ${count + 1}`);
+                    elem.value = null                
                 }
                 // otherwise add letters to array to later "connect" in plugboard
                 else {
@@ -238,7 +238,6 @@ export default class Enigma extends React.Component {
             updatedPairs[letters[i]] = letters[i+1];
             updatedPairs[letters[i+1]] = letters[i];
         }
-        console.log(updatedPairs)
         // change the state of the plugboard
         this.setState({
             plugboard: new Plugboard(updatedPairs)
