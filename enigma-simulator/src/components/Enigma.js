@@ -87,6 +87,7 @@ export default class Enigma extends React.Component {
 
     handleReset(event) {
         event.preventDefault();
+        this.resetPlugColors();
         document.querySelectorAll('.pair').forEach((elem) => {
             elem.value = null;
         })
@@ -259,7 +260,7 @@ export default class Enigma extends React.Component {
         
         for (let i = 0; i < letters.length; i++) {
             const letter = document.getElementById(letters[i]);
-            const clr = 'red';
+            const clr = colors[colorIdx];
 
             letter.style.cssText = `color: ${clr}; border-color: ${clr}`
         
