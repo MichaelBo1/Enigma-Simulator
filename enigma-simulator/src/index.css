@@ -28,6 +28,11 @@ code {
   text-transform: uppercase;
 }
 
+.standard-plug {
+  color: black;
+  border-color: black;
+}
+
 .red-pair {
   color: red;
   border-color: red;
