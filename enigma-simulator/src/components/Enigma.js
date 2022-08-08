@@ -27,6 +27,8 @@ const preProcessChar = (char) => {
     }
 }
 
+const colorClasses = ['red-pair', 'green-pair', 'blue-pair', 'yellow-pair', 'pink-pair', 'purple-pair', 'orange-pair', 'teal-pair', 'grey-pair', 'brown-pair']
+
 const revertRotors = (machine, arr) => {
     // shift rotor positions to those passed into as an array
     for (let i = 0; i < 3; i++) {
@@ -62,6 +64,7 @@ export default class Enigma extends React.Component {
         this.getUpdatedMachine = this.getUpdatedMachine.bind(this);
         this.handleConnect = this.handleConnect.bind(this);
         this.handleReset = this.handleReset.bind(this);
+        this.colorPairs = this.colorPairs.bind(this);
 
         
     }
@@ -241,6 +244,9 @@ export default class Enigma extends React.Component {
         })
     }
     
+    colorPairs(letters) {
+
+    }
     render() {
         return (
             <div className="container-fluid text-center">

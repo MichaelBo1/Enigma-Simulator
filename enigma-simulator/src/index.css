@@ -27,3 +27,44 @@ code {
 .pair {
   text-transform: uppercase;
 }
+
+.red-pair {
+  color: red;
+  border-color: red;
+}
+.blue-pair {
+  color: blue;
+  border-color: blue;
+}
+.green-pair {
+  color: green;
+  border-color: green;
+}
+.yellow-pair {
+  color: yellow;
+  border-color: yellow;
+}
+.pink-pair {
+  color: pink;
+  border-color: pink;
+}
+.purple-pair {
+  color: purple;
+  border-color: purple;
+}
+.orange-pair {
+  color: orange;
+  border-color: orange;
+}
+.teal-pair {
+  color: teal;
+  border-color: teal;
+}
+.grey-pair {
+  color: grey;
+  border-color: grey;
+}
+.brown-pair {
+  color: brown;
+  border-color: brown;
+}
