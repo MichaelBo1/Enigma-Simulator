@@ -27,8 +27,7 @@ const preProcessChar = (char) => {
     }
 }
 
-const colorClasses = ['red-pair', 'green-pair', 'blue-pair', 'yellow-pair', 'pink-pair', 'purple-pair', 'orange-pair', 'teal-pair', 'grey-pair', 'brown-pair']
-
+const colors = ['red', 'green', 'blue', 'goldenrod', 'pink', 'purple', 'orange', 'teal', 'grey', 'brown']
 const revertRotors = (machine, arr) => {
     // shift rotor positions to those passed into as an array
     for (let i = 0; i < 3; i++) {
@@ -65,6 +64,7 @@ export default class Enigma extends React.Component {
         this.handleConnect = this.handleConnect.bind(this);
         this.handleReset = this.handleReset.bind(this);
         this.colorPairs = this.colorPairs.bind(this);
+        this.resetPlugColors = this.resetPlugColors.bind(this);
 
         
     }
@@ -243,29 +243,26 @@ export default class Enigma extends React.Component {
             plugboard: new Plugboard(updatedPairs)
         })
         // color corresponding pairs on plugboard
+        this.resetPlugColors();
         this.colorPairs(letters);
     }
     // pass in array of letters after plugboard has been connected
+    
     // TODO: reset colors of all letters on reset click and those not included - might be easier to use the same reset method for both cases, the latter before then adding colors back
+    resetPlugColors() {
+        document.querySelectorAll('.plug').forEach((elem) => {
+            elem.style.cssText = 'color: black; border-color: revert';
+        })
+    }
     colorPairs(letters) {
         let colorIdx = 0;
         
         for (let i = 0; i < letters.length; i++) {
             const letter = document.getElementById(letters[i]);
-            console.log(letter)
-            // check if letter has been previously colored. If so, remove color class and add in default styling
-            if (letter.classList.contains('colored')) {
-                // find color of element
-                const elemClr = window.getComputedStyle(letter.color);
-                // remove color class
-                letter.classList.remove(elemClr + '-pair', 'colored');
-                // add default styling
-                //letter.classList.add('standard-plug') MAYBE?
-            }
-            else {
-                letter.classList.add('colored', colorClasses[colorIdx])
-            }
+            const clr = 'red';
 
+            letter.style.cssText = `color: ${clr}; border-color: ${clr}`
+        
             // update color index of a pair has been successfully colored
             if ((i + 1) % 2 === 0) {
                 colorIdx++;
