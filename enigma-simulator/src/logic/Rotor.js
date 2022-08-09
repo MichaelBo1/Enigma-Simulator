@@ -13,7 +13,7 @@ export default class Rotor {
         // set default wiring to use for ring setting changes
         this.defaultWiring = wiring;
         // adjusts entry and exit points. changes with configuration
-        this.offset = 0;;
+        this.offset = 0;
     }
 
     // signals if stepping point has been reached, in which case the left rotor (if this rotor is middle or right) must also be stepped
