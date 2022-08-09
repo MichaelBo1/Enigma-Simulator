@@ -272,6 +272,7 @@ export default class Enigma extends React.Component {
 
     }
     render() {
+        console.log(this.state.machine.rotors)
         return (
             <div className="container-fluid text-center">
                 <h1>Enigma</h1>

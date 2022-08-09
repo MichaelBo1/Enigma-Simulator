@@ -56,7 +56,7 @@ export default class Rotor {
         let dotPos = this.defaultWiring.indexOf('a');
 
         let diff = setting - 1;
-        // update wiring table by shifting based on the new ring setting (relative to a: 1)
+        // update default wiring table by shifting based on the new ring setting (relative to a: 1)
         this.wiring = this.defaultWiring.map(char => {
             let newCharIndex = (char.charCodeAt() - 97 + diff) % 26;
             return ALPHABET[newCharIndex];
@@ -70,7 +70,6 @@ export default class Rotor {
         // > 0, to the right of dot position, so just left shift. < 0, need to 'move right' by left shifting. != 0 as this be be for a ring setting of 01 (default reset)
         if (rotateBy < 0) {
             this.wiring = rotateArray(this.wiring, this.wiring.length + rotateBy)
-
         }
         else {
             this.wiring = rotateArray(this.wiring, rotateBy);
