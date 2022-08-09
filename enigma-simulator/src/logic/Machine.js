@@ -7,8 +7,7 @@ export default class Machine {
     }
 
     encodeChar(char) {
-        // right rotor is stepped after every character press
-        this.rotors[2].step();
+        
 
         // step middle rotor if right rotor is at stepping point
         if (this.rotors[2].atSteppingPoint()) {
@@ -19,13 +18,22 @@ export default class Machine {
             // step middle rotor
             this.rotors[1].step();
         }
+        // separate checks for middle and left rotors
+        if (this.rotors[1].atSteppingPoint()) {
+            this.rotors[1].step();
+            this.rotors[0].step();
+
+        }
         
+        // right rotor is stepped after every character press
+        this.rotors[2].step();
 
         // feed in character to be encrypted
         char = this.plugboard.swap(char);
         char = this.encodeForwards(char);
         char = this.reflector.reflect(char);
         char = this.encodeBackwards(char);
+        char = this.plugboard.swap(char);
 
         return char;
     }

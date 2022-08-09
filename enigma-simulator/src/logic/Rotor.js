@@ -7,12 +7,13 @@ export default class Rotor {
     constructor(wiring, rotorPos='a', ringSetting=1, steppingPoint) {
         // Array of characters substituted by index: ["b", "d"...]
         this.wiring = wiring;
-        this.defaultWiring = wiring;
         this.rotorPos = rotorPos;
         this.ringSetting = ringSetting
         this.steppingPoint = steppingPoint;
+        // set default wiring to use for ring setting changes
+        this.defaultWiring = wiring;
         // adjusts entry and exit points. changes with configuration
-        this.offset = 0;;
+        this.offset = 0;
     }
 
     // signals if stepping point has been reached, in which case the left rotor (if this rotor is middle or right) must also be stepped
@@ -51,17 +52,15 @@ export default class Rotor {
             return;
         }
         this.ringSetting = setting;
-        // find the dot position ('a' by default) in the default wiring before shifting
+        // find the dot position ('a' by default) in wiring before shifting
         let dotPos = this.defaultWiring.indexOf('a');
 
         let diff = setting - 1;
         // update default wiring table by shifting based on the new ring setting (relative to a: 1)
-        
         this.wiring = this.defaultWiring.map(char => {
             let newCharIndex = (char.charCodeAt() - 97 + diff) % 26;
             return ALPHABET[newCharIndex];
             });
-
             
         dotPos = (dotPos + diff) % 26;
         // find position of ring setting character (e.g. 1:'a') and its distance from the dot position to then shift it
@@ -71,7 +70,6 @@ export default class Rotor {
         // > 0, to the right of dot position, so just left shift. < 0, need to 'move right' by left shifting. != 0 as this be be for a ring setting of 01 (default reset)
         if (rotateBy < 0) {
             this.wiring = rotateArray(this.wiring, this.wiring.length + rotateBy)
-
         }
         else {
             this.wiring = rotateArray(this.wiring, rotateBy);
@@ -114,10 +112,6 @@ export default class Rotor {
         return ALPHABET[exitIndex];
 
     }
-
-
-
-    
 }
 
 
