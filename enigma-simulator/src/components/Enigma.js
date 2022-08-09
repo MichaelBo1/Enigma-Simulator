@@ -7,7 +7,7 @@ import GetSettings from './GetSettings.js';
 import Machine from '../logic/Machine.js';
 import Plugboard from '../logic/Plugboard.js';
 import Reflector from '../logic/Reflector.js';
-import Rotor from '../logic/Rotor.js';
+import Rotor, { ALPHABET } from '../logic/Rotor.js';
 
 // Define constants and default components
 const rotorI = new Rotor(['e','k','m','f','l','g','d','q','v','z','n','t','o','w','y','h','x','u','s','p','a','i','b','r','c','j'], 'a', 1, 'q');
@@ -34,6 +34,7 @@ const revertRotors = (machine, arr) => {
         machine.rotors[i].setRotor(arr[i])
     }
 };
+
 
 export default class Enigma extends React.Component {
     constructor(props) {
@@ -65,6 +66,8 @@ export default class Enigma extends React.Component {
         this.handleReset = this.handleReset.bind(this);
         this.colorPairs = this.colorPairs.bind(this);
         this.resetPlugColors = this.resetPlugColors.bind(this);
+        this.changeRotor = this.changeRotor.bind(this);
+        this.changeRing = this.changeRing.bind(this);
 
         
     }
@@ -267,24 +270,70 @@ export default class Enigma extends React.Component {
             }
             
         }
-
-
-
     }
+
+    changeRotor(event) {
+        const updatedPositions = this.state.rotorPositions.slice(0);
+        const rotorId = event.currentTarget.id;
+        const val = event.currentTarget.value;      
+        // Get new letter by finding the incremented index and using the ALPHABET constant to get it
+        let newLetter;
+        // val is either + or -
+        if (val === '+') {
+            newLetter = ALPHABET[(this.state.rotorPositions[rotorId].charCodeAt() - 97 + 1) % 26];
+        }
+        else {
+            let idx = this.state.rotorPositions[rotorId].charCodeAt() - 97 - 1;
+            // only if going from A to Z
+            if (idx < 0) {
+                idx = 25;
+            } 
+            newLetter = ALPHABET[idx]
+        }
+        
+        updatedPositions[rotorId] = newLetter;
+        
+        
+
+        this.setState({
+            rotorPositions: updatedPositions
+        })
+    }
+    changeRing(event) {
+         const newSettings = this.state.ringSettings.slice(0);
+         const ringId = event.currentTarget.id;
+         const btnVal = event.currentTarget.value;
+         // increase ring setting if adding
+         if (btnVal === '+') {
+            newSettings[ringId] = (this.state.ringSettings[ringId] % 26) + 1;
+         }
+         // otherwise it must be '-', so decrease the value, looping 1 to 26;
+         else {
+            let newNum = this.state.ringSettings[ringId] - 1;
+            if (newNum === 0) {
+                newNum = 26;
+            }
+            newSettings[ringId] = newNum;
+         }
+
+         this.setState({
+            ringSettings: newSettings
+         });
+    }
+
     render() {
-        console.log(this.state.machine.rotors)
         return (
             <div className="container-fluid text-center">
                 <h1>Enigma</h1>
-                <div className="row">
-                    <div className="col">
-                        <RotorComponent position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]}/>
+                <div className="d-flex flex-row justify-content-center">
+                    <div className='p-2'>
+                        <RotorComponent posID={0} position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]} changeRotor={this.changeRotor} changeRing={this.changeRing}/>
                     </div>
-                    <div className="col">
-                        <RotorComponent position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]}/>
+                    <div className='p-2'>
+                        <RotorComponent posID={1} position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]} changeRotor={this.changeRotor} changeRing={this.changeRing}/>
                     </div>
-                    <div className="col">
-                        <RotorComponent position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]}/>
+                    <div className='p-2'>
+                        <RotorComponent posID={2} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} changeRotor={this.changeRotor} changeRing={this.changeRing}/>
                     </div>
                 </div>
                 <div className="row">
