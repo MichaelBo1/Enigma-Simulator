@@ -66,7 +66,7 @@ export default class Enigma extends React.Component {
         this.handleReset = this.handleReset.bind(this);
         this.colorPairs = this.colorPairs.bind(this);
         this.resetPlugColors = this.resetPlugColors.bind(this);
-        this.incRotor = this.incRotor.bind(this);
+        this.changeRotor = this.changeRotor.bind(this);
 
         
     }
@@ -271,14 +271,25 @@ export default class Enigma extends React.Component {
         }
     }
 
-    incRotor(event) {
+    changeRotor(event) {
         const updatedPositions = this.state.rotorPositions.slice(0);
         const rotorId = event.currentTarget.id;
-        console.log(rotorId)
-        
+        const val = event.currentTarget.value;      
         // Get new letter by finding the incremented index and using the ALPHABET constant to get it
         let newLetter;
-        newLetter = ALPHABET[(this.state.rotorPositions[rotorId].charCodeAt() - 97 + 1) % 26];
+        // val is either + or -
+        if (val === '+') {
+            newLetter = ALPHABET[(this.state.rotorPositions[rotorId].charCodeAt() - 97 + 1) % 26];
+        }
+        else {
+            let idx = this.state.rotorPositions[rotorId].charCodeAt() - 97 - 1;
+            // only if going from A to Z
+            if (idx < 0) {
+                idx = 25;
+            } 
+            newLetter = ALPHABET[idx]
+        }
+        
         updatedPositions[rotorId] = newLetter;
         
         
@@ -294,13 +305,13 @@ export default class Enigma extends React.Component {
                 <h1>Enigma</h1>
                 <div className="d-flex flex-row justify-content-center">
                     <div className='p-2'>
-                        <RotorComponent posID={0} position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]} incRotor={this.incRotor}/>
+                        <RotorComponent posID={0} position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]} changeRotor={this.changeRotor}/>
                     </div>
                     <div className='p-2'>
-                        <RotorComponent posID={1} position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]} incRotor={this.incRotor}/>
+                        <RotorComponent posID={1} position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]} changeRotor={this.changeRotor}/>
                     </div>
                     <div className='p-2'>
-                        <RotorComponent posID={2} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} incRotor={this.incRotor}/>
+                        <RotorComponent posID={2} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} changeRotor={this.changeRotor}/>
                     </div>
                 </div>
                 <div className="row">
