@@ -10,6 +10,8 @@ export default class Rotor {
         this.rotorPos = rotorPos;
         this.ringSetting = ringSetting
         this.steppingPoint = steppingPoint;
+        // set default wiring to use for ring setting changes
+        this.defaultWiring = wiring;
         // adjusts entry and exit points. changes with configuration
         this.offset = 0;;
     }
@@ -51,16 +53,14 @@ export default class Rotor {
         }
         this.ringSetting = setting;
         // find the dot position ('a' by default) in wiring before shifting
-        let dotPos = this.wiring.indexOf('a');
+        let dotPos = this.defaultWiring.indexOf('a');
 
         let diff = setting - 1;
         // update wiring table by shifting based on the new ring setting (relative to a: 1)
-        
-        this.wiring = this.wiring.map(char => {
+        this.wiring = this.defaultWiring.map(char => {
             let newCharIndex = (char.charCodeAt() - 97 + diff) % 26;
             return ALPHABET[newCharIndex];
             });
-
             
         dotPos = (dotPos + diff) % 26;
         // find position of ring setting character (e.g. 1:'a') and its distance from the dot position to then shift it
@@ -113,10 +113,6 @@ export default class Rotor {
         return ALPHABET[exitIndex];
 
     }
-
-
-
-    
 }
 
 
