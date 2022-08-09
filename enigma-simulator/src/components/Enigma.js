@@ -65,6 +65,7 @@ export default class Enigma extends React.Component {
         this.handleReset = this.handleReset.bind(this);
         this.colorPairs = this.colorPairs.bind(this);
         this.resetPlugColors = this.resetPlugColors.bind(this);
+        this.incRotor = this.incRotor.bind(this);
 
         
     }
@@ -267,10 +268,12 @@ export default class Enigma extends React.Component {
             }
             
         }
-
-
-
     }
+
+    incRotor(event) {
+        console.log(event.currentTarget.id)
+    }
+
     render() {
         console.log(this.state.machine.rotors)
         return (
@@ -278,13 +281,13 @@ export default class Enigma extends React.Component {
                 <h1>Enigma</h1>
                 <div className="d-flex flex-row justify-content-center">
                     <div className='p-2'>
-                        <RotorComponent position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]}/>
+                        <RotorComponent posID={'left'} position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]} incRotor={this.incRotor}/>
                     </div>
                     <div className='p-2'>
-                        <RotorComponent position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]}/>
+                        <RotorComponent posID={'middle'} position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]} incRotor={this.incRotor}/>
                     </div>
                     <div className='p-2'>
-                        <RotorComponent position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]}/>
+                        <RotorComponent posID={'right'} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} incRotor={this.incRotor}/>
                     </div>
                 </div>
                 <div className="row">
