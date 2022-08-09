@@ -6,8 +6,9 @@ class RotorComponent extends React.Component {
     render() {
         return (
             <div>
-                <p>
+                <p class="text-uppercase fw-bold">
                     {this.props.position}
+                    -
                     {this.props.ring}
                 </p>
                 <FontAwesomeIcon icon={faGear} className="fa-4x"/>

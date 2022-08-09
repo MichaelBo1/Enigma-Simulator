@@ -276,14 +276,14 @@ export default class Enigma extends React.Component {
         return (
             <div className="container-fluid text-center">
                 <h1>Enigma</h1>
-                <div className="row">
-                    <div className="col">
+                <div className="d-flex flex-row justify-content-center">
+                    <div className='p-2'>
                         <RotorComponent position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]}/>
                     </div>
-                    <div className="col">
+                    <div className='p-2'>
                         <RotorComponent position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]}/>
                     </div>
-                    <div className="col">
+                    <div className='p-2'>
                         <RotorComponent position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]}/>
                     </div>
                 </div>
