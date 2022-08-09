@@ -18,9 +18,9 @@ class RotorComponent extends React.Component {
                 </div>
                 <div className="col fw-bold pt-3 px-1">
                     <div className="vstack gap-0">
-                        <button id={this.props.posID} className="text-btn">+</button>
+                        <button id={this.props.posID} value="+" className="text-btn" onClick={this.props.changeRing}>+</button>
                         {this.props.ring}
-                        <button id={this.props.posID} className="text-btn">-</button>
+                        <button id={this.props.posID} value="-" className="text-btn" onClick={this.props.changeRing}>-</button>
                     </div>
                 </div>
                 <div className="col pt-3">
