@@ -80,7 +80,6 @@ export default class Enigma extends React.Component {
         this.getUpdatedMachine = this.getUpdatedMachine.bind(this);
         this.handleConnect = this.handleConnect.bind(this);
         this.handleReset = this.handleReset.bind(this);
-        this.colorPairs = this.colorPairs.bind(this);
         this.connectPlug = this.connectPlug.bind(this);
         this.resetPlugs = this.resetPlugs.bind(this);
         this.changeRotor = this.changeRotor.bind(this);
@@ -310,22 +309,7 @@ export default class Enigma extends React.Component {
             selectedPlugs: []
         })
     }
-    colorPairs(letters) {
-        let colorIdx = 0;
-        
-        for (let i = 0; i < letters.length; i++) {
-            const letter = document.getElementById(letters[i]);
-            const clr = colors[colorIdx];
 
-            letter.style.cssText = `color: ${clr}; border-color: ${clr}`
-        
-            // update color index of a pair has been successfully colored
-            if ((i + 1) % 2 === 0) {
-                colorIdx++;
-            }
-            
-        }
-    }
 
     changeRotor(event) {
         const updatedPositions = this.state.rotorPositions.slice(0);
