@@ -69,6 +69,9 @@ export default class Enigma extends React.Component {
             rotorTypes: [rotorI, rotorII, rotorIII],
             reflector: reflectorB,
             plugboard: new Plugboard({}),
+            plugCount: 0,
+            colorIndex: 0,
+            connectedPlugs: []
         }
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleChar = this.handleChar.bind(this);
@@ -302,7 +305,30 @@ export default class Enigma extends React.Component {
     // pass in array of letters after plugboard has been connected
     
     connectPlug(event) {
-        console.log('plug clicked')
+        const plug = event.currentTarget;
+        console.log(plug)
+        console.log(`pc: ${this.state.plugCount}, ci: ${this.state.colorIndex}`)
+        let newPlugCnt;
+        let newClrIdx = this.state.colorIndex;
+        // if plug has already been highlighted, remove its color (and paired letter if any)
+        if (plug.classList.contains('clicked')) {
+            plug.classList.remove('clicked');
+            plug.style.cssText = 'color: black; border-color: black';
+            //
+        }
+        else {
+            if (this.state.plugCount % 2 === 0 && this.state.plugCount !== 0) {
+                newClrIdx++;
+            }
+            plug.classList.add('clicked');
+            plug.style.cssText = `color: ${colors[newClrIdx]}; border-color: ${colors[newClrIdx]}`
+            newPlugCnt = this.state.plugCount + 1;
+
+        }
+        this.setState({
+            plugCount: newPlugCnt,
+            colorIndex: newClrIdx
+        });
     }
     // TODO: reset colors of all letters on reset click and those not included - might be easier to use the same reset method for both cases, the latter before then adding colors back
     resetPlugColors() {
