@@ -82,7 +82,7 @@ export default class Enigma extends React.Component {
         this.handleReset = this.handleReset.bind(this);
         this.colorPairs = this.colorPairs.bind(this);
         this.connectPlug = this.connectPlug.bind(this);
-        this.resetPlugColors = this.resetPlugColors.bind(this);
+        this.resetPlugs = this.resetPlugs.bind(this);
         this.changeRotor = this.changeRotor.bind(this);
         this.changeRing = this.changeRing.bind(this);
 
@@ -126,7 +126,7 @@ export default class Enigma extends React.Component {
 
     handleReset(event) {
         event.preventDefault();
-        this.resetPlugColors();
+        this.resetPlugs();
         document.querySelectorAll('.pair').forEach((elem) => {
             elem.value = null;
         })
@@ -299,7 +299,7 @@ export default class Enigma extends React.Component {
             plugboard: new Plugboard(updatedPairs)
         })
         // color corresponding pairs on plugboard
-        this.resetPlugColors();
+        this.resetPlugs();
         this.colorPairs(letters);
     }
     // pass in array of letters after plugboard has been connected
@@ -326,9 +326,14 @@ export default class Enigma extends React.Component {
         }    
     }
     // TODO: reset colors of all letters on reset click and those not included - might be easier to use the same reset method for both cases, the latter before then adding colors back
-    resetPlugColors() {
+    resetPlugs() {
         document.querySelectorAll('.plug').forEach((elem) => {
             elem.style.cssText = 'color: black; border-color: revert';
+        })
+        this.setState({
+            plugCount: 0,
+            colorIndex: 0,
+            selectedPlugs: []
         })
     }
     colorPairs(letters) {
