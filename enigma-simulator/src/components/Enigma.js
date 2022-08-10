@@ -301,6 +301,7 @@ export default class Enigma extends React.Component {
     }
     resetPlugs() {
         document.querySelectorAll('.plug').forEach((elem) => {
+            elem.classList.remove('clicked')
             elem.style.cssText = 'color: black; border-color: revert';
         })
         this.setState({
