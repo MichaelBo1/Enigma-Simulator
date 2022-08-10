@@ -71,7 +71,7 @@ export default class Enigma extends React.Component {
             plugboard: new Plugboard({}),
         }
         this.handleKeyDown = this.handleKeyDown.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        this.handleChar = this.handleChar.bind(this);
         this.updateRotor = this.updateRotor.bind(this);
         this.updateRings = this.updateRings.bind(this);
         this.getUpdatedMachine = this.getUpdatedMachine.bind(this);
@@ -92,6 +92,7 @@ export default class Enigma extends React.Component {
         if (char !== null) {
             // TODO: highlight key pressed on keyboard
             // encrypt character
+            this.handleChar(char)
             // TODO: display encrypted character
         }
     }
@@ -129,9 +130,27 @@ export default class Enigma extends React.Component {
             plugboard: new Plugboard({})
         })
     }
-    handleChange(event) {
-        let updatedMachine = this.getUpdatedMachine();
-        const changedInput = event.target.value;
+    handleChar(char) {
+        const updatedMachine = this.getUpdatedMachine();
+
+        const encryptedChar = updatedMachine.encodeChar(char);
+        const newOutput = this.state.outputVal.concat(encryptedChar);
+        const updatedHistory = this.state.history.concat([
+            {
+                positions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos]
+            }
+        ]);
+        const newStepNo = this.state.stepNo + 1;
+
+        this.setState({
+            outputVal: newOutput,
+            history: updatedHistory,
+            stepNo: newStepNo,
+            machine: updatedMachine,
+            rotorPositions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos]
+        })
+
+        /*
         // input has been fully deleted - reset everything
         if (changedInput === '') {
             revertRotors(updatedMachine, this.state.history[0].positions)
@@ -207,6 +226,7 @@ export default class Enigma extends React.Component {
             machine: updatedMachine,
             rotorPositions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos]
         });
+        */
         
     }
     updateRotor(event) {
@@ -368,7 +388,7 @@ export default class Enigma extends React.Component {
                     </div>
                 </div>
                 <div className="row">
-                    <GetInput input={this.state.inputVal} handleChange={this.handleChange}/>
+                    <GetInput input={this.state.inputVal} handleChar={this.handleChar}/>
                     <GetSettings handleConnect={this.handleConnect} handleReset={this.handleReset}/>
 
                     <RenderInput input={this.state.outputVal.join('')}/>
