@@ -20,11 +20,13 @@ const isLetter = (str) => {
     }
     return false;
 }
+
+/*
 document.addEventListener('keydown', (event => {
     // TODO: SEE USEFFECT FOR KEYDOWN HANDLING IN REACT
     console.log(event.key, event.key.charCodeAt())
     console.log(isLetter(event.key));
-}) )
+}) )*/
 // Define constants and default components
 const rotorI = new Rotor(['e','k','m','f','l','g','d','q','v','z','n','t','o','w','y','h','x','u','s','p','a','i','b','r','c','j'], 'a', 1, 'q');
 const rotorII = new Rotor(['a', 'j', 'd', 'k', 's', 'i', 'r', 'u', 'x', 'b', 'l', 'h', 'w', 't', 'm', 'c', 'q', 'g', 'z', 'n', 'p', 'y', 'f', 'v', 'o', 'e'], 'a', 1, 'e');
@@ -74,6 +76,7 @@ export default class Enigma extends React.Component {
             reflector: reflectorB,
             plugboard: new Plugboard({}),
         }
+        this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.updateRotor = this.updateRotor.bind(this);
         this.updateRings = this.updateRings.bind(this);
@@ -86,6 +89,19 @@ export default class Enigma extends React.Component {
         this.changeRing = this.changeRing.bind(this);
 
         
+    }
+
+
+    handleKeyDown(event) {
+        const char = event.key;
+        console.log(char)
+    }
+
+    componentDidMount() {
+        document.addEventListener('keydown', this.handleKeyDown)
+    }
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.handleKeyDown)
     }
     // update this.state.inputVal field as user types.
     getUpdatedMachine() {
