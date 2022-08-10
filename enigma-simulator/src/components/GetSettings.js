@@ -13,7 +13,7 @@ export default class GetSettings extends React.Component {
                         </tr>
                     </thead>
                 </table>
-                <RenderPlugboard handleConnect={this.props.handleConnect} handleReset={this.props.handleReset}/>
+                <RenderPlugboard handleConnect={this.props.handleConnect} handleReset={this.props.handleReset} connectPlug={this.props.connectPlug}/>
             </div>
     
             

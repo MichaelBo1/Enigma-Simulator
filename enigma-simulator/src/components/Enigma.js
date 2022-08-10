@@ -78,6 +78,7 @@ export default class Enigma extends React.Component {
         this.handleConnect = this.handleConnect.bind(this);
         this.handleReset = this.handleReset.bind(this);
         this.colorPairs = this.colorPairs.bind(this);
+        this.connectPlug = this.connectPlug.bind(this);
         this.resetPlugColors = this.resetPlugColors.bind(this);
         this.changeRotor = this.changeRotor.bind(this);
         this.changeRing = this.changeRing.bind(this);
@@ -300,6 +301,9 @@ export default class Enigma extends React.Component {
     }
     // pass in array of letters after plugboard has been connected
     
+    connectPlug(event) {
+        console.log('plug clicked')
+    }
     // TODO: reset colors of all letters on reset click and those not included - might be easier to use the same reset method for both cases, the latter before then adding colors back
     resetPlugColors() {
         document.querySelectorAll('.plug').forEach((elem) => {
@@ -389,7 +393,7 @@ export default class Enigma extends React.Component {
                 </div>
                 <div className="row">
                     <GetInput input={this.state.inputVal} handleChar={this.handleChar}/>
-                    <GetSettings handleConnect={this.handleConnect} handleReset={this.handleReset}/>
+                    <GetSettings handleConnect={this.handleConnect} handleReset={this.handleReset} connectPlug={this.connectPlug}/>
 
                     <RenderInput input={this.state.outputVal.join('')}/>
                 </div>
