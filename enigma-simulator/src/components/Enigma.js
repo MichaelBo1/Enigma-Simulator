@@ -71,7 +71,7 @@ export default class Enigma extends React.Component {
             plugboard: new Plugboard({}),
             plugCount: 0,
             colorIndex: 0,
-            connectedPlugs: []
+            selectedPlugs: []
         }
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleChar = this.handleChar.bind(this);
@@ -306,29 +306,24 @@ export default class Enigma extends React.Component {
     
     connectPlug(event) {
         const plug = event.currentTarget;
-        console.log(plug)
-        console.log(`pc: ${this.state.plugCount}, ci: ${this.state.colorIndex}`)
-        let newPlugCnt;
+        let newPlugCnt = this.state.plugCount;
         let newClrIdx = this.state.colorIndex;
         // if plug has already been highlighted, remove its color (and paired letter if any)
-        if (plug.classList.contains('clicked')) {
-            plug.classList.remove('clicked');
-            plug.style.cssText = 'color: black; border-color: black';
-            //
-        }
-        else {
+        if (plug.classList.contains('clicked') === false && newClrIdx <= 9) {
+            // switch to a new color if starting a new pair
             if (this.state.plugCount % 2 === 0 && this.state.plugCount !== 0) {
                 newClrIdx++;
             }
             plug.classList.add('clicked');
             plug.style.cssText = `color: ${colors[newClrIdx]}; border-color: ${colors[newClrIdx]}`
-            newPlugCnt = this.state.plugCount + 1;
+            newPlugCnt++;
 
-        }
-        this.setState({
-            plugCount: newPlugCnt,
-            colorIndex: newClrIdx
-        });
+            this.setState({
+                plugCount: newPlugCnt,
+                colorIndex: newClrIdx,
+                selectedPlugs: this.state.selectedPlugs.concat(plug.id)
+            });
+        }    
     }
     // TODO: reset colors of all letters on reset click and those not included - might be easier to use the same reset method for both cases, the latter before then adding colors back
     resetPlugColors() {
