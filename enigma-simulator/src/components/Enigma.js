@@ -9,6 +9,22 @@ import Plugboard from '../logic/Plugboard.js';
 import Reflector from '../logic/Reflector.js';
 import Rotor, { ALPHABET } from '../logic/Rotor.js';
 
+// filter keyboard input for only letters
+const isLetter = (str) => {
+    // is of correct length and type
+    if (str.length === 1 && typeof(str) === 'string') {
+        // matches all letters
+        if (RegExp(/^\p{L}/, 'u').test(str) === true) {
+            return true
+        }
+    }
+    return false;
+}
+document.addEventListener('keydown', (event => {
+    // TODO: SEE USEFFECT FOR KEYDOWN HANDLING IN REACT
+    console.log(event.key, event.key.charCodeAt())
+    console.log(isLetter(event.key));
+}) )
 // Define constants and default components
 const rotorI = new Rotor(['e','k','m','f','l','g','d','q','v','z','n','t','o','w','y','h','x','u','s','p','a','i','b','r','c','j'], 'a', 1, 'q');
 const rotorII = new Rotor(['a', 'j', 'd', 'k', 's', 'i', 'r', 'u', 'x', 'b', 'l', 'h', 'w', 't', 'm', 'c', 'q', 'g', 'z', 'n', 'p', 'y', 'f', 'v', 'o', 'e'], 'a', 1, 'e');
@@ -19,7 +35,7 @@ const reflectorB = new Reflector({'a': 'y', 'b': 'r', 'c': 'u', 'd': 'h', 'e': '
 
 const preProcessChar = (char) => {
     // accept only letters a-z
-    if (char.length === 1 && char.match(/[a-z]/i)) {
+    if (isLetter(char)) {
         return char.toLowerCase();
     }
     else {
