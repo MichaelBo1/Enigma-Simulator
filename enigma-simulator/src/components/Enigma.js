@@ -9,6 +9,7 @@ import Plugboard from '../logic/Plugboard.js';
 import Reflector from '../logic/Reflector.js';
 import Rotor, { ALPHABET } from '../logic/Rotor.js';
 
+
 // Define constants and default components
 const rotorI = new Rotor(['e','k','m','f','l','g','d','q','v','z','n','t','o','w','y','h','x','u','s','p','a','i','b','r','c','j'], 'a', 1, 'q');
 const rotorII = new Rotor(['a', 'j', 'd', 'k', 's', 'i', 'r', 'u', 'x', 'b', 'l', 'h', 'w', 't', 'm', 'c', 'q', 'g', 'z', 'n', 'p', 'y', 'f', 'v', 'o', 'e'], 'a', 1, 'e');
@@ -17,9 +18,20 @@ const reflectorB = new Reflector({'a': 'y', 'b': 'r', 'c': 'u', 'd': 'h', 'e': '
 'p': 'i', 'q': 'e', 'r': 'b', 's': 'f', 't': 'z', 'u': 'c', 'v': 'w','w': 'v'
 , 'x': 'j','y': 's', 'z': 't'})
 
+// filter keyboard input for only letters
+const isLetter = (str) => {
+    // is of correct length and type
+    if (str.length === 1 && typeof(str) === 'string') {
+        // matches all letters
+        if (RegExp(/^\p{L}/, 'u').test(str) === true) {
+            return true
+        }
+    }
+    return false;
+}
 const preProcessChar = (char) => {
     // accept only letters a-z
-    if (char.length === 1 && char.match(/[a-z]/i)) {
+    if (isLetter(char)) {
         return char.toLowerCase();
     }
     else {
@@ -58,6 +70,7 @@ export default class Enigma extends React.Component {
             reflector: reflectorB,
             plugboard: new Plugboard({}),
         }
+        this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.updateRotor = this.updateRotor.bind(this);
         this.updateRings = this.updateRings.bind(this);
@@ -70,6 +83,24 @@ export default class Enigma extends React.Component {
         this.changeRing = this.changeRing.bind(this);
 
         
+    }
+
+
+    handleKeyDown(event) {
+        // pre proccess char and encrypt if it is a valid letter, null otherwise
+        const char = preProcessChar(event.key);
+        if (char !== null) {
+            // TODO: highlight key pressed on keyboard
+            // encrypt character
+            // TODO: display encrypted character
+        }
+    }
+
+    componentDidMount() {
+        document.addEventListener('keydown', this.handleKeyDown)
+    }
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.handleKeyDown)
     }
     // update this.state.inputVal field as user types.
     getUpdatedMachine() {
@@ -338,7 +369,7 @@ export default class Enigma extends React.Component {
                 </div>
                 <div className="row">
                     <GetInput input={this.state.inputVal} handleChange={this.handleChange}/>
-                    <GetSettings updateRotor={this.updateRotor} updateRings={this.updateRings} handleConnect={this.handleConnect} handleReset={this.handleReset}/>
+                    <GetSettings handleConnect={this.handleConnect} handleReset={this.handleReset}/>
 
                     <RenderInput input={this.state.outputVal.join('')}/>
                 </div>
