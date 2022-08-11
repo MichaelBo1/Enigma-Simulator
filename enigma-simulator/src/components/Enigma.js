@@ -400,6 +400,7 @@ export default class Enigma extends React.Component {
                 </div>
                 <div className="row">
                     <Keyboard val="lamp"/>
+                    <Keyboard val="user"/>
                     <RenderPlugboard handleConnect={this.props.handleConnect} resetPlugs={this.resetPlugs} connectPlug={this.connectPlug} />
                 </div>
                 <div className="row">
