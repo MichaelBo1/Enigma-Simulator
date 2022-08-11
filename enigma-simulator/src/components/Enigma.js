@@ -96,9 +96,12 @@ export default class Enigma extends React.Component {
     }
 
     handleBackspace() {
+        if (this.state.inputVal.length <= 0) {
+            return;
+        }
         const updatedMachine = this.getUpdatedMachine();
         const updatedHistory = this.state.history.slice(0, this.state.stepNo);
-        // revert rotor position by passing in the last positions in the history
+        // otherwiserevert rotor position by passing in the last positions in the history
         revertRotors(updatedMachine, updatedHistory[updatedHistory.length - 1].positions)
         this.setState({
             inputVal: this.state.inputVal.slice(0, this.state.inputVal.length - 1),
@@ -152,6 +155,10 @@ export default class Enigma extends React.Component {
     handleChar(char) {
         const updatedMachine = this.getUpdatedMachine();
         const encryptedChar = updatedMachine.encodeChar(char);
+
+        // light up corresponding char on lampboard
+        const lampId = 'lamp' + encryptedChar;
+        console.log(document.getElementById('lampId'));
 
 
         this.setState({
