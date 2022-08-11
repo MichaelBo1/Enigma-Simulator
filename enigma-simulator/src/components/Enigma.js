@@ -79,7 +79,6 @@ export default class Enigma extends React.Component {
         this.updateRings = this.updateRings.bind(this);
         this.getUpdatedMachine = this.getUpdatedMachine.bind(this);
         this.handleConnect = this.handleConnect.bind(this);
-        this.handleReset = this.handleReset.bind(this);
         this.connectPlug = this.connectPlug.bind(this);
         this.resetPlugs = this.resetPlugs.bind(this);
         this.changeRotor = this.changeRotor.bind(this);
@@ -123,16 +122,6 @@ export default class Enigma extends React.Component {
         return updatedMachine;
     }
 
-    handleReset(event) {
-        event.preventDefault();
-        this.resetPlugs();
-        document.querySelectorAll('.pair').forEach((elem) => {
-            elem.value = null;
-        })
-        this.setState({
-            plugboard: new Plugboard({})
-        })
-    }
     handleChar(char) {
         const updatedMachine = this.getUpdatedMachine();
 
@@ -377,7 +366,7 @@ export default class Enigma extends React.Component {
                 </div>
                 <div className="row">
                     <GetInput input={this.state.inputVal} handleChar={this.handleChar}/>
-                    <RenderPlugboard handleConnect={this.props.handleConnect} handleReset={this.props.handleReset} connectPlug={this.props.connectPlug}/>
+                    <RenderPlugboard handleConnect={this.props.handleConnect} resetPlugs={this.resetPlugs} connectPlug={this.connectPlug}/>
                     <RenderInput input={this.state.outputVal.join('')}/>
                 </div>
             </div>

@@ -5,7 +5,7 @@ export default class RenderPlugboard extends React.Component {
     render() {
         return (
             <div className="col">
-                <ConfigurePlugboard handleConnect={this.props.handleConnect} handleReset={this.props.handleReset} connectPlug={this.props.connectPlug}/>                  
+                <ConfigurePlugboard handleConnect={this.props.handleConnect} resetPlugs={this.props.resetPlugs} connectPlug={this.props.connectPlug}/>                  
             </div>
         ) 
     }

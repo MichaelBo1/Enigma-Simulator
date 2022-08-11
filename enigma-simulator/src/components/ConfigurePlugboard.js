@@ -113,7 +113,7 @@ export default class ConfigurePlugboard extends React.Component {
                         </div>
                         <div className="container text-center">
                             <button type="submit" className="btn" onClick={this.props.handleConnect}>Connect</button>
-                            <button className="btn" onClick={this.props.handleReset}>Reset</button>
+                            <button className="btn" onClick={this.props.resetPlugs}>Reset</button>
                         </div> 
                     </div>
                 </Collapse >     
