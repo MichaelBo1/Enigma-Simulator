@@ -3,6 +3,7 @@ import RotorComponent from './RotorComponent.js';
 import GetInput from './GetInput.js';
 import RenderInput from './RenderInput.js';
 import Lampboard from './Lampboard.js';
+import Keyboard from './Keyboard.js';
 // Logic modules
 import Machine from '../logic/Machine.js';
 import Plugboard from '../logic/Plugboard.js';
@@ -398,7 +399,7 @@ export default class Enigma extends React.Component {
                     </div>
                 </div>
                 <div className="row">
-                    <Lampboard/>
+                    <Keyboard val="lamp"/>
                     <RenderPlugboard handleConnect={this.props.handleConnect} resetPlugs={this.resetPlugs} connectPlug={this.connectPlug} />
                 </div>
                 <div className="row">
