@@ -58,7 +58,7 @@ export default class Enigma extends React.Component {
         super(props);
 
         this.state = {
-            inputVal: '',
+            inputVal: [],
             prevInput: '',
             outputVal: [],
             history: [
@@ -147,20 +147,18 @@ export default class Enigma extends React.Component {
 
     handleChar(char) {
         const updatedMachine = this.getUpdatedMachine();
-
         const encryptedChar = updatedMachine.encodeChar(char);
-        const newOutput = this.state.outputVal.concat(encryptedChar);
-        const updatedHistory = this.state.history.concat([
-            {
-                positions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos]
-            }
-        ]);
-        const newStepNo = this.state.stepNo + 1;
+
 
         this.setState({
-            outputVal: newOutput,
-            history: updatedHistory,
-            stepNo: newStepNo,
+            inputVal: this.state.inputVal.concat(char),
+            outputVal: this.state.outputVal.concat(encryptedChar),
+            history: this.state.history.concat([
+                {
+                    positions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos]
+                }
+            ]),
+            stepNo: this.state.stepNo + 1,
             machine: updatedMachine,
             rotorPositions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos]
         })
@@ -388,7 +386,7 @@ export default class Enigma extends React.Component {
                     </div>
                 </div>
                 <div className="row">
-                    <GetInput input={this.state.inputVal} handleChar={this.handleChar}/>
+                    <GetInput input={this.state.inputVal.join('')} handleChar={this.handleChar}/>
                     <RenderPlugboard handleConnect={this.props.handleConnect} resetPlugs={this.resetPlugs} connectPlug={this.connectPlug}/>
                     <RenderInput input={this.state.outputVal.join('')}/>
                 </div>
