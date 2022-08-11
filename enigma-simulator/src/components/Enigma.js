@@ -2,6 +2,7 @@ import React from 'react';
 import RotorComponent from './RotorComponent.js';
 import GetInput from './GetInput.js';
 import RenderInput from './RenderInput.js';
+import Lampboard from './Lampboard.js';
 // Logic modules
 import Machine from '../logic/Machine.js';
 import Plugboard from '../logic/Plugboard.js';
@@ -11,17 +12,19 @@ import RenderPlugboard from './RenderPlugboard.js';
 
 
 // Define constants and default components
-const rotorI = new Rotor(['e','k','m','f','l','g','d','q','v','z','n','t','o','w','y','h','x','u','s','p','a','i','b','r','c','j'], 'a', 1, 'q');
+const rotorI = new Rotor(['e', 'k', 'm', 'f', 'l', 'g', 'd', 'q', 'v', 'z', 'n', 't', 'o', 'w', 'y', 'h', 'x', 'u', 's', 'p', 'a', 'i', 'b', 'r', 'c', 'j'], 'a', 1, 'q');
 const rotorII = new Rotor(['a', 'j', 'd', 'k', 's', 'i', 'r', 'u', 'x', 'b', 'l', 'h', 'w', 't', 'm', 'c', 'q', 'g', 'z', 'n', 'p', 'y', 'f', 'v', 'o', 'e'], 'a', 1, 'e');
 const rotorIII = new Rotor(['b', 'd', 'f', 'h', 'j', 'l', 'c', 'p', 'r', 't', 'x', 'v', 'z', 'n', 'y', 'e', 'i', 'w', 'g', 'a', 'k', 'm', 'u', 's', 'q', 'o'], 'a', 1, 'v');
-const reflectorB = new Reflector({'a': 'y', 'b': 'r', 'c': 'u', 'd': 'h', 'e': 'q', 'f': 's','g': 'l','h': 'd','i': 'p','j': 'x','k': 'n','l': 'g','m': 'o','n': 'k','o': 'm',
-'p': 'i', 'q': 'e', 'r': 'b', 's': 'f', 't': 'z', 'u': 'c', 'v': 'w','w': 'v'
-, 'x': 'j','y': 's', 'z': 't'})
+const reflectorB = new Reflector({
+    'a': 'y', 'b': 'r', 'c': 'u', 'd': 'h', 'e': 'q', 'f': 's', 'g': 'l', 'h': 'd', 'i': 'p', 'j': 'x', 'k': 'n', 'l': 'g', 'm': 'o', 'n': 'k', 'o': 'm',
+    'p': 'i', 'q': 'e', 'r': 'b', 's': 'f', 't': 'z', 'u': 'c', 'v': 'w', 'w': 'v'
+    , 'x': 'j', 'y': 's', 'z': 't'
+})
 
 // filter keyboard input for only letters
 const isLetterOrBack = (str) => {
     // is of correct length and type
-    if (str.length === 1 && typeof(str) === 'string') {
+    if (str.length === 1 && typeof (str) === 'string') {
         // matches all letters
         if (RegExp(/^\p{L}/, 'u').test(str) === true) {
             return true
@@ -30,7 +33,7 @@ const isLetterOrBack = (str) => {
     else if (str === 'Backspace') {
         return true;
     }
-    else{
+    else {
         return false;
     }
 }
@@ -89,7 +92,7 @@ export default class Enigma extends React.Component {
         this.changeRotor = this.changeRotor.bind(this);
         this.changeRing = this.changeRing.bind(this);
 
-        
+
     }
 
     handleBackspace() {
@@ -109,7 +112,7 @@ export default class Enigma extends React.Component {
     handleKeyDown(event) {
         // pre proccess char and encrypt if it is a valid letter, null otherwise
         const char = preProcessChar(event.key);
-        if (char !== null ) {
+        if (char !== null) {
             if (char === 'backspace') {
                 this.handleBackspace();
             }
@@ -118,7 +121,7 @@ export default class Enigma extends React.Component {
             }
             // TODO: highlight key pressed on keyboard
             // encrypt character
-            
+
             // TODO: display encrypted character
         }
     }
@@ -133,12 +136,12 @@ export default class Enigma extends React.Component {
     getUpdatedMachine() {
         let updatedMachine = new Machine(
             [this.state.rotorTypes[0],
-             this.state.rotorTypes[1],
-             this.state.rotorTypes[2]],
+            this.state.rotorTypes[1],
+            this.state.rotorTypes[2]],
 
-             this.state.reflector,
-             this.state.plugboard    
-            );
+            this.state.reflector,
+            this.state.plugboard
+        );
         for (let i = 0; i < 3; i++) {
             updatedMachine.rotors[i].setRotor(this.state.rotorPositions[i]);
             updatedMachine.rotors[i].setRing(this.state.ringSettings[i]);
@@ -241,7 +244,7 @@ export default class Enigma extends React.Component {
             rotorPositions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos]
         });
         */
-        
+
     }
     updateRotor(event) {
         let newPos = this.state.rotorPositions.slice();
@@ -277,17 +280,17 @@ export default class Enigma extends React.Component {
         let updatedPairs = {};
         // jump in 2s as only valid pairs are added
         for (let i = 0; i < plugs.length; i += 2) {
-            updatedPairs[plugs[i]] = plugs[i+1];
-            updatedPairs[plugs[i+1]] = plugs[i];
+            updatedPairs[plugs[i]] = plugs[i + 1];
+            updatedPairs[plugs[i + 1]] = plugs[i];
         }
         // change the state of the plugboard
         this.setState({
             plugboard: new Plugboard(updatedPairs)
-        })        
+        })
     }
-        
+
     // pass in array of letters after plugboard has been connected
-    
+
     connectPlug(event) {
         const plug = event.currentTarget;
         let newPlugCnt = this.state.plugCount;
@@ -307,7 +310,7 @@ export default class Enigma extends React.Component {
                 colorIndex: newClrIdx,
                 selectedPlugs: this.state.selectedPlugs.concat(plug.id)
             });
-        }    
+        }
     }
     resetPlugs() {
         document.querySelectorAll('.plug').forEach((elem) => {
@@ -325,7 +328,7 @@ export default class Enigma extends React.Component {
     changeRotor(event) {
         const updatedPositions = this.state.rotorPositions.slice(0);
         const rotorId = event.currentTarget.id;
-        const val = event.currentTarget.value;      
+        const val = event.currentTarget.value;
         // Get new letter by finding the incremented index and using the ALPHABET constant to get it
         let newLetter;
         // val is either + or -
@@ -337,38 +340,38 @@ export default class Enigma extends React.Component {
             // only if going from A to Z
             if (idx < 0) {
                 idx = 25;
-            } 
+            }
             newLetter = ALPHABET[idx]
         }
-        
+
         updatedPositions[rotorId] = newLetter;
-        
-        
+
+
 
         this.setState({
             rotorPositions: updatedPositions
         })
     }
     changeRing(event) {
-         const newSettings = this.state.ringSettings.slice(0);
-         const ringId = event.currentTarget.id;
-         const btnVal = event.currentTarget.value;
-         // increase ring setting if adding
-         if (btnVal === '+') {
+        const newSettings = this.state.ringSettings.slice(0);
+        const ringId = event.currentTarget.id;
+        const btnVal = event.currentTarget.value;
+        // increase ring setting if adding
+        if (btnVal === '+') {
             newSettings[ringId] = (this.state.ringSettings[ringId] % 26) + 1;
-         }
-         // otherwise it must be '-', so decrease the value, looping 1 to 26;
-         else {
+        }
+        // otherwise it must be '-', so decrease the value, looping 1 to 26;
+        else {
             let newNum = this.state.ringSettings[ringId] - 1;
             if (newNum === 0) {
                 newNum = 26;
             }
             newSettings[ringId] = newNum;
-         }
+        }
 
-         this.setState({
+        this.setState({
             ringSettings: newSettings
-         });
+        });
     }
 
     render() {
@@ -377,22 +380,25 @@ export default class Enigma extends React.Component {
                 <h1>Enigma</h1>
                 <div className="d-flex flex-row justify-content-center">
                     <div className='p-2'>
-                        <RotorComponent posID={0} position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]} changeRotor={this.changeRotor} changeRing={this.changeRing}/>
+                        <RotorComponent posID={0} position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]} changeRotor={this.changeRotor} changeRing={this.changeRing} />
                     </div>
                     <div className='p-2'>
-                        <RotorComponent posID={1} position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]} changeRotor={this.changeRotor} changeRing={this.changeRing}/>
+                        <RotorComponent posID={1} position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]} changeRotor={this.changeRotor} changeRing={this.changeRing} />
                     </div>
                     <div className='p-2'>
-                        <RotorComponent posID={2} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} changeRotor={this.changeRotor} changeRing={this.changeRing}/>
+                        <RotorComponent posID={2} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} changeRotor={this.changeRotor} changeRing={this.changeRing} />
                     </div>
                 </div>
                 <div className="row">
-                    <GetInput input={this.state.inputVal.join('')} handleChar={this.handleChar}/>
-                    <RenderPlugboard handleConnect={this.props.handleConnect} resetPlugs={this.resetPlugs} connectPlug={this.connectPlug}/>
-                    <RenderInput input={this.state.outputVal.join('')}/>
+                    <Lampboard />
+                    <RenderPlugboard handleConnect={this.props.handleConnect} resetPlugs={this.resetPlugs} connectPlug={this.connectPlug} />
+                </div>
+                <div className="row">
+                    <GetInput input={this.state.inputVal.join('')} handleChar={this.handleChar} />
+                    <RenderInput input={this.state.outputVal.join('')} />
                 </div>
             </div>
-      
+
         )
     }
 }
