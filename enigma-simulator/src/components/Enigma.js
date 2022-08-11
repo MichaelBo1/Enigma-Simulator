@@ -2,12 +2,12 @@ import React from 'react';
 import RotorComponent from './RotorComponent.js';
 import GetInput from './GetInput.js';
 import RenderInput from './RenderInput.js';
-import GetSettings from './GetSettings.js';
 // Logic modules
 import Machine from '../logic/Machine.js';
 import Plugboard from '../logic/Plugboard.js';
 import Reflector from '../logic/Reflector.js';
 import Rotor, { ALPHABET } from '../logic/Rotor.js';
+import RenderPlugboard from './RenderPlugboard.js';
 
 
 // Define constants and default components
@@ -69,16 +69,18 @@ export default class Enigma extends React.Component {
             rotorTypes: [rotorI, rotorII, rotorIII],
             reflector: reflectorB,
             plugboard: new Plugboard({}),
+            plugCount: 0,
+            colorIndex: 0,
+            selectedPlugs: []
         }
         this.handleKeyDown = this.handleKeyDown.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        this.handleChar = this.handleChar.bind(this);
         this.updateRotor = this.updateRotor.bind(this);
         this.updateRings = this.updateRings.bind(this);
         this.getUpdatedMachine = this.getUpdatedMachine.bind(this);
         this.handleConnect = this.handleConnect.bind(this);
-        this.handleReset = this.handleReset.bind(this);
-        this.colorPairs = this.colorPairs.bind(this);
-        this.resetPlugColors = this.resetPlugColors.bind(this);
+        this.connectPlug = this.connectPlug.bind(this);
+        this.resetPlugs = this.resetPlugs.bind(this);
         this.changeRotor = this.changeRotor.bind(this);
         this.changeRing = this.changeRing.bind(this);
 
@@ -92,6 +94,7 @@ export default class Enigma extends React.Component {
         if (char !== null) {
             // TODO: highlight key pressed on keyboard
             // encrypt character
+            this.handleChar(char)
             // TODO: display encrypted character
         }
     }
@@ -119,19 +122,27 @@ export default class Enigma extends React.Component {
         return updatedMachine;
     }
 
-    handleReset(event) {
-        event.preventDefault();
-        this.resetPlugColors();
-        document.querySelectorAll('.pair').forEach((elem) => {
-            elem.value = null;
-        })
+    handleChar(char) {
+        const updatedMachine = this.getUpdatedMachine();
+
+        const encryptedChar = updatedMachine.encodeChar(char);
+        const newOutput = this.state.outputVal.concat(encryptedChar);
+        const updatedHistory = this.state.history.concat([
+            {
+                positions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos]
+            }
+        ]);
+        const newStepNo = this.state.stepNo + 1;
+
         this.setState({
-            plugboard: new Plugboard({})
+            outputVal: newOutput,
+            history: updatedHistory,
+            stepNo: newStepNo,
+            machine: updatedMachine,
+            rotorPositions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos]
         })
-    }
-    handleChange(event) {
-        let updatedMachine = this.getUpdatedMachine();
-        const changedInput = event.target.value;
+
+        /*
         // input has been fully deleted - reset everything
         if (changedInput === '') {
             revertRotors(updatedMachine, this.state.history[0].positions)
@@ -207,6 +218,7 @@ export default class Enigma extends React.Component {
             machine: updatedMachine,
             rotorPositions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos]
         });
+        */
         
     }
     updateRotor(event) {
@@ -232,76 +244,61 @@ export default class Enigma extends React.Component {
     }*/
     handleConnect(event) {
         event.preventDefault();
-        const pairs = document.querySelectorAll('.pair')
-        // use count to identify input box that has errored (if any)
-        let count = 0
-        let letters = [];
-        pairs.forEach((elem) => {
-            const val = elem.value;
-            // exit if only a single letter has been given in an input field
-            if (val.length === 1) {
-                alert(`error: a pair cannot be made from a single letter. Field ${count + 1}`);
-                return;
-            } 
-            // if value is defined, it must be a pair (maxlength is 2), so check for duplicates and previously used letters
-            else if (val) {
-                const first = val[0].toLowerCase();
-                const second = val[1].toLowerCase();
-                // if letters are duplicated in field, remove the value and do nothing else
-                if (first === second) {
-                    elem.value = null;
-                }
-                // then check if letter has been used in another pair or not
-                else if (letters.includes(first) || letters.includes(second)) {
-                    alert(`error: duplicate letter used in multiple pairs. Field ${count + 1}`);
-                    elem.value = null                
-                }
-                // otherwise add letters to array to later "connect" in plugboard
-                else {
-                    letters.push(first, second)
-                }
-            }
-            count++;
-        })
+        const plugs = this.state.selectedPlugs
+        const plugLen = this.state.selectedPlugs.length;
+        // don't connect if a plug is not in a pair
+        if (plugLen % 2 !== 0) {
+            alert(`Error: The letter ${this.state.selectedPlugs[plugLen - 1]} is not paired up`);
+            return;
+        }
         // if executed correctly, generate plugboard object
         let updatedPairs = {};
-        // jump in 2s as only valid pairs are added in letters
-        for (let i = 0; i < letters.length; i += 2) {
-            updatedPairs[letters[i]] = letters[i+1];
-            updatedPairs[letters[i+1]] = letters[i];
+        // jump in 2s as only valid pairs are added
+        for (let i = 0; i < plugs.length; i += 2) {
+            updatedPairs[plugs[i]] = plugs[i+1];
+            updatedPairs[plugs[i+1]] = plugs[i];
         }
         // change the state of the plugboard
         this.setState({
             plugboard: new Plugboard(updatedPairs)
-        })
-        // color corresponding pairs on plugboard
-        this.resetPlugColors();
-        this.colorPairs(letters);
+        })        
     }
+        
     // pass in array of letters after plugboard has been connected
     
-    // TODO: reset colors of all letters on reset click and those not included - might be easier to use the same reset method for both cases, the latter before then adding colors back
-    resetPlugColors() {
+    connectPlug(event) {
+        const plug = event.currentTarget;
+        let newPlugCnt = this.state.plugCount;
+        let newClrIdx = this.state.colorIndex;
+        // if plug has already been highlighted, remove its color (and paired letter if any)
+        if (plug.classList.contains('clicked') === false && newClrIdx <= 9) {
+            // switch to a new color if starting a new pair
+            if (this.state.plugCount % 2 === 0 && this.state.plugCount !== 0) {
+                newClrIdx++;
+            }
+            plug.classList.add('clicked');
+            plug.style.cssText = `color: ${colors[newClrIdx]}; border-color: ${colors[newClrIdx]}`
+            newPlugCnt++;
+
+            this.setState({
+                plugCount: newPlugCnt,
+                colorIndex: newClrIdx,
+                selectedPlugs: this.state.selectedPlugs.concat(plug.id)
+            });
+        }    
+    }
+    resetPlugs() {
         document.querySelectorAll('.plug').forEach((elem) => {
+            elem.classList.remove('clicked')
             elem.style.cssText = 'color: black; border-color: revert';
         })
+        this.setState({
+            plugCount: 0,
+            colorIndex: 0,
+            selectedPlugs: []
+        })
     }
-    colorPairs(letters) {
-        let colorIdx = 0;
-        
-        for (let i = 0; i < letters.length; i++) {
-            const letter = document.getElementById(letters[i]);
-            const clr = colors[colorIdx];
 
-            letter.style.cssText = `color: ${clr}; border-color: ${clr}`
-        
-            // update color index of a pair has been successfully colored
-            if ((i + 1) % 2 === 0) {
-                colorIdx++;
-            }
-            
-        }
-    }
 
     changeRotor(event) {
         const updatedPositions = this.state.rotorPositions.slice(0);
@@ -368,9 +365,8 @@ export default class Enigma extends React.Component {
                     </div>
                 </div>
                 <div className="row">
-                    <GetInput input={this.state.inputVal} handleChange={this.handleChange}/>
-                    <GetSettings handleConnect={this.handleConnect} handleReset={this.handleReset}/>
-
+                    <GetInput input={this.state.inputVal} handleChar={this.handleChar}/>
+                    <RenderPlugboard handleConnect={this.props.handleConnect} resetPlugs={this.resetPlugs} connectPlug={this.connectPlug}/>
                     <RenderInput input={this.state.outputVal.join('')}/>
                 </div>
             </div>
