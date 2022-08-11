@@ -78,8 +78,7 @@ export default class Enigma extends React.Component {
             plugboard: new Plugboard({}),
             plugCount: 0,
             colorIndex: 0,
-            selectedPlugs: [],
-            currentLamp: '';
+            selectedPlugs: []
         }
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleChar = this.handleChar.bind(this);
@@ -156,10 +155,10 @@ export default class Enigma extends React.Component {
         const updatedMachine = this.getUpdatedMachine();
         const encryptedChar = updatedMachine.encodeChar(char);
 
-        // light up corresponding char on lampboard
-        const lampId = 'lamp' + encryptedChar;
-        console.log(document.getElementById('lampId'));
-
+        // light up corresponding char on lampboard;
+        const lamp = document.getElementById('lamp' + encryptedChar);
+        lamp.style.cssText = 'color: yellow; box-shadow: 0 0 3px 3px gold';
+        setTimeout(() => { lamp.style.cssText = 'color: white; box-shadow: ""'}, 500);
 
         this.setState({
             inputVal: this.state.inputVal.concat(char),
@@ -171,7 +170,8 @@ export default class Enigma extends React.Component {
             ]),
             stepNo: this.state.stepNo + 1,
             machine: updatedMachine,
-            rotorPositions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos]
+            rotorPositions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos],
+            currentLamp: encryptedChar
         })
 
         /*
@@ -397,7 +397,7 @@ export default class Enigma extends React.Component {
                     </div>
                 </div>
                 <div className="row">
-                    <Lampboard />
+                    <Lampboard/>
                     <RenderPlugboard handleConnect={this.props.handleConnect} resetPlugs={this.resetPlugs} connectPlug={this.connectPlug} />
                 </div>
                 <div className="row">
