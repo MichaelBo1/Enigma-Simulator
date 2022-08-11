@@ -98,6 +98,7 @@ export default class Enigma extends React.Component {
         // revert rotor position by passing in the last positions in the history
         revertRotors(updatedMachine, updatedHistory[updatedHistory.length - 1].positions)
         this.setState({
+            inputVal: this.state.inputVal.slice(0, this.state.inputVal.length - 1),
             outputVal: this.state.outputVal.slice(0, this.state.outputVal.length - 1),
             history: updatedHistory,
             stepNo: this.state.stepNo - 1,
