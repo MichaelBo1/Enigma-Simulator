@@ -62,7 +62,6 @@ export default class Enigma extends React.Component {
 
         this.state = {
             inputVal: [],
-            prevInput: '',
             outputVal: [],
             history: [
                 {
@@ -79,7 +78,8 @@ export default class Enigma extends React.Component {
             plugboard: new Plugboard({}),
             plugCount: 0,
             colorIndex: 0,
-            selectedPlugs: []
+            selectedPlugs: [],
+            currentLamp: '';
         }
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleChar = this.handleChar.bind(this);
