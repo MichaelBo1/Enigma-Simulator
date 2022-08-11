@@ -2,12 +2,12 @@ import React from 'react';
 import RotorComponent from './RotorComponent.js';
 import GetInput from './GetInput.js';
 import RenderInput from './RenderInput.js';
-import GetSettings from './GetSettings.js';
 // Logic modules
 import Machine from '../logic/Machine.js';
 import Plugboard from '../logic/Plugboard.js';
 import Reflector from '../logic/Reflector.js';
 import Rotor, { ALPHABET } from '../logic/Rotor.js';
+import RenderPlugboard from './RenderPlugboard.js';
 
 
 // Define constants and default components
@@ -377,8 +377,7 @@ export default class Enigma extends React.Component {
                 </div>
                 <div className="row">
                     <GetInput input={this.state.inputVal} handleChar={this.handleChar}/>
-                    <GetSettings handleConnect={this.handleConnect} handleReset={this.handleReset} connectPlug={this.connectPlug}/>
-
+                    <RenderPlugboard handleConnect={this.props.handleConnect} handleReset={this.props.handleReset} connectPlug={this.props.connectPlug}/>
                     <RenderInput input={this.state.outputVal.join('')}/>
                 </div>
             </div>
