@@ -18,8 +18,9 @@ const rotorIII = new Rotor(['b', 'd', 'f', 'h', 'j', 'l', 'c', 'p', 'r', 't', 'x
 const reflectorB = new Reflector({
     'a': 'y', 'b': 'r', 'c': 'u', 'd': 'h', 'e': 'q', 'f': 's', 'g': 'l', 'h': 'd', 'i': 'p', 'j': 'x', 'k': 'n', 'l': 'g', 'm': 'o', 'n': 'k', 'o': 'm',
     'p': 'i', 'q': 'e', 'r': 'b', 's': 'f', 't': 'z', 'u': 'c', 'v': 'w', 'w': 'v'
-    , 'x': 'j', 'y': 's', 'z': 't'
+    , 'x': 'j', 'y': 'a', 'z': 't'
 })
+
 
 // filter keyboard input for only letters
 const isLetterOrBack = (str) => {
