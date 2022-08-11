@@ -19,7 +19,7 @@ const reflectorB = new Reflector({'a': 'y', 'b': 'r', 'c': 'u', 'd': 'h', 'e': '
 , 'x': 'j','y': 's', 'z': 't'})
 
 // filter keyboard input for only letters
-const isLetter = (str) => {
+const isLetterOrBack = (str) => {
     // is of correct length and type
     if (str.length === 1 && typeof(str) === 'string') {
         // matches all letters
@@ -27,11 +27,16 @@ const isLetter = (str) => {
             return true
         }
     }
-    return false;
+    else if (str === 'Backspace') {
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 const preProcessChar = (char) => {
     // accept only letters a-z
-    if (isLetter(char)) {
+    if (isLetterOrBack(char)) {
         return char.toLowerCase();
     }
     else {
@@ -87,14 +92,32 @@ export default class Enigma extends React.Component {
         
     }
 
-
+    handleBackspace() {
+        const updatedMachine = this.getUpdatedMachine();
+        const updatedHistory = this.state.history.slice(0, this.state.stepNo);
+        // revert rotor position by passing in the last positions in the history
+        revertRotors(updatedMachine, updatedHistory[updatedHistory.length - 1].positions)
+        this.setState({
+            outputVal: this.state.outputVal.slice(0, this.state.outputVal.length - 1),
+            history: updatedHistory,
+            stepNo: this.state.stepNo - 1,
+            rotorPositions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos],
+            machine: updatedMachine
+        })
+    }
     handleKeyDown(event) {
         // pre proccess char and encrypt if it is a valid letter, null otherwise
         const char = preProcessChar(event.key);
-        if (char !== null) {
+        if (char !== null ) {
+            if (char === 'backspace') {
+                this.handleBackspace();
+            }
+            else {
+                this.handleChar(char)
+            }
             // TODO: highlight key pressed on keyboard
             // encrypt character
-            this.handleChar(char)
+            
             // TODO: display encrypted character
         }
     }
