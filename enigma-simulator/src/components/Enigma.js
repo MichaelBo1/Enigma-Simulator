@@ -132,10 +132,6 @@ export default class Enigma extends React.Component {
             else {
                 this.handleChar(char)
             }
-            // TODO: highlight key pressed on keyboard
-            // encrypt character
-
-            // TODO: display encrypted character
         }
     }
 
@@ -153,7 +149,7 @@ export default class Enigma extends React.Component {
             this.state.rotorTypes[2]],
 
             this.state.reflector,
-            this.state.plugboard
+            this.state.plugboard,
         );
         for (let i = 0; i < 3; i++) {
             updatedMachine.rotors[i].setRotor(this.state.rotorPositions[i]);
@@ -166,14 +162,12 @@ export default class Enigma extends React.Component {
         const updatedMachine = this.getUpdatedMachine();
         const encryptedChar = updatedMachine.encodeChar(char);
 
-        // TODO: FORMAT OUTPUT AND CORRECTLY ADJUST FOR BACKSPACING
+        // format output into blocks of 5 letters
         let newOutput = this.state.outputVal.slice(0)
-        console.log(this.state.stepNo + 1)
         if ((this.state.stepNo) % 5 === 0 && this.state.stepNo > 0) {
-            console.log("mod triggered")
             newOutput.push(' ')
         }
-        console.log(newOutput)
+
         
         newOutput.push(encryptedChar)
         KEYPRESS.play();
@@ -428,7 +422,7 @@ export default class Enigma extends React.Component {
                 <div className="row">
                     <Keyboard val="lamp"/>
                     <Keyboard val="user"/>
-                    <RenderPlugboard handleConnect={this.props.handleConnect} resetPlugs={this.resetPlugs} connectPlug={this.connectPlug} />
+                    <RenderPlugboard handleConnect={this.handleConnect} resetPlugs={this.resetPlugs} connectPlug={this.connectPlug} />
                 </div>
                 <div className="row">
                     <GetInput input={this.state.inputVal.join('')} handleChar={this.handleChar} />

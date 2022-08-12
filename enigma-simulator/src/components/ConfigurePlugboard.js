@@ -59,9 +59,6 @@ export default class ConfigurePlugboard extends React.Component {
                             <Letter idLetter={"n"} letter={"N"} connectPlug={this.props.connectPlug} />
                             <Letter idLetter={"l"} letter={"L"} connectPlug={this.props.connectPlug} />
                         </div>
-
-
-
                         <div className="container text-center">
                             <button type="submit" className="btn" onClick={this.props.handleConnect}>Connect</button>
                             <button className="btn" onClick={this.props.resetPlugs}>Reset</button>
