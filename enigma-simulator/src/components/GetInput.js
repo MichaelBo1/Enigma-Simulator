@@ -12,7 +12,6 @@ export default class GetInput extends React.Component {
                     id="userInput"
                     rows="12"
                     readOnly>{this.props.input}</textarea>
-
             </div>
         )
     }
