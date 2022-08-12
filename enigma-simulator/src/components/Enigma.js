@@ -2,8 +2,8 @@ import React from 'react';
 import RotorComponent from './RotorComponent.js';
 import GetInput from './GetInput.js';
 import RenderInput from './RenderInput.js';
-import Lampboard from './Lampboard.js';
 import Keyboard from './Keyboard.js';
+import sound from '../assets/typewriter-key.mp3'
 // Logic modules
 import Machine from '../logic/Machine.js';
 import Plugboard from '../logic/Plugboard.js';
@@ -22,7 +22,7 @@ const reflectorB = new Reflector({
     , 'x': 'j', 'y': 'a', 'z': 't'
 })
 
-
+const KEYPRESS = new Audio(sound)
 // filter keyboard input for only letters
 const isLetterOrBack = (str) => {
     // is of correct length and type
@@ -156,6 +156,15 @@ export default class Enigma extends React.Component {
     handleChar(char) {
         const updatedMachine = this.getUpdatedMachine();
         const encryptedChar = updatedMachine.encodeChar(char);
+
+        KEYPRESS.play();
+
+        // highlight character key press on user keyboard
+        const user = document.getElementById('user' + char);
+        console.log(user)
+        user.style.boxShadow = '0px 0px 0px 0px'
+        setTimeout(() => { user.style.boxShadow = ''}, 500);
+
 
         // light up corresponding char on lampboard;
         const lamp = document.getElementById('lamp' + encryptedChar);
