@@ -1,4 +1,5 @@
 import React from 'react';
+import ChangeSettings from './ChangeSettings.js';
 import RotorComponent from './RotorComponent.js';
 import GetInput from './GetInput.js';
 import RenderInput from './RenderInput.js';
@@ -328,6 +329,9 @@ export default class Enigma extends React.Component {
                     </div>
                     <div className='p-2'>
                         <RotorComponent posID={2} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} changeRotor={this.changeRotor} changeRing={this.changeRing} />
+                    </div>
+                    <div className="pt-5">
+                        <ChangeSettings />
                     </div>
                 </div>
                 <div className="row">
