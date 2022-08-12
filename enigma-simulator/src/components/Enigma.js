@@ -196,85 +196,6 @@ export default class Enigma extends React.Component {
             rotorPositions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos],
             currentLamp: encryptedChar
         })
-
-        /*
-        // input has been fully deleted - reset everything
-        if (changedInput === '') {
-            revertRotors(updatedMachine, this.state.history[0].positions)
-            this.setState(
-                {
-                    prevInput: this.state.inputVal,
-                    inputVal: changedInput,
-                    outputVal: [],
-                    history: this.state.history.slice(0, 1),
-                    stepNo: 0,
-                    machine: updatedMachine,
-                    rotorPositions: [
-                        updatedMachine.rotors[0].rotorPos, 
-                        updatedMachine.rotors[1].rotorPos, 
-                        updatedMachine.rotors[2].rotorPos
-                                    ]
-                }
-            )
-            
-            return;
-        } 
-        // check for difference when input field changes
-        const newLength = changedInput.length;
-        const prevLength = this.state.inputVal.length;
-        let updatedHistory;
-        let newStepNo;
-        let newOutput;
-
-        // new input is >=, so encode only the new letter and add to output value
-        if (newLength >= prevLength) {
-            let addedInput;
-            if (this.state.inputVal === '') {
-                addedInput = preProcessChar(changedInput);
-            } 
-            else {
-                addedInput = preProcessChar(changedInput[changedInput.length - 1]);
-            }
-            // exit if new character is not alphabetical
-            if (addedInput === null) {
-                return;
-            }
-            newOutput = this.state.outputVal.concat(updatedMachine.encodeChar(addedInput));
-            updatedHistory = this.state.history.concat([
-                {
-                    positions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos]
-                }
-            ]);
-            newStepNo = this.state.stepNo + 1;
-        }
-        // input is smaller, so a char has been deleted and the machine needs to reverse its rotor position
-        else {
-            let deletedInput = preProcessChar(this.state.prevInput[this.state.prevInput.length - 1]);
-            // ignore if not alphabetical
-            if (deletedInput === null) {
-                return;
-            }
-            newOutput = this.state.outputVal.slice(0, this.state.outputVal.length - 1);
-            updatedHistory = this.state.history.slice(0, this.state.stepNo);
-            newStepNo = this.state.stepNo - 1;
-
-            // revert rotor position by passing in the last positions in the history
-            revertRotors(updatedMachine, updatedHistory[updatedHistory.length - 1].positions);
-
-        }
-
-       
-        this.setState({
-            prevInput: this.state.inputVal,
-            inputVal: changedInput,
-            outputVal: newOutput,
-            history: updatedHistory,
-            stepNo: newStepNo,
-            machine: updatedMachine,
-            rotorPositions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos]
-        });
-        */
-
     }
     updateRotor(event) {
         let newPos = this.state.rotorPositions.slice();
@@ -290,13 +211,6 @@ export default class Enigma extends React.Component {
             ringSettings: newRings
         })
     }
-    // update (and re-render) component only if input value has changed
-    /*shouldComponentUpdate(nextProps, nextState) {
-        if (nextState.inputVal !== this.state.inputVal || nextState.rotorPositions !== this.state.rotorPositions) {
-            return true;
-        }
-        return false;
-    }*/
     handleConnect(event) {
         event.preventDefault();
         const plugs = this.state.selectedPlugs
@@ -318,9 +232,6 @@ export default class Enigma extends React.Component {
             plugboard: new Plugboard(updatedPairs)
         })
     }
-
-    // pass in array of letters after plugboard has been connected
-
     connectPlug(event) {
         const plug = event.currentTarget;
         let newPlugCnt = this.state.plugCount;
