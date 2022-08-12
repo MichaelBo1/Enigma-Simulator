@@ -100,13 +100,22 @@ export default class Enigma extends React.Component {
         if (this.state.inputVal.length <= 0) {
             return;
         }
+        let updatedOutput = this.state.outputVal.slice(0);
+        let optLen = updatedOutput.length;
+        if (updatedOutput[optLen- 1] === ' ') {
+            updatedOutput = updatedOutput.slice(0, optLen - 2)
+        }
+        else {
+            updatedOutput = updatedOutput.slice(0, optLen - 1)
+        }
+        
         const updatedMachine = this.getUpdatedMachine();
         const updatedHistory = this.state.history.slice(0, this.state.stepNo);
-        // otherwiserevert rotor position by passing in the last positions in the history
+        // otherwise revert rotor position by passing in the last positions in the history
         revertRotors(updatedMachine, updatedHistory[updatedHistory.length - 1].positions)
         this.setState({
             inputVal: this.state.inputVal.slice(0, this.state.inputVal.length - 1),
-            outputVal: this.state.outputVal.slice(0, this.state.outputVal.length - 1),
+            outputVal: updatedOutput,
             history: updatedHistory,
             stepNo: this.state.stepNo - 1,
             rotorPositions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos],
@@ -157,23 +166,32 @@ export default class Enigma extends React.Component {
         const updatedMachine = this.getUpdatedMachine();
         const encryptedChar = updatedMachine.encodeChar(char);
 
+        // TODO: FORMAT OUTPUT AND CORRECTLY ADJUST FOR BACKSPACING
+        let newOutput = this.state.outputVal.slice(0)
+        console.log(this.state.stepNo + 1)
+        if ((this.state.stepNo) % 5 === 0 && this.state.stepNo > 0) {
+            console.log("mod triggered")
+            newOutput.push(' ')
+        }
+        console.log(newOutput)
+        
+        newOutput.push(encryptedChar)
         KEYPRESS.play();
 
         // highlight character key press on user keyboard
         const user = document.getElementById('user' + char);
-        console.log(user)
         user.style.boxShadow = '0px 0px 0px 0px'
         setTimeout(() => { user.style.boxShadow = ''}, 500);
 
 
-        // light up corresponding char on lampboard;
+        // light up corresponding ecnrypted char on lampboard;
         const lamp = document.getElementById('lamp' + encryptedChar);
         lamp.style.cssText = 'color: yellow; box-shadow: 0 0 3px 3px gold';
         setTimeout(() => { lamp.style.cssText = 'color: white; box-shadow: ""'}, 500);
 
         this.setState({
             inputVal: this.state.inputVal.concat(char),
-            outputVal: this.state.outputVal.concat(encryptedChar),
+            outputVal: newOutput,
             history: this.state.history.concat([
                 {
                     positions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos]
