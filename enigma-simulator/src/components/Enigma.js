@@ -174,8 +174,8 @@ export default class Enigma extends React.Component {
 
         // highlight character key press on user keyboard
         const user = document.getElementById('user' + char);
-        user.style.boxShadow = '0px 0px 0px 0px'
-        setTimeout(() => { user.style.boxShadow = ''}, 500);
+        user.style.cssText = 'box-shadow: 0px 0px 0px 0px; border: 4px solid black'
+        setTimeout(() => { user.style.cssText = 'box-shadow: ""; border: ""'}, 500);
 
 
         // light up corresponding ecnrypted char on lampboard;
