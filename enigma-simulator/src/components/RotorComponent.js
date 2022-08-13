@@ -82,7 +82,7 @@ class RotorComponent extends React.Component {
                     rootClose 
                     placement={this.props.placement} 
                     overlay={rotorPopover} >
-                        <button className="btn settings">
+                        <button className="btn">
                             <FontAwesomeIcon icon={faGear} className="fa-4x" />
                         </button>
                     </OverlayTrigger>
