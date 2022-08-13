@@ -5,15 +5,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGear } from '@fortawesome/free-solid-svg-icons'
 
 const rotorPopover = (
-    <Popover id="rotor-popover">
-        <Popover.Header as="h4">Rotor Settings</Popover.Header>
+    <Popover className="bg-dark" id="rotor-popover">
+        <Popover.Header as="h4" className="bg-dark text-light text-center border-bottom border-white">Rotor Selection</Popover.Header>
         <Popover.Body>
-            <table>
+            <table className="text-light">
                 <tbody>
                     <tr>
                         <th>Reflector</th>
                         <td>
-                            <select id="reflector">
+                            <select id="reflector" className="bg-dark text-light text-center">
                                 <option value="A">A</option>
                                 <option value="B">B</option>
                                 <option value="C">C</option>
@@ -23,7 +23,7 @@ const rotorPopover = (
                         </td>
                         <th>1st Rotor</th>
                         <td>
-                            <select id="rotor0">
+                            <select id="rotor0" className="bg-dark text-light text-center">
                                 <option value="I">I</option>
                                 <option value="II">II</option>
                                 <option value="III">III</option>
@@ -33,7 +33,7 @@ const rotorPopover = (
                         </td>
                         <th>2nd Rotor</th>
                         <td>
-                            <select id="rotor1">
+                            <select id="rotor1" className="bg-dark text-light text-center">
                                 <option value="I">I</option>
                                 <option value="II">II</option>
                                 <option value="III">III</option>
@@ -43,7 +43,7 @@ const rotorPopover = (
                         </td>
                         <th>3rd Rotor</th>
                         <td>
-                            <select id="rotor2">
+                            <select id="rotor2" className="bg-dark text-light text-center">
                                 <option value="I">I</option>
                                 <option value="II">II</option>
                                 <option value="III">III</option>
