@@ -79,7 +79,10 @@ class RotorComponent extends React.Component {
                         <button id={this.props.posID} value="-" className="text-btn" onClick={this.props.changeRing}>-</button>
                     </div>
                 </div>
-                <div className="col pt-3">
+                <div className="col pt-0">
+                    <div className="fw-bold text-muted">
+                        {this.props.rotorType}
+                    </div>
                     <OverlayTrigger
                         trigger="click"
                         rootClose
