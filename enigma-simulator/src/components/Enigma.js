@@ -10,12 +10,10 @@ import Plugboard from '../logic/Plugboard.js';
 import Reflector from '../logic/Reflector.js';
 import Rotor, { ALPHABET } from '../logic/Rotor.js';
 import RenderPlugboard from './RenderPlugboard.js';
-
+import getRotor from '../DefinedRotors.js';
 
 // Define constants and default components
-const rotorI = new Rotor(['e', 'k', 'm', 'f', 'l', 'g', 'd', 'q', 'v', 'z', 'n', 't', 'o', 'w', 'y', 'h', 'x', 'u', 's', 'p', 'a', 'i', 'b', 'r', 'c', 'j'], 'a', 1, 'q');
-const rotorII = new Rotor(['a', 'j', 'd', 'k', 's', 'i', 'r', 'u', 'x', 'b', 'l', 'h', 'w', 't', 'm', 'c', 'q', 'g', 'z', 'n', 'p', 'y', 'f', 'v', 'o', 'e'], 'a', 1, 'e');
-const rotorIII = new Rotor(['b', 'd', 'f', 'h', 'j', 'l', 'c', 'p', 'r', 't', 'x', 'v', 'z', 'n', 'y', 'e', 'i', 'w', 'g', 'a', 'k', 'm', 'u', 's', 'q', 'o'], 'a', 1, 'v');
+
 const reflectorB = new Reflector({
     'a': 'y', 'b': 'r', 'c': 'u', 'd': 'h', 'e': 'q', 'f': 's', 'g': 'l', 'h': 'd', 'i': 'p', 'j': 'x', 'k': 'n', 'l': 'g', 'm': 'o', 'n': 'k', 'o': 'm',
     'p': 'i', 'q': 'e', 'r': 'b', 's': 'f', 't': 'z', 'u': 'c', 'v': 'w', 'w': 'v'
@@ -72,7 +70,7 @@ export default class Enigma extends React.Component {
             ],
             stepNo: 0,
             currentPositions: ['a', 'a', 'a'],
-            machine: new Machine([rotorI, rotorII, rotorIII], reflectorB, new Plugboard({})),
+            machine: new Machine([getRotor(1), getRotor(2), getRotor(3)], reflectorB, new Plugboard({})),
             rotorPositions: ['a', 'a', 'a'],
             ringSettings: [1, 1, 1],
             rotorTypes: ['I', 'II', 'III'],
@@ -144,9 +142,9 @@ export default class Enigma extends React.Component {
     // update this.state.inputVal field as user types.
     getUpdatedMachine() {
         let updatedMachine = new Machine(
-            [this.state.rotorTypes[0],
-            this.state.rotorTypes[1],
-            this.state.rotorTypes[2]],
+            [getRotor(1),
+            getRotor(2),
+            getRotor(3)],
 
             this.state.reflector,
             this.state.plugboard,
@@ -160,6 +158,7 @@ export default class Enigma extends React.Component {
 
     handleChar(char) {
         const updatedMachine = this.getUpdatedMachine();
+        console.log("udpated machine", updatedMachine)
         const encryptedChar = updatedMachine.encodeChar(char);
 
         // format output into blocks of 5 letters
