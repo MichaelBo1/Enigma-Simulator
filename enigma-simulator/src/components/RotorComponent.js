@@ -54,6 +54,9 @@ const rotorPopover = (
                     </tr>
                 </tbody>
             </table>
+            <div className="text-center pt-3">
+                <button class="text-btn apply">Apply Selection</button>
+            </div>
         </Popover.Body>
     </Popover>
 )
@@ -77,12 +80,12 @@ class RotorComponent extends React.Component {
                     </div>
                 </div>
                 <div className="col pt-3">
-                    <OverlayTrigger 
-                    trigger="click"
-                    rootClose 
-                    placement={this.props.placement} 
-                    overlay={rotorPopover} >
-                        <button className="btn">
+                    <OverlayTrigger
+                        trigger="click"
+                        rootClose
+                        placement={this.props.placement}
+                        overlay={rotorPopover} >
+                        <button className={`btn text-btn ${this.props.status}`} id={this.props.status}>
                             <FontAwesomeIcon icon={faGear} className="fa-4x" />
                         </button>
                     </OverlayTrigger>
