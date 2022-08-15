@@ -50,8 +50,8 @@ const preProcessChar = (char) => {
 
 const formatPlugs = (plugs) => {
     let res = []
-    for (let i = 0; i < plugs.length; i+= 2) {
-        res.push(plugs[i].toUpperCase() + plugs[i+1].toUpperCase())
+    for (let i = 0; i < plugs.length; i += 2) {
+        res.push(plugs[i].toUpperCase() + plugs[i + 1].toUpperCase())
     }
     return res
 }
@@ -111,13 +111,13 @@ export default class Enigma extends React.Component {
         }
         let updatedOutput = this.state.outputVal.slice(0);
         let optLen = updatedOutput.length;
-        if (updatedOutput[optLen- 1] === ' ') {
+        if (updatedOutput[optLen - 1] === ' ') {
             updatedOutput = updatedOutput.slice(0, optLen - 2)
         }
         else {
             updatedOutput = updatedOutput.slice(0, optLen - 1)
         }
-        
+
         const updatedMachine = this.getUpdatedMachine();
         const updatedHistory = this.state.history.slice(0, this.state.stepNo);
         // otherwise revert rotor position by passing in the last positions in the history
@@ -177,20 +177,20 @@ export default class Enigma extends React.Component {
             newOutput.push(' ')
         }
 
-        
+
         newOutput.push(encryptedChar)
         KEYPRESS.play();
 
         // highlight character key press on user keyboard
         const user = document.getElementById('user' + char);
         user.style.cssText = 'box-shadow: 0px 0px 0px 0px; border: 4px solid black'
-        setTimeout(() => { user.style.cssText = 'box-shadow: ""; border: ""'}, 500);
+        setTimeout(() => { user.style.cssText = 'box-shadow: ""; border: ""' }, 500);
 
 
         // light up corresponding ecnrypted char on lampboard;
         const lamp = document.getElementById('lamp' + encryptedChar);
         lamp.style.cssText = 'color: yellow; box-shadow: 0 0 3px 3px gold';
-        setTimeout(() => { lamp.style.cssText = 'color: white; box-shadow: ""'}, 500);
+        setTimeout(() => { lamp.style.cssText = 'color: white; box-shadow: ""' }, 500);
 
         this.setState({
             inputVal: this.state.inputVal.concat(char),
@@ -326,6 +326,9 @@ export default class Enigma extends React.Component {
             ringSettings: newSettings
         });
     }
+    handleRotorSelect(event) {
+
+    }
 
 
     render() {
@@ -334,21 +337,21 @@ export default class Enigma extends React.Component {
                 <h1>Enigma</h1>
                 <div className="d-flex flex-row justify-content-center">
                     <div className='p-2'>
-                        <RotorComponent posID={0} position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]} changeRotor={this.changeRotor} changeRing={this.changeRing} rotorType={this.state.rotorTypes[0]}/>
+                        <RotorComponent posID={0} position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]} changeRotor={this.changeRotor} changeRing={this.changeRing} startType={'I'} handleRotorSelect={this.handleRotorSelect}/>
                     </div>
                     <div className='p-2'>
-                        <RotorComponent posID={1} position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]} changeRotor={this.changeRotor} changeRing={this.changeRing} rotorType={this.state.rotorTypes[1]}/>
+                        <RotorComponent posID={1} position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]} changeRotor={this.changeRotor} changeRing={this.changeRing} startType={'II'} handleRotorSelect={this.handleRotorSelect} />
                     </div>
                     <div className='p-2'>
-                        <RotorComponent posID={2} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} changeRotor={this.changeRotor} changeRing={this.changeRing} rotorType={this.state.rotorTypes[2]}/>
+                        <RotorComponent posID={2} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} changeRotor={this.changeRotor} changeRing={this.changeRing} startType={'III'} handleRotorSelect={this.handleRotorSelect} />
                     </div>
                 </div>
                 <div className="d-flex flex-row justify-content-center">
-                    <RenderConfig rotorTypes={this.state.rotorTypes} displayPlugs={this.state.plugStatus.join('-')}/>
+                    <RenderConfig rotorTypes={this.state.rotorTypes} displayPlugs={this.state.plugStatus.join('-')} />
                 </div>
                 <div className="row">
-                    <Keyboard val="lamp"/>
-                    <Keyboard val="user"/>
+                    <Keyboard val="lamp" />
+                    <Keyboard val="user" />
                     <RenderPlugboard handleConnect={this.handleConnect} resetPlugs={this.resetPlugs} connectPlug={this.connectPlug} />
                 </div>
                 <div className="row">

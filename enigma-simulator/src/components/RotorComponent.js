@@ -1,4 +1,5 @@
 import React from 'react';
+import SelectRotor from './SelectRotor.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGear } from '@fortawesome/free-solid-svg-icons'
 
@@ -22,17 +23,10 @@ class RotorComponent extends React.Component {
                     </div>
                 </div>
                 <div className="col pt-0">
-                    <div className="fw-bold text-muted pb-2">
-                        <select className="rotor-select">
-                            <option value={'I'}>I</option>
-                            <option value={'II'}>II</option>
-                            <option value={'III'}>III</option>
-                            <option value={'IV'}>IV</option>
-                            <option value={'V'}>V</option>
-                        </select>
-
+                    <SelectRotor handleRotorSelect={this.props.handleRotorSelect} startType={this.props.startType} />
+                    <div>
+                        <FontAwesomeIcon icon={faGear} className="fa-4x" />
                     </div>
-                    <FontAwesomeIcon icon={faGear} className="fa-4x" />
                 </div>
             </div>
         )
