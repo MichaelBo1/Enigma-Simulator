@@ -7,14 +7,14 @@ class RotorComponent extends React.Component {
     render() {
         return (
             <div className="row">
-                <div className="col text-uppercase fw-bold pt-3 ps-4">
+                <div className="col text-uppercase fw-bold pt-4 ps-4">
                     <div className="vstack gap-0">
                         <button id={this.props.posID} value="+" className="text-btn" onClick={this.props.changeRotor}>+</button>
                         {this.props.position}
                         <button id={this.props.posID} value="-" className="text-btn" onClick={this.props.changeRotor}>-</button>
                     </div>
                 </div>
-                <div className="col fw-bold pt-3 px-1">
+                <div className="col fw-bold pt-4 px-1">
                     <div className="vstack gap-0">
                         <button id={this.props.posID} value="+" className="text-btn" onClick={this.props.changeRing}>+</button>
                         {this.props.ring}
@@ -22,8 +22,15 @@ class RotorComponent extends React.Component {
                     </div>
                 </div>
                 <div className="col pt-0">
-                    <div className="fw-bold text-muted">
-                        {this.props.rotorType}
+                    <div className="fw-bold text-muted pb-2">
+                        <select>
+                            <option value={'I'}>I</option>
+                            <option value={'II'}>II</option>
+                            <option value={'III'}>III</option>
+                            <option value={'IV'}>IV</option>
+                            <option value={'V'}>V</option>
+                        </select>
+
                     </div>
                     <FontAwesomeIcon icon={faGear} className="fa-4x" />
                 </div>
