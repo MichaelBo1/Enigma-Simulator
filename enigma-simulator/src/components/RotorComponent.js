@@ -1,12 +1,10 @@
 import React from 'react';
-import { OverlayTrigger } from "react-bootstrap"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGear } from '@fortawesome/free-solid-svg-icons'
-import SettingsPopover from './SettingsPopover.js';
+
 
 class RotorComponent extends React.Component {
     render() {
-        const popover = SettingsPopover();
         return (
             <div className="row">
                 <div className="col text-uppercase fw-bold pt-3 ps-4">
@@ -27,17 +25,7 @@ class RotorComponent extends React.Component {
                     <div className="fw-bold text-muted">
                         {this.props.rotorType}
                     </div>
-                    <OverlayTrigger
-                        trigger="click"
-                        rootClose
-                        placement={this.props.placement}
-                        overlay={popover}>
-                        <button 
-                        className={`btn text-btn ${this.props.status}`} 
-                        id={this.props.status}>
-                            <FontAwesomeIcon icon={faGear} className="fa-4x" />
-                        </button>
-                    </OverlayTrigger>
+                    <FontAwesomeIcon icon={faGear} className="fa-4x" />
                 </div>
             </div>
         )

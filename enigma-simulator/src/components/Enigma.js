@@ -90,6 +90,7 @@ export default class Enigma extends React.Component {
         this.resetPlugs = this.resetPlugs.bind(this);
         this.changeRotor = this.changeRotor.bind(this);
         this.changeRing = this.changeRing.bind(this);
+        this.applySelection = this.applySelection.bind(this);
 
 
     }
@@ -313,6 +314,9 @@ export default class Enigma extends React.Component {
             ringSettings: newSettings
         });
     }
+    applySelection() {
+        console.log("changed")
+    }
 
     render() {
         return (
@@ -320,13 +324,13 @@ export default class Enigma extends React.Component {
                 <h1>Enigma</h1>
                 <div className="d-flex flex-row justify-content-center">
                     <div className='p-2'>
-                        <RotorComponent posID={0} placement={"right"} status={"off"} position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]} changeRotor={this.changeRotor} changeRing={this.changeRing} rotorType={this.state.rotorTypes[0]}/>
+                        <RotorComponent posID={0} position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]} changeRotor={this.changeRotor} changeRing={this.changeRing} rotorType={this.state.rotorTypes[0]}/>
                     </div>
                     <div className='p-2'>
-                        <RotorComponent posID={1} placement={"bottom"} status={"on"} position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]} changeRotor={this.changeRotor} changeRing={this.changeRing} rotorType={this.state.rotorTypes[1]}/>
+                        <RotorComponent posID={1} position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]} changeRotor={this.changeRotor} changeRing={this.changeRing} rotorType={this.state.rotorTypes[1]}/>
                     </div>
                     <div className='p-2'>
-                        <RotorComponent posID={2} placement={"left"} status={"off"} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} changeRotor={this.changeRotor} changeRing={this.changeRing} rotorType={this.state.rotorTypes[2]}/>
+                        <RotorComponent posID={2} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} changeRotor={this.changeRotor} changeRing={this.changeRing} rotorType={this.state.rotorTypes[2]}/>
                     </div>
                 </div>
                 <div className="row">
