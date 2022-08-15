@@ -169,7 +169,6 @@ export default class Enigma extends React.Component {
 
     handleChar(char) {
         const updatedMachine = this.getUpdatedMachine();
-        console.log("udpated machine", updatedMachine)
         const encryptedChar = updatedMachine.encodeChar(char);
 
         // format output into blocks of 5 letters
@@ -224,7 +223,6 @@ export default class Enigma extends React.Component {
     handleConnect(event) {
         event.preventDefault();
         const plugs = this.state.selectedPlugs
-        const newPlugStatus = formatPlugs(plugs);
         const plugLen = plugs.length;
         // don't connect if a plug is not in a pair
         if (plugLen % 2 !== 0) {
@@ -241,15 +239,16 @@ export default class Enigma extends React.Component {
         // change the state of the plugboard
         this.setState({
             plugboard: new Plugboard(updatedPairs),
-            plugStatus: newPlugStatus
+            plugStatus: formatPlugs(plugs)
         })
     }
     connectPlug(event) {
         const plug = event.currentTarget;
         let newPlugCnt = this.state.plugCount;
         let newClrIdx = this.state.colorIndex;
+        console.log(newPlugCnt)
         // if plug has already been highlighted, remove its color (and paired letter if any)
-        if (plug.classList.contains('clicked') === false && newClrIdx <= 9) {
+        if (plug.classList.contains('clicked') === false && newPlugCnt < 20) {
             // switch to a new color if starting a new pair
             if (this.state.plugCount % 2 === 0 && this.state.plugCount !== 0) {
                 newClrIdx++;
