@@ -60,12 +60,10 @@ code {
   box-shadow: 3px 3px 3px 3px grey;
 }
 
-.popover {
-  max-width: 700px;
+.rotor-select {
+  border: none;
+  text-align: center;
 }
-.apply {
-  color: white;
-}
-.off {
-  pointer-events: none;
+.rotor-select:hover {
+  color: red;
 }

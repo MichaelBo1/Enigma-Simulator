@@ -23,7 +23,7 @@ class RotorComponent extends React.Component {
                 </div>
                 <div className="col pt-0">
                     <div className="fw-bold text-muted pb-2">
-                        <select>
+                        <select className="rotor-select">
                             <option value={'I'}>I</option>
                             <option value={'II'}>II</option>
                             <option value={'III'}>III</option>
