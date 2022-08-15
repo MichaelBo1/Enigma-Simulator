@@ -185,12 +185,12 @@ export default class Enigma extends React.Component {
         // highlight character key press on user keyboard
         const user = document.getElementById('user' + char);
         user.style.border = '4px solid #C3C7C7'
-        setTimeout(() => { user.style.border = ''}, 500);
+        setTimeout(() => { user.style.border = '' }, 500);
 
 
         // light up corresponding ecnrypted char on lampboard;
         const lamp = document.getElementById('lamp' + encryptedChar);
-        lamp.style.cssText = 'color: yellow; box-shadow: 0 0 3px 3px gold';
+        lamp.style.cssText = 'color: gold; box-shadow: 0 0 3px 3px gold';
         setTimeout(() => { lamp.style.cssText = 'color: white; box-shadow: ""' }, 500);
 
         this.setState({
@@ -268,7 +268,7 @@ export default class Enigma extends React.Component {
     resetPlugs() {
         document.querySelectorAll('.plug').forEach((elem) => {
             elem.classList.remove('clicked')
-            elem.style.cssText = 'color: black; border-color: revert';
+            elem.style.cssText = 'color:""; border: ""';
         })
         this.setState({
             plugCount: 0,
@@ -346,15 +346,18 @@ export default class Enigma extends React.Component {
 
 
                 <div className="d-flex flex-row justify-content-center">
-                    <div className='p-2'>
-                        <RotorComponent posID={0} position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]} changeRotor={this.changeRotor} changeRing={this.changeRing} startType={'I'} handleRotorSelect={this.handleRotorSelect} />
+                    <div id="rotor-settings" className="d-flex flex-row">
+                        <div className='p-2'>
+                            <RotorComponent posID={0} position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]} changeRotor={this.changeRotor} changeRing={this.changeRing} startType={'I'} handleRotorSelect={this.handleRotorSelect} />
+                        </div>
+                        <div className='p-2'>
+                            <RotorComponent posID={1} position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]} changeRotor={this.changeRotor} changeRing={this.changeRing} startType={'II'} handleRotorSelect={this.handleRotorSelect} />
+                        </div>
+                        <div className='p-2'>
+                            <RotorComponent posID={2} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} changeRotor={this.changeRotor} changeRing={this.changeRing} startType={'III'} handleRotorSelect={this.handleRotorSelect} />
+                        </div>
                     </div>
-                    <div className='p-2'>
-                        <RotorComponent posID={1} position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]} changeRotor={this.changeRotor} changeRing={this.changeRing} startType={'II'} handleRotorSelect={this.handleRotorSelect} />
-                    </div>
-                    <div className='p-2'>
-                        <RotorComponent posID={2} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} changeRotor={this.changeRotor} changeRing={this.changeRing} startType={'III'} handleRotorSelect={this.handleRotorSelect} />
-                    </div>
+
                 </div>
                 <div className="d-flex flex-row justify-content-center">
                     <RenderConfig rotorTypes={this.state.rotorTypes} rings={this.state.ringSettings} displayPlugs={this.state.plugStatus.join('-')} />
