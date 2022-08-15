@@ -48,6 +48,14 @@ const preProcessChar = (char) => {
     }
 }
 
+const formatPlugs = (plugs) => {
+    let res = []
+    for (let i = 0; i < plugs.length; i+= 2) {
+        res.push(plugs[i].toUpperCase() + plugs[i+1].toUpperCase())
+    }
+    return res
+}
+
 const colors = ['red', 'green', 'blue', 'goldenrod', 'pink', 'purple', 'orange', 'teal', 'grey', 'brown']
 const revertRotors = (machine, arr) => {
     // shift rotor positions to those passed into as an array
@@ -79,7 +87,9 @@ export default class Enigma extends React.Component {
             plugboard: new Plugboard({}),
             plugCount: 0,
             colorIndex: 0,
-            selectedPlugs: []
+            selectedPlugs: [],
+            plugStatus: []
+
         }
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleChar = this.handleChar.bind(this);
@@ -214,7 +224,8 @@ export default class Enigma extends React.Component {
     handleConnect(event) {
         event.preventDefault();
         const plugs = this.state.selectedPlugs
-        const plugLen = this.state.selectedPlugs.length;
+        const newPlugStatus = formatPlugs(plugs);
+        const plugLen = plugs.length;
         // don't connect if a plug is not in a pair
         if (plugLen % 2 !== 0) {
             alert(`Error: The letter ${this.state.selectedPlugs[plugLen - 1]} is not paired up`);
@@ -229,7 +240,8 @@ export default class Enigma extends React.Component {
         }
         // change the state of the plugboard
         this.setState({
-            plugboard: new Plugboard(updatedPairs)
+            plugboard: new Plugboard(updatedPairs),
+            plugStatus: newPlugStatus
         })
     }
     connectPlug(event) {
@@ -261,7 +273,8 @@ export default class Enigma extends React.Component {
         this.setState({
             plugCount: 0,
             colorIndex: 0,
-            selectedPlugs: []
+            selectedPlugs: [],
+            plugStatus: []
         })
     }
 
@@ -332,7 +345,7 @@ export default class Enigma extends React.Component {
                     </div>
                 </div>
                 <div className="d-flex flex-row justify-content-center">
-                    <RenderConfig rotorTypes={this.state.rotorTypes} displayPlugs={"abc"}/>
+                    <RenderConfig rotorTypes={this.state.rotorTypes} displayPlugs={this.state.plugStatus.join('-')}/>
                 </div>
                 <div className="row">
                     <Keyboard val="lamp"/>
