@@ -67,3 +67,6 @@ code {
 .rotor-select:hover {
   color: red;
 }
+.no-pointer {
+  pointer-events: none;
+}
