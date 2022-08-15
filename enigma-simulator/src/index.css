@@ -8,7 +8,7 @@ textarea {
 }
 
 #machine {
-  background-image: url('./assets/dd.jpg');
+  background-color: black;
   width: 98%;
   height: 98%;
 }
@@ -40,6 +40,7 @@ textarea {
   margin:0;
   padding:0;
   font-weight: bold;
+  color: #C3C7C7;
 }
 
 .lamp {
@@ -58,20 +59,25 @@ textarea {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: grey;
-  border: 3px solid black;
-  color: black;
+  background-color: black;
+  border: 3px solid #C3C7C7;
+  color: #C3C7C7;
   font-size: 20px;
-  box-shadow: 3px 3px 3px 3px grey;
 }
-
+.rotor, .rotor-display {
+  color: #C3C7C7
+}
 .rotor-select {
   border: none;
+  outline: none;
+  background-color: black;
+  color: #C3C7C7;
   text-align: center;
 }
 .rotor-select:hover {
   color: red;
 }
+
 .no-pointer {
   pointer-events: none;
 }
