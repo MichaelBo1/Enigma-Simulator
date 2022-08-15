@@ -11,7 +11,7 @@ import Plugboard from '../logic/Plugboard.js';
 import Reflector from '../logic/Reflector.js';
 import { ALPHABET } from '../logic/Rotor.js';
 import RenderPlugboard from './RenderPlugboard.js';
-import getRotor from '../DefinedRotors.js';
+import getRotor from '../logic/GetRotors.js';
 
 // Define constants and default components
 
@@ -79,7 +79,7 @@ export default class Enigma extends React.Component {
             ],
             stepNo: 0,
             currentPositions: ['a', 'a', 'a'],
-            machine: new Machine([getRotor(1), getRotor(2), getRotor(3)], reflectorB, new Plugboard({})),
+            machine: new Machine([getRotor('I'), getRotor('II'), getRotor('III')], reflectorB, new Plugboard({})),
             rotorPositions: ['a', 'a', 'a'],
             ringSettings: [1, 1, 1],
             rotorTypes: ['I', 'II', 'III'],
@@ -101,6 +101,7 @@ export default class Enigma extends React.Component {
         this.resetPlugs = this.resetPlugs.bind(this);
         this.changeRotor = this.changeRotor.bind(this);
         this.changeRing = this.changeRing.bind(this);
+        this.handleRotorSelect = this.handleRotorSelect.bind(this);
 
 
     }
@@ -153,12 +154,12 @@ export default class Enigma extends React.Component {
     // update this.state.inputVal field as user types.
     getUpdatedMachine() {
         let updatedMachine = new Machine(
-            [getRotor(1),
-            getRotor(2),
-            getRotor(3)],
+            [getRotor(this.state.rotorTypes[0]),
+            getRotor(this.state.rotorTypes[1]),
+            getRotor(this.state.rotorTypes[2])],
 
             this.state.reflector,
-            this.state.plugboard,
+            this.state.plugboard
         );
         for (let i = 0; i < 3; i++) {
             updatedMachine.rotors[i].setRotor(this.state.rotorPositions[i]);
@@ -327,6 +328,12 @@ export default class Enigma extends React.Component {
         });
     }
     handleRotorSelect(event) {
+        const selector = event.currentTarget;
+        let updatedTypes = this.state.rotorTypes.slice(0)
+        updatedTypes[selector.id] = selector.value;
+        this.setState({
+            rotorTypes: updatedTypes
+        })
 
     }
 
@@ -347,7 +354,7 @@ export default class Enigma extends React.Component {
                     </div>
                 </div>
                 <div className="d-flex flex-row justify-content-center">
-                    <RenderConfig rotorTypes={this.state.rotorTypes} displayPlugs={this.state.plugStatus.join('-')} />
+                    <RenderConfig rotorTypes={this.state.rotorTypes} rings={this.state.ringSettings} displayPlugs={this.state.plugStatus.join('-')} />
                 </div>
                 <div className="row">
                     <Keyboard val="lamp" />
