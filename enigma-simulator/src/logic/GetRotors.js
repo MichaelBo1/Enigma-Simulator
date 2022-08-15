@@ -1,4 +1,4 @@
-import Rotor from "./logic/Rotor.js";
+import Rotor from "./Rotor.js";
 
 export default function getRotor(num) {
     switch (num) {
