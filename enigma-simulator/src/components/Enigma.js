@@ -4,11 +4,12 @@ import GetInput from './GetInput.js';
 import RenderInput from './RenderInput.js';
 import Keyboard from './Keyboard.js';
 import sound from '../assets/typewriter-key.mp3'
+import RenderConfig from './RenderConfig.js';
 // Logic modules
 import Machine from '../logic/Machine.js';
 import Plugboard from '../logic/Plugboard.js';
 import Reflector from '../logic/Reflector.js';
-import Rotor, { ALPHABET } from '../logic/Rotor.js';
+import { ALPHABET } from '../logic/Rotor.js';
 import RenderPlugboard from './RenderPlugboard.js';
 import getRotor from '../DefinedRotors.js';
 
@@ -90,7 +91,6 @@ export default class Enigma extends React.Component {
         this.resetPlugs = this.resetPlugs.bind(this);
         this.changeRotor = this.changeRotor.bind(this);
         this.changeRing = this.changeRing.bind(this);
-        this.applySelection = this.applySelection.bind(this);
 
 
     }
@@ -314,9 +314,7 @@ export default class Enigma extends React.Component {
             ringSettings: newSettings
         });
     }
-    applySelection() {
-        console.log("changed")
-    }
+
 
     render() {
         return (
@@ -332,6 +330,9 @@ export default class Enigma extends React.Component {
                     <div className='p-2'>
                         <RotorComponent posID={2} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} changeRotor={this.changeRotor} changeRing={this.changeRing} rotorType={this.state.rotorTypes[2]}/>
                     </div>
+                </div>
+                <div className="d-flex flex-row justify-content-center">
+                    <RenderConfig rotorTypes={this.state.rotorTypes} displayPlugs={"abc"}/>
                 </div>
                 <div className="row">
                     <Keyboard val="lamp"/>
