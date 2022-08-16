@@ -89,7 +89,7 @@ export default class Enigma extends React.Component {
             plugCount: 0,
             colorIndex: 0,
             selectedPlugs: [],
-            plugStatus: [],
+            plugStatus: []
 
         }
         this.handleKeyDown = this.handleKeyDown.bind(this);

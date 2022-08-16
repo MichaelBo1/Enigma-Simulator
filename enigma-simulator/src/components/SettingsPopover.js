@@ -66,6 +66,7 @@ export default class SettingsPopover extends React.Component {
                                     document.body.click();
                                 }}>Close</button>
                             </div>
+                            <div className="fw-bold">Note: rotors can only be changed when starting a new message</div>
                         </Popover.Body>
                     </Popover>
                 }
