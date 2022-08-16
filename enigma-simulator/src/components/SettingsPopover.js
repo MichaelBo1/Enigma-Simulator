@@ -34,13 +34,13 @@ export default class SettingsPopover extends React.Component {
                                     <tr>
                                         <th scope="row">Rotor Type</th>
                                         <td>
-                                            <SelectRotor posID={0} handleRotorSelect={this.props.handleRotorSelect} startType={this.props.rotorType[0]} />
+                                            <SelectRotor posID={0} handleRotorTypeSelect={this.props.handleRotorTypeSelect} startType={this.props.rotorType[0]} />
                                         </td>
                                         <td>
-                                            <SelectRotor posID={1} handleRotorSelect={this.props.handleRotorSelect} startType={this.props.rotorType[1]} />
+                                            <SelectRotor posID={1} handleRotorTypeSelect={this.props.handleRotorTypeSelect} startType={this.props.rotorType[1]} />
                                         </td>
                                         <td>
-                                            <SelectRotor posID={2} handleRotorSelect={this.props.handleRotorSelect} startType={this.props.rotorType[2]} />
+                                            <SelectRotor posID={2} handleRotorTypeSelect={this.props.handleRotorTypeSelect} startType={this.props.rotorType[2]} />
                                         </td>
                                     </tr>
                                     <tr>

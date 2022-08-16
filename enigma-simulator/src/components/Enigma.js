@@ -95,14 +95,13 @@ export default class Enigma extends React.Component {
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleChar = this.handleChar.bind(this);
         this.updateRotor = this.updateRotor.bind(this);
-        this.updateRings = this.updateRings.bind(this);
         this.getUpdatedMachine = this.getUpdatedMachine.bind(this);
         this.handleConnect = this.handleConnect.bind(this);
         this.connectPlug = this.connectPlug.bind(this);
         this.resetPlugs = this.resetPlugs.bind(this);
-        this.changeRotor = this.changeRotor.bind(this);
+        this.stepRotorPos = this.stepRotorPos.bind(this);
         this.changeRing = this.changeRing.bind(this);
-        this.handleRotorSelect = this.handleRotorSelect.bind(this);
+        this.handleRotorTypeSelect = this.handleRotorTypeSelect.bind(this);
 
 
     }
@@ -210,18 +209,12 @@ export default class Enigma extends React.Component {
     }
     updateRotor(event) {
         let newPos = this.state.rotorPositions.slice();
-        newPos[event.target.id] = event.target.value.toLowerCase();
+        newPos[event.currentTarget.id] = event.currentTarget.value.toLowerCase();
         this.setState({
             rotorPositions: newPos
         })
     }
-    updateRings(event) {
-        let newRings = this.state.ringSettings
-        newRings[event.target.id] = parseInt(event.target.value);
-        this.setState({
-            ringSettings: newRings
-        })
-    }
+
     handleConnect(event) {
         event.preventDefault();
         const plugs = this.state.selectedPlugs
@@ -280,7 +273,7 @@ export default class Enigma extends React.Component {
     }
 
 
-    changeRotor(event) {
+    stepRotorPos(event) {
         const updatedPositions = this.state.rotorPositions.slice(0);
         const rotorId = event.currentTarget.id;
         const val = event.currentTarget.value;
@@ -316,7 +309,8 @@ export default class Enigma extends React.Component {
             ringSettings: newSettings
         });
     }
-    handleRotorSelect(event) {
+
+    handleRotorTypeSelect(event) {
         const selector = event.currentTarget;
         let updatedTypes = this.state.rotorTypes.slice(0)
         updatedTypes[selector.id] = selector.value;
@@ -332,18 +326,18 @@ export default class Enigma extends React.Component {
             <div id="machine" className="container-fluid text-center">
 
                 <h1>Enigma</h1>
-                <SettingsPopover rotorType={this.state.rotorTypes} handleRotorSelect={this.handleRotorSelect} changeRing={this.changeRing}/>
+                <SettingsPopover rotorType={this.state.rotorTypes} handleRotorTypeSelect={this.handleRotorTypeSelect} changeRing={this.changeRing} updateRotor={this.updateRotor}/>
 
                 <div className="d-flex flex-row justify-content-center">
                     <div id="rotor-settings" className="d-flex flex-row">
                         <div className='p-2'>
-                            <RotorComponent posID={0} position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]} changeRotor={this.changeRotor} changeRing={this.changeRing} startType={'I'} handleRotorSelect={this.handleRotorSelect} />
+                            <RotorComponent posID={0} position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing} startType={'I'} handleRotorTypeSelect={this.handleRotorTypeSelect} />
                         </div>
                         <div className='p-2'>
-                            <RotorComponent posID={1} position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]} changeRotor={this.changeRotor} changeRing={this.changeRing} startType={'II'} handleRotorSelect={this.handleRotorSelect} />
+                            <RotorComponent posID={1} position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing} startType={'II'} handleRotorTypeSelect={this.handleRotorTypeSelect} />
                         </div>
                         <div className='p-2'>
-                            <RotorComponent posID={2} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} changeRotor={this.changeRotor} changeRing={this.changeRing} startType={'III'} handleRotorSelect={this.handleRotorSelect} />
+                            <RotorComponent posID={2} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing} startType={'III'} handleRotorTypeSelect={this.handleRotorTypeSelect} />
                         </div>
                     </div>
 
