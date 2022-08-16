@@ -323,8 +323,12 @@ export default class Enigma extends React.Component {
 
     resetSettings() {
         this.setState({
-            rotorTypes: ['I', 'II', 'III']
+            rotorPositions: ['a', 'a', 'a'],
+            ringSettings: [1, 1, 1],
+            rotorTypes: ['I', 'II', 'III'],
+            reflector: reflectorB,
         })
+        document.body.click()
     }
 
 

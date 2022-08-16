@@ -21,6 +21,12 @@ export default class SettingsPopover extends React.Component {
                     <Popover id="settings-popover">
                         <Popover.Header as="h4">
                             Configuration Settings
+                            <button 
+                                id="close" 
+                                className="text-btn ps-5" 
+                                onClick={() => {
+                                    document.body.click();
+                                }}>X</button>
                         </Popover.Header>
                         <Popover.Body>
                             <table className="table">
@@ -59,12 +65,7 @@ export default class SettingsPopover extends React.Component {
                             </table>
                             <div className="d-flex flex-row justify-content-center text-dark">
                                 <button id="reset" className="btn fw-bold" onClick={this.props.resetSettings}>Reset</button>
-                                <button 
-                                id="close" 
-                                className="btn fw-bold" 
-                                onClick={() => {
-                                    document.body.click();
-                                }}>Close</button>
+                                
                             </div>
                             <div className="fw-bold">Note: rotors can only be changed when starting a new message</div>
                         </Popover.Body>
