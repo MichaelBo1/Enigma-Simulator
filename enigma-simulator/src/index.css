@@ -5,16 +5,11 @@ body,
   background-color: black;
 }
 
-
 #machine {
   width: 80%;
   height: 80%;
 }
 
-#title {
-  background-image: url('./assets/wood-texture.jpg');
-  width: 100vw;
-}
 .form-control[readonly] {
   resize: none;
   color: #C3C7C7;
@@ -84,6 +79,13 @@ select {
 
 .no-pointer {
   pointer-events: none;
+}
+
+.increment:hover {
+  color: green;
+}
+.decrement:hover {
+  color: red;
 }
 
 #settings-popover {
