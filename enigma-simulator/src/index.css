@@ -32,7 +32,10 @@ body,
 .pair {
   text-transform: uppercase;
 }
+.key {
+  margin: 0px 2px 0px 2px;
 
+}
 .text-btn {
   background: none;
   border: none;
@@ -97,4 +100,9 @@ select {
 #close {
   position: fixed;
   right: 20px;
+}
+@media only screen and (max-width: 576px) {
+  .key {
+    margin: 0px 0px;
+  }
 }
