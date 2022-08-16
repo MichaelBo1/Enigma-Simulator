@@ -78,7 +78,7 @@ export default class Enigma extends React.Component {
             rotorPositions: ['a', 'a', 'a'],
             ringSettings: [1, 1, 1],
             rotorTypes: ['I', 'II', 'III'],
-            reflector: getReflector("B"),
+            reflector: "B",
             plugboard: new Plugboard({}),
             plugCount: 0,
             colorIndex: 0,
@@ -154,7 +154,7 @@ export default class Enigma extends React.Component {
             getRotor(this.state.rotorTypes[1]),
             getRotor(this.state.rotorTypes[2])],
 
-            this.state.reflector,
+            getReflector(this.state.reflector),
             this.state.plugboard
         );
         for (let i = 0; i < 3; i++) {
@@ -308,7 +308,7 @@ export default class Enigma extends React.Component {
 
     changeReflector(event) {
         this.setState({
-            reflector: getReflector(event.currentTarget.value)
+            reflector: event.currentTarget.value
         })
     }
 
@@ -327,7 +327,7 @@ export default class Enigma extends React.Component {
             rotorPositions: ['a', 'a', 'a'],
             ringSettings: [1, 1, 1],
             rotorTypes: ['I', 'II', 'III'],
-            reflector: getReflector("B"),
+            reflector: "B",
         })
         document.body.click()
     }
@@ -366,8 +366,13 @@ export default class Enigma extends React.Component {
                     </div>
 
                 </div>
-                <div className="d-flex flex-row justify-content-center">
-                    <RenderConfig rotorTypes={this.state.rotorTypes} rings={this.state.ringSettings} displayPlugs={this.state.plugStatus.join('-')} />
+                <div className="d-flex flex-row justify-content-center pb-2">
+                    <RenderConfig 
+                    rotorTypes={this.state.rotorTypes} 
+                    rings={this.state.ringSettings} 
+                    displayPlugs={this.state.plugStatus.join('-')}
+                    rotorPos={this.state.rotorPositions}
+                    reflector={this.state.reflector} />
                 </div>
                 <div className="row">
                     <Keyboard val="lamp" />
