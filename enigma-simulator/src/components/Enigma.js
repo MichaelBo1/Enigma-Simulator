@@ -5,6 +5,7 @@ import RenderInput from './RenderInput.js';
 import Keyboard from './Keyboard.js';
 import sound from '../assets/typewriter-key.mp3'
 import RenderConfig from './RenderConfig.js';
+import SettingsPopover from './SettingsPopover.js';
 // Logic modules
 import Machine from '../logic/Machine.js';
 import Plugboard from '../logic/Plugboard.js';
@@ -343,7 +344,7 @@ export default class Enigma extends React.Component {
             <div id="machine" className="container-fluid text-center">
 
                 <h1>Enigma</h1>
-
+                <SettingsPopover />
 
                 <div className="d-flex flex-row justify-content-center">
                     <div id="rotor-settings" className="d-flex flex-row">
