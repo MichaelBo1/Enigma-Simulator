@@ -3,7 +3,7 @@ import React from 'react';
 export default class GetInput extends React.Component {
     render() {
         return (
-            <div className="col">
+            <div className="col clr">
                 <label htmlFor="userInput" className="form-label">Plaintext</label>
                 <textarea 
                     value={this.props.input}

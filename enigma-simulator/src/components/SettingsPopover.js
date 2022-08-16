@@ -80,7 +80,7 @@ export default class SettingsPopover extends React.Component {
                     </Popover>
                 }
             >
-                <button className="text-btn pb-0 mb-0"><FontAwesomeIcon id="settings-gear" icon={faGear} className="fa-1x" /></button>
+                <button className="text-btn pb-0 mb-0 clr"><FontAwesomeIcon id="settings-gear" icon={faGear} className="fa-1x" /></button>
             </OverlayTrigger>
         )
     }

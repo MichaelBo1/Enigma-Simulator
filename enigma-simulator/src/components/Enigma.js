@@ -341,7 +341,7 @@ export default class Enigma extends React.Component {
         return (
             <div id="machine" className="container-fluid text-center">
 
-                <h1>Enigma</h1>
+                <h1 className="clr">Enigma Machine</h1>
                 <SettingsPopover 
                 rotorType={this.state.rotorTypes} 
                 handleRotorTypeSelect={this.handleRotorTypeSelect} 
@@ -355,13 +355,13 @@ export default class Enigma extends React.Component {
                 <div className="d-flex flex-row justify-content-center">
                     <div id="rotor-settings" className="d-flex flex-row">
                         <div className='p-2'>
-                            <RotorComponent posID={0} position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing} startType={'I'} handleRotorTypeSelect={this.handleRotorTypeSelect} />
+                            <RotorComponent posID={0} position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing}  type={this.state.rotorTypes[0]}/>
                         </div>
                         <div className='p-2'>
-                            <RotorComponent posID={1} position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing} startType={'II'} handleRotorTypeSelect={this.handleRotorTypeSelect} />
+                            <RotorComponent posID={1} position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing} type={this.state.rotorTypes[1]}/>
                         </div>
                         <div className='p-2'>
-                            <RotorComponent posID={2} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing} startType={'III'} handleRotorTypeSelect={this.handleRotorTypeSelect} />
+                            <RotorComponent posID={2} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing} type={this.state.rotorTypes[2]}/>
                         </div>
                     </div>
 

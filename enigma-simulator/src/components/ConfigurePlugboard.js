@@ -18,7 +18,7 @@ export default class ConfigurePlugboard extends React.Component {
     }
     render() {
         return (
-            <div>
+            <div className="clr">
                 <button
                     className="btn text-btn"
                     onClick={this.setOpen}
@@ -60,8 +60,8 @@ export default class ConfigurePlugboard extends React.Component {
                             <Letter idLetter={"l"} letter={"L"} connectPlug={this.props.connectPlug} />
                         </div>
                         <div className="container text-center">
-                            <button type="submit" className="btn" onClick={this.props.handleConnect}>Connect</button>
-                            <button className="btn" onClick={this.props.resetPlugs}>Reset</button>
+                            <button type="submit" className="btn clr" onClick={this.props.handleConnect}>Connect</button>
+                            <button className="btn clr" onClick={this.props.resetPlugs}>Reset</button>
                         </div>
                     </div>
                 </Collapse >

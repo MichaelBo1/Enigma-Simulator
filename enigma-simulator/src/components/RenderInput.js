@@ -3,7 +3,7 @@ import React from 'react';
 export default class RenderInput extends React.Component {
     render() {
         return (
-            <div className="col">
+            <div className="col clr">
                 <label htmlFor="renderInput" className="form-label">Ciphertext</label>
                 <textarea 
                     value={this.props.input}
