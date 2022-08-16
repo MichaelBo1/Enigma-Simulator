@@ -3,7 +3,7 @@ import React from "react";
 export default class RenderRingSettings extends React.Component {
     render() {
         return (
-            <select id={this.props.idPos} onChange={this.props.updateRings}>
+            <select className="ring-select" id={this.props.idPos} onChange={this.props.updateRings}>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>

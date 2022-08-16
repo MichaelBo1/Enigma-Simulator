@@ -77,16 +77,12 @@ body,
   color: #C3C7C7
 }
 
-.rotor-select {
+select {
   border: none;
   outline: none;
   background-color: black;
   color: #C3C7C7;
   text-align: center;
-}
-
-.rotor-select:hover {
-  color: red;
 }
 
 .no-pointer {
