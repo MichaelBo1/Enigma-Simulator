@@ -34,31 +34,31 @@ export default class SettingsPopover extends React.Component {
                                     <tr>
                                         <th scope="row">Rotor Type</th>
                                         <td>
-                                            <SelectRotor posID={0} handleRotorTypeSelect={this.props.handleRotorTypeSelect} startType={this.props.rotorType[0]} />
+                                            <SelectRotor posID={0} handleRotorTypeSelect={this.props.handleRotorTypeSelect} startType={this.props.rotorType[0]} rotorsDisabled={this.props.rotorsDisabled}/>
                                         </td>
                                         <td>
-                                            <SelectRotor posID={1} handleRotorTypeSelect={this.props.handleRotorTypeSelect} startType={this.props.rotorType[1]} />
+                                            <SelectRotor posID={1} handleRotorTypeSelect={this.props.handleRotorTypeSelect} startType={this.props.rotorType[1]} rotorsDisabled={this.props.rotorsDisabled}/>
                                         </td>
                                         <td>
-                                            <SelectRotor posID={2} handleRotorTypeSelect={this.props.handleRotorTypeSelect} startType={this.props.rotorType[2]} />
+                                            <SelectRotor posID={2} handleRotorTypeSelect={this.props.handleRotorTypeSelect} startType={this.props.rotorType[2]} rotorsDisabled={this.props.rotorsDisabled}/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Ring Setting</th>
-                                        <td><RenderRingSettings idPos={0} changeRing={this.props.changeRing} /></td>
-                                        <td><RenderRingSettings idPos={1} changeRing={this.props.changeRing} /></td>
-                                        <td><RenderRingSettings idPos={2} changeRing={this.props.changeRing} /></td>
+                                        <td><RenderRingSettings idPos={0} changeRing={this.props.changeRing} defVal={this.props.ringSettings[0]}/></td>
+                                        <td><RenderRingSettings idPos={1} changeRing={this.props.changeRing} defVal={this.props.ringSettings[1]}/></td>
+                                        <td><RenderRingSettings idPos={2} changeRing={this.props.changeRing} defVal={this.props.ringSettings[2]}/></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Starting Position</th>
-                                        <td><RenderRotorList idPos={0} updateRotor={this.props.updateRotor} /></td>
-                                        <td><RenderRotorList idPos={1} updateRotor={this.props.updateRotor} /></td>
-                                        <td><RenderRotorList idPos={2} updateRotor={this.props.updateRotor} /></td>
+                                        <td><RenderRotorList idPos={0} updateRotor={this.props.updateRotor} rotorsDisabled={this.props.rotorsDisabled}/></td>
+                                        <td><RenderRotorList idPos={1} updateRotor={this.props.updateRotor} rotorsDisabled={this.props.rotorsDisabled}/></td>
+                                        <td><RenderRotorList idPos={2} updateRotor={this.props.updateRotor} rotorsDisabled={this.props.rotorsDisabled}/></td>
                                     </tr>
                                 </thead>
                             </table>
                             <div className="d-flex flex-row justify-content-center text-dark">
-                                <button id="reset" className="btn fw-bold">Reset</button>
+                                <button id="reset" className="btn fw-bold" onClick={this.props.resetSettings}>Reset</button>
                                 <button 
                                 id="close" 
                                 className="btn fw-bold" 

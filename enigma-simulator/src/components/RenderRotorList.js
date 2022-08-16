@@ -3,7 +3,7 @@ import React from "react";
 export default class RenderRotorList extends React.Component {
     render() {
         return (
-            <select id={this.props.idPos} onChange={this.props.updateRotor}>
+            <select id={this.props.idPos} onChange={this.props.updateRotor} disabled={this.props.rotorsDisabled}>    
                 <option value="A">A</option>
                 <option value="B">B</option>
                 <option value="C">C</option>

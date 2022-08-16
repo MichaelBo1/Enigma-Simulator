@@ -89,7 +89,7 @@ export default class Enigma extends React.Component {
             plugCount: 0,
             colorIndex: 0,
             selectedPlugs: [],
-            plugStatus: []
+            plugStatus: [],
 
         }
         this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -102,6 +102,7 @@ export default class Enigma extends React.Component {
         this.stepRotorPos = this.stepRotorPos.bind(this);
         this.changeRing = this.changeRing.bind(this);
         this.handleRotorTypeSelect = this.handleRotorTypeSelect.bind(this);
+        this.resetSettings = this.resetSettings.bind(this);
 
 
     }
@@ -320,13 +321,29 @@ export default class Enigma extends React.Component {
 
     }
 
+    resetSettings() {
+        this.setState({
+            rotorTypes: ['I', 'II', 'III']
+        })
+    }
+
 
     render() {
+        let rotorsDisabled = false;
+        if (this.state.inputVal.length > 0) {
+            rotorsDisabled = true;
+        }
         return (
             <div id="machine" className="container-fluid text-center">
 
                 <h1>Enigma</h1>
-                <SettingsPopover rotorType={this.state.rotorTypes} handleRotorTypeSelect={this.handleRotorTypeSelect} changeRing={this.changeRing} updateRotor={this.updateRotor}/>
+                <SettingsPopover 
+                rotorType={this.state.rotorTypes} 
+                handleRotorTypeSelect={this.handleRotorTypeSelect} 
+                changeRing={this.changeRing} updateRotor={this.updateRotor} 
+                resetSettings={this.resetSettings}
+                ringSettings={this.state.ringSettings}
+                rotorsDisabled={rotorsDisabled}/>
 
                 <div className="d-flex flex-row justify-content-center">
                     <div id="rotor-settings" className="d-flex flex-row">

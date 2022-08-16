@@ -4,7 +4,11 @@ export default class SelectRotor extends React.Component {
     render() {
         return (
             <div>
-                <select id={this.props.posID} onChange={this.props.handleRotorTypeSelect} defaultValue={this.props.startType}>
+                <select 
+                id={this.props.posID} 
+                onChange={this.props.handleRotorTypeSelect} 
+                defaultValue={this.props.startType} 
+                disabled={this.props.rotorsDisabled}>
                     <option value={'I'}>I</option>
                     <option value={'II'}>II</option>
                     <option value={'III'}>III</option>
