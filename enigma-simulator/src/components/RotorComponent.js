@@ -17,7 +17,7 @@ class RotorComponent extends React.Component {
                 </div>
 
                 <div className="col pt-3">
-                    <SelectRotor handleRotorSelect={this.props.handleRotorSelect} startType={this.props.startType} />
+                    <SelectRotor handleRotorSelect={this.props.handleRotorSelect} startType={this.props.startType} posID={this.props.posID}/>
                     <FontAwesomeIcon icon={faGear} className="fa-3x rotor"/>
                 </div>
             </div>
