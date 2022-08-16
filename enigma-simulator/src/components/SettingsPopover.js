@@ -59,7 +59,12 @@ export default class SettingsPopover extends React.Component {
                             </table>
                             <div className="d-flex flex-row justify-content-center text-dark">
                                 <button id="reset" className="btn fw-bold">Reset</button>
-                                <button id="close" className="btn fw-bold">X</button>
+                                <button 
+                                id="close" 
+                                className="btn fw-bold" 
+                                onClick={() => {
+                                    document.body.click();
+                                }}>Close</button>
                             </div>
                         </Popover.Body>
                     </Popover>
