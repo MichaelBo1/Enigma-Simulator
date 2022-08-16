@@ -8,7 +8,7 @@ class RotorComponent extends React.Component {
     render() {
         return (
             <div className="row">
-                <div className="col text-uppercase pt-4 ps-4">
+                <div className="col text-uppercase pt-4 ps-4 clr">
                     <div className="vstack gap-0">
                         <button id={this.props.posID} value="+" className="text-btn" onClick={this.props.stepRotorPos}>+</button>
                         <div className="rotor-display">{this.props.position}</div>
@@ -16,8 +16,8 @@ class RotorComponent extends React.Component {
                     </div>
                 </div>
 
-                <div className="col pt-3">
-                    <SelectRotor handleRotorSelect={this.props.handleRotorSelect} startType={this.props.startType} posID={this.props.posID}/>
+                <div className="col pt-3 clr">
+                    {this.props.type}
                     <FontAwesomeIcon icon={faGear} className="fa-3x rotor"/>
                 </div>
             </div>
