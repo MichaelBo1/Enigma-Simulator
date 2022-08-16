@@ -8,7 +8,7 @@ export default class GetInput extends React.Component {
                 <textarea 
                     value={this.props.input}
                     onChange={this.props.handleChange}
-                    className="form-control"
+                    className="form-control mb-2"
                     id="userInput"
                     rows="12"
                     readOnly>{this.props.input}</textarea>
