@@ -329,6 +329,7 @@ export default class Enigma extends React.Component {
         });
     }
     handleRotorSelect(event) {
+        console.log("handling type...")
         const selector = event.currentTarget;
         let updatedTypes = this.state.rotorTypes.slice(0)
         updatedTypes[selector.id] = selector.value;
@@ -344,7 +345,7 @@ export default class Enigma extends React.Component {
             <div id="machine" className="container-fluid text-center">
 
                 <h1>Enigma</h1>
-                <SettingsPopover />
+                <SettingsPopover rotorType={this.state.rotorTypes} handleRotorSelect={this.handleRotorSelect}/>
 
                 <div className="d-flex flex-row justify-content-center">
                     <div id="rotor-settings" className="d-flex flex-row">
