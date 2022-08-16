@@ -13,14 +13,8 @@ import Reflector from '../logic/Reflector.js';
 import { ALPHABET } from '../logic/Rotor.js';
 import RenderPlugboard from './RenderPlugboard.js';
 import getRotor from '../logic/GetRotors.js';
-
+import getReflector from '../logic/GetReflector.js';
 // Define constants and default components
-
-const reflectorB = new Reflector({
-    'a': 'y', 'b': 'r', 'c': 'u', 'd': 'h', 'e': 'q', 'f': 's', 'g': 'l', 'h': 'd', 'i': 'p', 'j': 'x', 'k': 'n', 'l': 'g', 'm': 'o', 'n': 'k', 'o': 'm',
-    'p': 'i', 'q': 'e', 'r': 'b', 's': 'f', 't': 'z', 'u': 'c', 'v': 'w', 'w': 'v'
-    , 'x': 'j', 'y': 'a', 'z': 't'
-})
 
 const KEYPRESS = new Audio(sound)
 // filter keyboard input for only letters
@@ -80,11 +74,11 @@ export default class Enigma extends React.Component {
             ],
             stepNo: 0,
             currentPositions: ['a', 'a', 'a'],
-            machine: new Machine([getRotor('I'), getRotor('II'), getRotor('III')], reflectorB, new Plugboard({})),
+            machine: new Machine([getRotor('I'), getRotor('II'), getRotor('III')], getReflector("B"), new Plugboard({})),
             rotorPositions: ['a', 'a', 'a'],
             ringSettings: [1, 1, 1],
             rotorTypes: ['I', 'II', 'III'],
-            reflector: reflectorB,
+            reflector: getReflector("B"),
             plugboard: new Plugboard({}),
             plugCount: 0,
             colorIndex: 0,
@@ -326,7 +320,7 @@ export default class Enigma extends React.Component {
             rotorPositions: ['a', 'a', 'a'],
             ringSettings: [1, 1, 1],
             rotorTypes: ['I', 'II', 'III'],
-            reflector: reflectorB,
+            reflector: getReflector("B"),
         })
         document.body.click()
     }
