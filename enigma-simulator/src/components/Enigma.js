@@ -5,23 +5,18 @@ import RenderInput from './RenderInput.js';
 import Keyboard from './Keyboard.js';
 import sound from '../assets/typewriter-key.mp3'
 import RenderConfig from './RenderConfig.js';
+import SettingsPopover from './SettingsPopover.js';
 // Logic modules
 import Machine from '../logic/Machine.js';
 import Plugboard from '../logic/Plugboard.js';
-import Reflector from '../logic/Reflector.js';
 import { ALPHABET } from '../logic/Rotor.js';
 import RenderPlugboard from './RenderPlugboard.js';
 import getRotor from '../logic/GetRotors.js';
+import getReflector from '../logic/GetReflector.js';
 
 // Define constants and default components
-
-const reflectorB = new Reflector({
-    'a': 'y', 'b': 'r', 'c': 'u', 'd': 'h', 'e': 'q', 'f': 's', 'g': 'l', 'h': 'd', 'i': 'p', 'j': 'x', 'k': 'n', 'l': 'g', 'm': 'o', 'n': 'k', 'o': 'm',
-    'p': 'i', 'q': 'e', 'r': 'b', 's': 'f', 't': 'z', 'u': 'c', 'v': 'w', 'w': 'v'
-    , 'x': 'j', 'y': 'a', 'z': 't'
-})
-
 const KEYPRESS = new Audio(sound)
+
 // filter keyboard input for only letters
 const isLetterOrBack = (str) => {
     // is of correct length and type
@@ -47,7 +42,7 @@ const preProcessChar = (char) => {
         return null;
     }
 }
-
+// generates a list of uppercase letters from connected plugs to be displayed in the config component
 const formatPlugs = (plugs) => {
     let res = []
     for (let i = 0; i < plugs.length; i += 2) {
@@ -57,6 +52,7 @@ const formatPlugs = (plugs) => {
 }
 
 const colors = ['red', 'green', 'blue', 'goldenrod', 'pink', 'purple', 'orange', 'teal', 'grey', 'brown']
+
 const revertRotors = (machine, arr) => {
     // shift rotor positions to those passed into as an array
     for (let i = 0; i < 3; i++) {
@@ -79,11 +75,10 @@ export default class Enigma extends React.Component {
             ],
             stepNo: 0,
             currentPositions: ['a', 'a', 'a'],
-            machine: new Machine([getRotor('I'), getRotor('II'), getRotor('III')], reflectorB, new Plugboard({})),
             rotorPositions: ['a', 'a', 'a'],
             ringSettings: [1, 1, 1],
             rotorTypes: ['I', 'II', 'III'],
-            reflector: reflectorB,
+            reflector: "B",
             plugboard: new Plugboard({}),
             plugCount: 0,
             colorIndex: 0,
@@ -94,14 +89,15 @@ export default class Enigma extends React.Component {
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleChar = this.handleChar.bind(this);
         this.updateRotor = this.updateRotor.bind(this);
-        this.updateRings = this.updateRings.bind(this);
         this.getUpdatedMachine = this.getUpdatedMachine.bind(this);
         this.handleConnect = this.handleConnect.bind(this);
         this.connectPlug = this.connectPlug.bind(this);
         this.resetPlugs = this.resetPlugs.bind(this);
-        this.changeRotor = this.changeRotor.bind(this);
+        this.stepRotorPos = this.stepRotorPos.bind(this);
         this.changeRing = this.changeRing.bind(this);
-        this.handleRotorSelect = this.handleRotorSelect.bind(this);
+        this.changeReflector = this.changeReflector.bind(this);
+        this.handleRotorTypeSelect = this.handleRotorTypeSelect.bind(this);
+        this.resetSettings = this.resetSettings.bind(this);
 
 
     }
@@ -128,8 +124,7 @@ export default class Enigma extends React.Component {
             outputVal: updatedOutput,
             history: updatedHistory,
             stepNo: this.state.stepNo - 1,
-            rotorPositions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos],
-            machine: updatedMachine
+            rotorPositions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos]
         })
     }
     handleKeyDown(event) {
@@ -158,7 +153,7 @@ export default class Enigma extends React.Component {
             getRotor(this.state.rotorTypes[1]),
             getRotor(this.state.rotorTypes[2])],
 
-            this.state.reflector,
+            getReflector(this.state.reflector),
             this.state.plugboard
         );
         for (let i = 0; i < 3; i++) {
@@ -184,13 +179,13 @@ export default class Enigma extends React.Component {
 
         // highlight character key press on user keyboard
         const user = document.getElementById('user' + char);
-        user.style.cssText = 'box-shadow: 0px 0px 0px 0px; border: 4px solid black'
-        setTimeout(() => { user.style.cssText = 'box-shadow: ""; border: ""' }, 500);
+        user.style.border = '4px solid #C3C7C7'
+        setTimeout(() => { user.style.border = '' }, 500);
 
 
         // light up corresponding ecnrypted char on lampboard;
         const lamp = document.getElementById('lamp' + encryptedChar);
-        lamp.style.cssText = 'color: yellow; box-shadow: 0 0 3px 3px gold';
+        lamp.style.cssText = 'color: gold; box-shadow: 0 0 3px 3px gold';
         setTimeout(() => { lamp.style.cssText = 'color: white; box-shadow: ""' }, 500);
 
         this.setState({
@@ -202,25 +197,18 @@ export default class Enigma extends React.Component {
                 }
             ]),
             stepNo: this.state.stepNo + 1,
-            machine: updatedMachine,
             rotorPositions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos],
             currentLamp: encryptedChar
         })
     }
     updateRotor(event) {
         let newPos = this.state.rotorPositions.slice();
-        newPos[event.target.id] = event.target.value.toLowerCase();
+        newPos[event.currentTarget.id] = event.currentTarget.value.toLowerCase();
         this.setState({
             rotorPositions: newPos
         })
     }
-    updateRings(event) {
-        let newRings = this.state.ringSettings
-        newRings[event.target.id] = parseInt(event.target.value);
-        this.setState({
-            ringSettings: newRings
-        })
-    }
+
     handleConnect(event) {
         event.preventDefault();
         const plugs = this.state.selectedPlugs
@@ -268,7 +256,7 @@ export default class Enigma extends React.Component {
     resetPlugs() {
         document.querySelectorAll('.plug').forEach((elem) => {
             elem.classList.remove('clicked')
-            elem.style.cssText = 'color: black; border-color: revert';
+            elem.style.cssText = 'color:""; border: ""';
         })
         this.setState({
             plugCount: 0,
@@ -279,7 +267,7 @@ export default class Enigma extends React.Component {
     }
 
 
-    changeRotor(event) {
+    stepRotorPos(event) {
         const updatedPositions = this.state.rotorPositions.slice(0);
         const rotorId = event.currentTarget.id;
         const val = event.currentTarget.value;
@@ -307,27 +295,22 @@ export default class Enigma extends React.Component {
         })
     }
     changeRing(event) {
-        const newSettings = this.state.ringSettings.slice(0);
-        const ringId = event.currentTarget.id;
-        const btnVal = event.currentTarget.value;
-        // increase ring setting if adding
-        if (btnVal === '+') {
-            newSettings[ringId] = (this.state.ringSettings[ringId] % 26) + 1;
-        }
-        // otherwise it must be '-', so decrease the value, looping 1 to 26;
-        else {
-            let newNum = this.state.ringSettings[ringId] - 1;
-            if (newNum === 0) {
-                newNum = 26;
-            }
-            newSettings[ringId] = newNum;
-        }
+        const ring = event.currentTarget;
+        const newSettings = this.state.ringSettings.slice(0);    
+        newSettings[ring.id] = ring.value;
 
         this.setState({
             ringSettings: newSettings
         });
     }
-    handleRotorSelect(event) {
+
+    changeReflector(event) {
+        this.setState({
+            reflector: event.currentTarget.value
+        })
+    }
+
+    handleRotorTypeSelect(event) {
         const selector = event.currentTarget;
         let updatedTypes = this.state.rotorTypes.slice(0)
         updatedTypes[selector.id] = selector.value;
@@ -337,24 +320,57 @@ export default class Enigma extends React.Component {
 
     }
 
+    resetSettings() {
+        this.setState({
+            rotorPositions: ['a', 'a', 'a'],
+            ringSettings: [1, 1, 1],
+            rotorTypes: ['I', 'II', 'III'],
+            reflector: "B",
+        })
+        document.body.click()
+    }
+
 
     render() {
+        let rotorsDisabled = false;
+        if (this.state.inputVal.length > 0) {
+            rotorsDisabled = true;
+        }
         return (
-            <div className="container-fluid text-center">
-                <h1>Enigma</h1>
+            <div id="machine" className="container-fluid text-center">
+
+                <h1 className="clr">Enigma Machine</h1>
+                <SettingsPopover 
+                rotorType={this.state.rotorTypes} 
+                handleRotorTypeSelect={this.handleRotorTypeSelect} 
+                changeRing={this.changeRing} updateRotor={this.updateRotor} 
+                resetSettings={this.resetSettings}
+                ringSettings={this.state.ringSettings}
+                rotorsDisabled={rotorsDisabled}
+                reflector={this.state.reflector}
+                changeReflector={this.changeReflector}/>
+
                 <div className="d-flex flex-row justify-content-center">
-                    <div className='p-2'>
-                        <RotorComponent posID={0} position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]} changeRotor={this.changeRotor} changeRing={this.changeRing} startType={'I'} handleRotorSelect={this.handleRotorSelect}/>
+                    <div id="rotor-settings" className="d-flex flex-row">
+                        <div className='p-2'>
+                            <RotorComponent posID={0} position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing}  type={this.state.rotorTypes[0]}/>
+                        </div>
+                        <div className='p-2'>
+                            <RotorComponent posID={1} position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing} type={this.state.rotorTypes[1]}/>
+                        </div>
+                        <div className='p-2'>
+                            <RotorComponent posID={2} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing} type={this.state.rotorTypes[2]}/>
+                        </div>
                     </div>
-                    <div className='p-2'>
-                        <RotorComponent posID={1} position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]} changeRotor={this.changeRotor} changeRing={this.changeRing} startType={'II'} handleRotorSelect={this.handleRotorSelect} />
-                    </div>
-                    <div className='p-2'>
-                        <RotorComponent posID={2} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} changeRotor={this.changeRotor} changeRing={this.changeRing} startType={'III'} handleRotorSelect={this.handleRotorSelect} />
-                    </div>
+
                 </div>
-                <div className="d-flex flex-row justify-content-center">
-                    <RenderConfig rotorTypes={this.state.rotorTypes} rings={this.state.ringSettings} displayPlugs={this.state.plugStatus.join('-')} />
+                <div className="d-flex flex-row justify-content-center pb-2">
+                    <RenderConfig 
+                    rotorTypes={this.state.rotorTypes} 
+                    rings={this.state.ringSettings} 
+                    displayPlugs={this.state.plugStatus.join('-')}
+                    rotorPos={this.state.rotorPositions}
+                    reflector={this.state.reflector} />
                 </div>
                 <div className="row">
                     <Keyboard val="lamp" />

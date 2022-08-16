@@ -4,7 +4,7 @@ import Key from "./Key.js"
 export default class Keyboard extends React.Component {
     render() {
         return (
-            <div className="no-pointer">
+            <div className="no-pointer mb-3">
                 <div className="d-flex flex-row justify-content-center">
                     <Key val={this.props.val + "q"} display={"Q"} cls={this.props.val}/>
                     <Key val={this.props.val + "w"} display={"W"} cls={this.props.val}/>
