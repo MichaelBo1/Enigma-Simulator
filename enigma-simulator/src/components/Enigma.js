@@ -296,7 +296,7 @@ export default class Enigma extends React.Component {
     }
     changeRing(event) {
         const ring = event.currentTarget;
-        const newSettings = this.state.ringSettings.slice(0);    
+        const newSettings = this.state.ringSettings.slice(0);
         newSettings[ring.id] = ring.value;
 
         this.setState({
@@ -340,37 +340,37 @@ export default class Enigma extends React.Component {
             <div id="machine" className="container-fluid text-center">
 
                 <h1 className="clr">Enigma Machine</h1>
-                <SettingsPopover 
-                rotorType={this.state.rotorTypes} 
-                handleRotorTypeSelect={this.handleRotorTypeSelect} 
-                changeRing={this.changeRing} updateRotor={this.updateRotor} 
-                resetSettings={this.resetSettings}
-                ringSettings={this.state.ringSettings}
-                rotorsDisabled={rotorsDisabled}
-                reflector={this.state.reflector}
-                changeReflector={this.changeReflector}/>
+                <SettingsPopover
+                    rotorType={this.state.rotorTypes}
+                    handleRotorTypeSelect={this.handleRotorTypeSelect}
+                    changeRing={this.changeRing} updateRotor={this.updateRotor}
+                    resetSettings={this.resetSettings}
+                    ringSettings={this.state.ringSettings}
+                    rotorsDisabled={rotorsDisabled}
+                    reflector={this.state.reflector}
+                    changeReflector={this.changeReflector} />
 
                 <div className="d-flex flex-row justify-content-center">
                     <div id="rotor-settings" className="d-flex flex-row">
                         <div className='p-2'>
-                            <RotorComponent posID={0} position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing}  type={this.state.rotorTypes[0]}/>
+                            <RotorComponent posID={0} position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing} type={this.state.rotorTypes[0]} />
                         </div>
                         <div className='p-2'>
-                            <RotorComponent posID={1} position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing} type={this.state.rotorTypes[1]}/>
+                            <RotorComponent posID={1} position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing} type={this.state.rotorTypes[1]} />
                         </div>
                         <div className='p-2'>
-                            <RotorComponent posID={2} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing} type={this.state.rotorTypes[2]}/>
+                            <RotorComponent posID={2} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing} type={this.state.rotorTypes[2]} />
                         </div>
                     </div>
 
                 </div>
                 <div className="d-flex flex-row justify-content-center pb-2">
-                    <RenderConfig 
-                    rotorTypes={this.state.rotorTypes} 
-                    rings={this.state.ringSettings} 
-                    displayPlugs={this.state.plugStatus.join('-')}
-                    rotorPos={this.state.rotorPositions}
-                    reflector={this.state.reflector} />
+                    <RenderConfig
+                        rotorTypes={this.state.rotorTypes}
+                        rings={this.state.ringSettings}
+                        displayPlugs={this.state.plugStatus.join('-')}
+                        rotorPos={this.state.rotorPositions}
+                        reflector={this.state.reflector} />
                 </div>
                 <div className="row">
                     <Keyboard val="lamp" />
