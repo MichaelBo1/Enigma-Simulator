@@ -90,6 +90,7 @@ select {
 }
 
 #settings-popover {
+  max-width: 700px;
   background-color: grey;
   opacity: 0.9;
 }
