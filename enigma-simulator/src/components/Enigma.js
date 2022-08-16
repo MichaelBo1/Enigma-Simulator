@@ -9,14 +9,14 @@ import SettingsPopover from './SettingsPopover.js';
 // Logic modules
 import Machine from '../logic/Machine.js';
 import Plugboard from '../logic/Plugboard.js';
-import Reflector from '../logic/Reflector.js';
 import { ALPHABET } from '../logic/Rotor.js';
 import RenderPlugboard from './RenderPlugboard.js';
 import getRotor from '../logic/GetRotors.js';
 import getReflector from '../logic/GetReflector.js';
-// Define constants and default components
 
+// Define constants and default components
 const KEYPRESS = new Audio(sound)
+
 // filter keyboard input for only letters
 const isLetterOrBack = (str) => {
     // is of correct length and type
@@ -42,7 +42,7 @@ const preProcessChar = (char) => {
         return null;
     }
 }
-
+// generates a list of uppercase letters from connected plugs to be displayed in the config component
 const formatPlugs = (plugs) => {
     let res = []
     for (let i = 0; i < plugs.length; i += 2) {
@@ -52,6 +52,7 @@ const formatPlugs = (plugs) => {
 }
 
 const colors = ['red', 'green', 'blue', 'goldenrod', 'pink', 'purple', 'orange', 'teal', 'grey', 'brown']
+
 const revertRotors = (machine, arr) => {
     // shift rotor positions to those passed into as an array
     for (let i = 0; i < 3; i++) {
@@ -74,7 +75,6 @@ export default class Enigma extends React.Component {
             ],
             stepNo: 0,
             currentPositions: ['a', 'a', 'a'],
-            machine: new Machine([getRotor('I'), getRotor('II'), getRotor('III')], getReflector("B"), new Plugboard({})),
             rotorPositions: ['a', 'a', 'a'],
             ringSettings: [1, 1, 1],
             rotorTypes: ['I', 'II', 'III'],
@@ -124,8 +124,7 @@ export default class Enigma extends React.Component {
             outputVal: updatedOutput,
             history: updatedHistory,
             stepNo: this.state.stepNo - 1,
-            rotorPositions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos],
-            machine: updatedMachine
+            rotorPositions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos]
         })
     }
     handleKeyDown(event) {
@@ -198,7 +197,6 @@ export default class Enigma extends React.Component {
                 }
             ]),
             stepNo: this.state.stepNo + 1,
-            machine: updatedMachine,
             rotorPositions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos],
             currentLamp: encryptedChar
         })
