@@ -308,28 +308,15 @@ export default class Enigma extends React.Component {
         })
     }
     changeRing(event) {
-        const newSettings = this.state.ringSettings.slice(0);
-        const ringId = event.currentTarget.id;
-        const btnVal = event.currentTarget.value;
-        // increase ring setting if adding
-        if (btnVal === '+') {
-            newSettings[ringId] = (this.state.ringSettings[ringId] % 26) + 1;
-        }
-        // otherwise it must be '-', so decrease the value, looping 1 to 26;
-        else {
-            let newNum = this.state.ringSettings[ringId] - 1;
-            if (newNum === 0) {
-                newNum = 26;
-            }
-            newSettings[ringId] = newNum;
-        }
+        const ring = event.currentTarget;
+        const newSettings = this.state.ringSettings.slice(0);    
+        newSettings[ring.id] = ring.value;
 
         this.setState({
             ringSettings: newSettings
         });
     }
     handleRotorSelect(event) {
-        console.log("handling type...")
         const selector = event.currentTarget;
         let updatedTypes = this.state.rotorTypes.slice(0)
         updatedTypes[selector.id] = selector.value;
@@ -345,7 +332,7 @@ export default class Enigma extends React.Component {
             <div id="machine" className="container-fluid text-center">
 
                 <h1>Enigma</h1>
-                <SettingsPopover rotorType={this.state.rotorTypes} handleRotorSelect={this.handleRotorSelect}/>
+                <SettingsPopover rotorType={this.state.rotorTypes} handleRotorSelect={this.handleRotorSelect} changeRing={this.changeRing}/>
 
                 <div className="d-flex flex-row justify-content-center">
                     <div id="rotor-settings" className="d-flex flex-row">

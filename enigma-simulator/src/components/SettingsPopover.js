@@ -45,9 +45,9 @@ export default class SettingsPopover extends React.Component {
                                     </tr>
                                     <tr>
                                         <th scope="row">Ring Setting</th>
-                                        <td><RenderRingSettings idPos={0} updatedRings={this.props.updatedRings} /></td>
-                                        <td><RenderRingSettings idPos={1} updatedRings={this.props.updatedRings} /></td>
-                                        <td><RenderRingSettings idPos={2} updatedRings={this.props.updatedRings} /></td>
+                                        <td><RenderRingSettings idPos={0} changeRing={this.props.changeRing} /></td>
+                                        <td><RenderRingSettings idPos={1} changeRing={this.props.changeRing} /></td>
+                                        <td><RenderRingSettings idPos={2} changeRing={this.props.changeRing} /></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Starting Position</th>
