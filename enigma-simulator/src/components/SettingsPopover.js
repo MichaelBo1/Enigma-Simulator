@@ -32,7 +32,15 @@ export default class SettingsPopover extends React.Component {
                             <table className="table">
                                 <thead>
                                     <tr>
-                                        <th>Plugboard</th>
+                                        <th>
+                                            Reflector
+                                            <select className="ms-1" defaultValue={this.props.reflector} onChange={this.props.changeReflector}>
+                                                <option value="B">B</option>
+                                                <option value="A">A</option>
+                                                <option value="C">C</option>
+                                            </select>
+                                        
+                                        </th>
                                         <th scope="col">Left Rotor</th>
                                         <th scope="col">Middle Rotor</th>
                                         <th scope="col">Right Rotor</th>

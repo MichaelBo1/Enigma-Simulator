@@ -95,6 +95,7 @@ export default class Enigma extends React.Component {
         this.resetPlugs = this.resetPlugs.bind(this);
         this.stepRotorPos = this.stepRotorPos.bind(this);
         this.changeRing = this.changeRing.bind(this);
+        this.changeReflector = this.changeReflector.bind(this);
         this.handleRotorTypeSelect = this.handleRotorTypeSelect.bind(this);
         this.resetSettings = this.resetSettings.bind(this);
 
@@ -305,6 +306,12 @@ export default class Enigma extends React.Component {
         });
     }
 
+    changeReflector(event) {
+        this.setState({
+            reflector: getReflector(event.currentTarget.value)
+        })
+    }
+
     handleRotorTypeSelect(event) {
         const selector = event.currentTarget;
         let updatedTypes = this.state.rotorTypes.slice(0)
@@ -341,7 +348,9 @@ export default class Enigma extends React.Component {
                 changeRing={this.changeRing} updateRotor={this.updateRotor} 
                 resetSettings={this.resetSettings}
                 ringSettings={this.state.ringSettings}
-                rotorsDisabled={rotorsDisabled}/>
+                rotorsDisabled={rotorsDisabled}
+                reflector={this.state.reflector}
+                changeReflector={this.changeReflector}/>
 
                 <div className="d-flex flex-row justify-content-center">
                     <div id="rotor-settings" className="d-flex flex-row">
