@@ -2,7 +2,7 @@
   "name": "enigma-simulator",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "https://MBDur12.github.io/Enigma-Simulator",
   "type": "module",
   "dependencies": {
     "@fortawesome/free-regular-svg-icons": "^6.1.2",
