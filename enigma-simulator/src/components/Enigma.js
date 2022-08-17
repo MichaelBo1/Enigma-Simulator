@@ -3,6 +3,7 @@ import RotorComponent from './RotorComponent.js';
 import GetInput from './GetInput.js';
 import RenderInput from './RenderInput.js';
 import Keyboard from './Keyboard.js';
+import InputBoard from './InputBoard.js';
 import sound from '../assets/typewriter-key.mp3'
 import RenderConfig from './RenderConfig.js';
 import SettingsPopover from './SettingsPopover.js';
@@ -86,6 +87,7 @@ export default class Enigma extends React.Component {
             plugStatus: []
 
         }
+        this.handleInput = this.handleInput.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleChar = this.handleChar.bind(this);
         this.updateRotor = this.updateRotor.bind(this);
@@ -126,6 +128,10 @@ export default class Enigma extends React.Component {
             stepNo: this.state.stepNo - 1,
             rotorPositions: [updatedMachine.rotors[0].rotorPos, updatedMachine.rotors[1].rotorPos, updatedMachine.rotors[2].rotorPos]
         })
+    }
+    // take key value and encrypt if input Keyboard is used instead
+    handleInput(event) {
+        this.handleChar(event.currentTarget.value)
     }
     handleKeyDown(event) {
         // pre proccess char and encrypt if it is a valid letter, null otherwise
@@ -235,7 +241,6 @@ export default class Enigma extends React.Component {
         const plug = event.currentTarget;
         let newPlugCnt = this.state.plugCount;
         let newClrIdx = this.state.colorIndex;
-        console.log(newPlugCnt)
         // if plug has already been highlighted, remove its color (and paired letter if any)
         if (plug.classList.contains('clicked') === false && newPlugCnt < 20) {
             // switch to a new color if starting a new pair
@@ -350,19 +355,16 @@ export default class Enigma extends React.Component {
                     reflector={this.state.reflector}
                     changeReflector={this.changeReflector} />
 
-                <div className="d-flex flex-row justify-content-center">
-                    <div id="rotor-settings" className="d-flex flex-row">
-                        <div className='p-2'>
-                            <RotorComponent posID={0} position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing} type={this.state.rotorTypes[0]} />
-                        </div>
-                        <div className='p-2'>
-                            <RotorComponent posID={1} position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing} type={this.state.rotorTypes[1]} />
-                        </div>
-                        <div className='p-2'>
-                            <RotorComponent posID={2} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing} type={this.state.rotorTypes[2]} />
-                        </div>
+                <div className="d-flex flex-row justify-content-center  flex-wrap">
+                    <div className='p-2'>
+                        <RotorComponent posID={0} position={this.state.rotorPositions[0]} ring={this.state.ringSettings[0]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing} type={this.state.rotorTypes[0]} />
                     </div>
-
+                    <div className='p-2'>
+                        <RotorComponent posID={1} position={this.state.rotorPositions[1]} ring={this.state.ringSettings[1]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing} type={this.state.rotorTypes[1]} />
+                    </div>
+                    <div className='p-2'>
+                        <RotorComponent posID={2} position={this.state.rotorPositions[2]} ring={this.state.ringSettings[2]} stepRotorPos={this.stepRotorPos} changeRing={this.changeRing} type={this.state.rotorTypes[2]} />
+                    </div>
                 </div>
                 <div className="d-flex flex-row justify-content-center pb-2">
                     <RenderConfig
@@ -374,7 +376,7 @@ export default class Enigma extends React.Component {
                 </div>
                 <div className="row">
                     <Keyboard val="lamp" />
-                    <Keyboard val="user" />
+                    <InputBoard val="user" handleInput={this.handleInput}/>
                     <RenderPlugboard handleConnect={this.handleConnect} resetPlugs={this.resetPlugs} connectPlug={this.connectPlug} />
                 </div>
                 <div className="row">

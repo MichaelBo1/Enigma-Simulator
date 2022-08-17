@@ -9,9 +9,9 @@ class RotorComponent extends React.Component {
             <div className="row">
                 <div className="col text-uppercase pt-2 ps-4 clr">
                     <div className="vstack gap-0">
-                        <button id={this.props.posID} value="+" className="text-btn increment" onClick={this.props.stepRotorPos}>+</button>
-                        <div className="rotor-display">{this.props.position}</div>
-                        <button id={this.props.posID} value="-" className="text-btn decrement" onClick={this.props.stepRotorPos}>-</button>
+                        <button id={this.props.posID} value="+" className="text-btn increment rotor-text" onClick={this.props.stepRotorPos}>+</button>
+                        <div className="rotor-display rotor-text">{this.props.position}</div>
+                        <button id={this.props.posID} value="-" className="text-btn decrement rotor-text" onClick={this.props.stepRotorPos}>-</button>
                     </div>
                 </div>
 
