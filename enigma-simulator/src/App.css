@@ -1,0 +1,111 @@
+body,
+#root {
+  height: 100vh;
+  margin: 0;
+  background-color: black;
+}
+
+#machine {
+  width: 80%;
+  height: 80%;
+}
+
+.form-control[readonly] {
+  resize: none;
+  color: #C3C7C7;
+  border: 2px solid #C3C7C7;
+  background-color: black;
+}
+.plug {
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  background-color: black;
+  color: #C3C7C7;
+  border: 1px solid #C3C7C7;
+  margin: 2px 2px 2px 2px;
+  padding: 0px 2px 2px 2px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.pair {
+  text-transform: uppercase;
+}
+.key {
+  margin: 0px 2px 0px 2px;
+
+}
+.text-btn {
+  background: none;
+  border: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  color: #C3C7C7;
+}
+
+.key {
+  text-align: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 20px;
+}
+.lamp {
+  background: linear-gradient(135deg, #C3C7C7 5%, black);
+  border: 3px solid #C3C7C7;
+  color: white;
+
+}
+
+.user {
+  background-color: black;
+  border: 3px solid #C3C7C7;
+  color: #C3C7C7;
+
+}
+
+.clr {
+  color: #C3C7C7
+}
+
+select {
+  border: none;
+  outline: none;
+  background-color: black;
+  color: #C3C7C7;
+  text-align: center;
+}
+
+.no-pointer {
+  pointer-events: none;
+}
+
+.increment:hover {
+  color: green;
+}
+.decrement:hover {
+  color: red;
+}
+
+#settings-popover {
+  max-width: 700px;
+  background-color: grey;
+  opacity: 0.9;
+}
+
+#close {
+  position: fixed;
+  right: 20px;
+}
+@media only screen and (max-width: 576px) {
+  .key {
+    margin: 0px 0px;
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+  }
+
+}
