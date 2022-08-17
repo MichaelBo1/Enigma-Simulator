@@ -46,26 +46,25 @@ body,
   color: #C3C7C7;
 }
 
-.lamp {
+.key {
   text-align: center;
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  font-size: 20px;
+}
+.lamp {
   background: linear-gradient(135deg, #C3C7C7 5%, black);
   border: 3px solid #C3C7C7;
   color: white;
-  font-size: 20px;
+
 }
 
 .user {
-  text-align: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
   background-color: black;
   border: 3px solid #C3C7C7;
   color: #C3C7C7;
-  font-size: 20px;
+
 }
 
 .clr {
@@ -104,5 +103,9 @@ select {
 @media only screen and (max-width: 576px) {
   .key {
     margin: 0px 0px;
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
   }
+
 }
