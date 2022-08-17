@@ -1,0 +1,10 @@
+{
+  "short_name": "Enigma React App",
+  "name": "Simple Enigma Machine Simulator Created Using React App",
+  "icons": [
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
