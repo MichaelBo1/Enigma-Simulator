@@ -18,6 +18,21 @@ import getReflector from '../logic/GetReflector.js';
 // Define constants and default components
 const KEYPRESS = new Audio(sound)
 
+
+const generateConnectedPlugboard = (plugs, plugLen) => {
+    // don't connect if a plug is not in a pair
+    if (plugLen % 2 !== 0) {
+        alert(`Error: The letter ${plugs[plugLen - 1]} is not paired up`);
+        return null;
+    }
+    let updatedPairs = {}
+    // jump in 2s as only valid pairs are added
+    for (let i = 0; i < plugLen; i += 2) {
+            updatedPairs[plugs[i]] = plugs[i + 1];
+            updatedPairs[plugs[i + 1]] = plugs[i];
+    }
+    return new Plugboard(updatedPairs)
+}
 // filter keyboard input for only letters
 const isLetterOrBack = (str) => {
     // is of correct length and type
@@ -44,7 +59,7 @@ const preProcessChar = (char) => {
     }
 }
 // generates a list of uppercase letters from connected plugs to be displayed in the config component
-const formatPlugs = (plugs) => {
+const generateFormattedPlugList = (plugs) => {
     let res = []
     for (let i = 0; i < plugs.length; i += 2) {
         res.push(plugs[i].toUpperCase() + plugs[i + 1].toUpperCase())
@@ -215,27 +230,22 @@ export default class Enigma extends React.Component {
         })
     }
 
+    // attempts to generate new plugboard if correctly connected
     handleConnect(event) {
         event.preventDefault();
         const plugs = this.state.selectedPlugs
         const plugLen = plugs.length;
-        // don't connect if a plug is not in a pair
-        if (plugLen % 2 !== 0) {
-            alert(`Error: The letter ${this.state.selectedPlugs[plugLen - 1]} is not paired up`);
-            return;
-        }
-        // if executed correctly, generate plugboard object
-        let updatedPairs = {};
-        // jump in 2s as only valid pairs are added
-        for (let i = 0; i < plugs.length; i += 2) {
-            updatedPairs[plugs[i]] = plugs[i + 1];
-            updatedPairs[plugs[i + 1]] = plugs[i];
-        }
+        
+        const newPlugboard = generateConnectedPlugboard(plugs, plugLen)
+        if (newPlugboard != null)
+        {
         // change the state of the plugboard
         this.setState({
-            plugboard: new Plugboard(updatedPairs),
-            plugStatus: formatPlugs(plugs)
+            plugboard: newPlugboard,
+            plugStatus: generateFormattedPlugList(plugs)
         })
+        }
+
     }
     connectPlug(event) {
         const plug = event.currentTarget;
