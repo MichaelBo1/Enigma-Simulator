@@ -1,5 +1,5 @@
 # Enigma-Simulator
-A simple Enigma Machine simulator created using the [create-react-app](https://create-react-app.dev/) framework. You can change the configuration of the machine and the components used and it will encrpyt/decrypt your message as you type. It is deployed [here](https://mbdur12.github.io/Enigma-Simulator/).
+A simple Enigma Machine simulator created using the [create-react-app](https://create-react-app.dev/) framework. You can change the configuration of the machine and the components used and it will encrpyt/decrypt your message as you type. It can be used [here](https://michaelbo1.github.io/Enigma-Simulator/).
 ## What I learned
 - Using React.js to build components, splitting rendering and logic functionality
 ## License
